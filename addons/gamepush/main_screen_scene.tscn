@@ -1,0 +1,100 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd1mw0n5od0ny"]
+
+[ext_resource type="Script" path="res://addons/gamepush/main_screen_scene.gd" id="1_1qo8o"]
+
+[node name="MainScreenScene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_1qo8o")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_right = 476.0
+offset_bottom = 149.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Projet ID:"
+
+[node name="ProjectId" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Token:"
+
+[node name="Token" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "Show preloader Ad:"
+
+[node name="ShowPreload" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+text = "Game ready delay:"
+
+[node name="ReadyDelay" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+placeholder_text = "0"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Archive export folder to zip:"
+
+[node name="IsArchive" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Archive name:"
+
+[node name="NameArchive" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+placeholder_text = "export_archive.zip"
+max_length = 20
+editable = false
+expand_to_text_length = true
+
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/ProjectId" to="." method="_on_project_id_text_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/Token" to="." method="_on_token_text_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer5/ShowPreload" to="." method="_on_show_preload_toggled"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer6/ReadyDelay" to="." method="_on_ready_delay_text_changed"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HBoxContainer4/IsArchive" to="." method="_on_is_archive_toggled"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer3/NameArchive" to="." method="_on_name_archive_text_changed"]

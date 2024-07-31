@@ -1,31 +1,56 @@
 extends Node
 
+
 class Ads:
-	static var window = JavaScriptBridge.get_interface("window")
-	static var gp = window.gp
-	static var ads = gp.ads
+	static var window:JavaScriptObject
+	static var gp:JavaScriptObject
+	static var ads:JavaScriptObject
 	
+	
+	static func _static_init():
+		if OS.get_name() == "Web":
+			window = JavaScriptBridge.get_interface("window")
+			gp = window.gp
+			ads = gp.ads
+			#ads.on('start', func _start(): start.emit())
+		
 	static func is_adblock_enabled() -> bool:
-		return ads.isAdblockEnabled
+		if OS.get_name() == "Web":
+			return ads.isAdblockEnabled
+		return false
 		
 	static func is_sticky_available() -> bool:
-		return ads.isStickyAvailable
+		if OS.get_name() == "Web":
+			return ads.isStickyAvailable
+		return false
 		
 	static func is_fullscreen_available() -> bool:
-		return ads.isFullscreenAvailable
+		if OS.get_name() == "Web":
+			return ads.isFullscreenAvailable
+		return false
 		
 	static func is_rewarded_available() -> bool:
-		return ads.isRewardedAvailable
-	
+		if OS.get_name() == "Web":
+			return ads.isRewardedAvailable
+		return false
+		
 	# Is the ads playing now	
 	static func is_sticky_playing() -> bool:
-		return ads.isStickyPlaying
+		if OS.get_name() == "Web":
+			return ads.isStickyPlaying
+		return false
 		
 	static func is_fullscreen_playing() -> bool:
-		return ads.isFullscreenPlaying
-
+		if OS.get_name() == "Web":
+			return ads.isFullscreenPlaying
+		return false
+		
 	static func is_rewarded_playing() -> bool:
-		return ads.isRewardedPlaying
+		if OS.get_name() == "Web":
+			return ads.isRewardedPlaying
+		return false
 
 	static func is_preloader_playing() -> bool:
-		return ads.isStickyPlaying
+		if OS.get_name() == "Web":
+			return ads.isStickyPlaying
+		return false

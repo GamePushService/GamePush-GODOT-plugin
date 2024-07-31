@@ -4,10 +4,11 @@ class_name  HTMLExportPlugin
 
 
 var plugin_path: String = get_script().resource_path.get_base_dir()
-var project_id: String #TODO export to main screen
-var public_token: String #TODO export to main screen
 var export_path: String
-var archive_name := 'export_archive.zip' #TODO export to main screen
+
+var project_id: String
+var public_token: String 
+var archive_name := 'export_archive.zip'
 
 func _get_name() -> String:
 	return "Game Push"
@@ -25,7 +26,7 @@ func _export_end() -> void:
 	html = html.insert(pos, 
 				'<script async src="https://gamepush.com/sdk/game-score.js?projectId='
 				 + project_id + '&publicToken=' + public_token +
-				'&callback=onGPInit""></script>\n' + 
+				'&callback=onGPInit"></script>\n' + 
 				'<script>
 					let gp
 					window.onGPInit = async (_gp) => {
