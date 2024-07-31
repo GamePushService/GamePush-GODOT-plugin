@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-const AUTOLOAD_NAME = "GamePush"
+const AUTOLOAD_NAME = "GP"
 
 
 func _enter_tree():

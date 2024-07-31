@@ -16,7 +16,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GamePush="*res://addons/gamepush/game_push.gd"
+GP="*res://addons/gamepush/game_push.gd"
 
 [editor_plugins]
 
