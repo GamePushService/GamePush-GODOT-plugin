@@ -1,12 +1,17 @@
 extends Control
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _on_is_adblock_enabled_pressed():
+	print(GP.Ads.is_adblock_enabled())
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	
+func _on_is_sticky_available_pressed():
+	print(GP.Ads.is_sticky_available())
+
+
+func _on_is_fullscreen_available_pressed():
+	print(GP.Ads.is_fullscreen_available())
+
+
+func _on_is_rewarded_available_pressed():
+	print(GP.Ads.is_rewarded_available())

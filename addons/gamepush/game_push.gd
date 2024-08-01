@@ -10,8 +10,9 @@ class Ads:
 	static func _static_init():
 		if OS.get_name() == "Web":
 			window = JavaScriptBridge.get_interface("window")
-			gp = window.gp
-			ads = gp.ads
+			while not gp:
+				gp = window.gp
+				ads = gp.ads
 			#ads.on('start', func _start(): start.emit())
 		
 	static func is_adblock_enabled() -> bool:

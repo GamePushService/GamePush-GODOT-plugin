@@ -33,7 +33,7 @@ func _export_end() -> void:
 						await _gp.player.ready;
 						await _gp.ads.showPreloader();
 						_gp.ads.showSticky();
-						gp = _gp;
+						window.gp = _gp;
 					};
 				</script>')
 	file = FileAccess.open(export_path, FileAccess.WRITE)
