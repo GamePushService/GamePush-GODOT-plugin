@@ -107,6 +107,25 @@ func is_preloader_playing() -> bool:
 		return ads.isStickyPlaying
 	push_warning("Not Web")
 	return false
+	
+func is_countdown_overlay_enabled() -> bool:
+	if OS.get_name() == "Web":
+		return ads.isCountdownOverlayEnabled
+	push_warning("Not Web")
+	return false
+	
+func is_rewarded_failed_overlay_enabled() -> bool:
+	if OS.get_name() == "Web":
+		return ads.isRewardedFailedOverlayEnabled
+	push_warning("Not Web")
+	return false
+	
+func can_show_fullscreen_before_game_play() -> bool:
+	if OS.get_name() == "Web":
+		return ads.canShowFullscreenBeforeGamePlay
+	push_warning("Not Web")
+	return false
+	
 
 
 func show_fullscreen(show_countdown_overlay=false) -> void:
