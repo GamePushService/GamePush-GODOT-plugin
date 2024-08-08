@@ -6,6 +6,7 @@ signal main_scene_data_change
 var archive_name := "export_archive.zip"
 var project_id := ""
 var token := ""
+var is_archive := false
 
 
 
@@ -22,9 +23,10 @@ func _on_token_text_changed(new_text: String) -> void:
 func _on_is_archive_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		$MarginContainer/VBoxContainer/HBoxContainer3/NameArchive.editable = true
+		is_archive = true
 	else:
 		$MarginContainer/VBoxContainer/HBoxContainer3/NameArchive.editable = false
-	#TODO add bool logic
+		is_archive = false
 	main_scene_data_change.emit()
 
 

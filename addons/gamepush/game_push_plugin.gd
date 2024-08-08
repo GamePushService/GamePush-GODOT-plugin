@@ -40,4 +40,5 @@ func _get_plugin_icon():
 func _update_data_from_main_screen():
 	export_plugin.project_id = main_screen_scene_instance.project_id
 	export_plugin.public_token = main_screen_scene_instance.token
+	export_plugin.is_archive = main_screen_scene_instance.is_archive
 	export_plugin.archive_name = main_screen_scene_instance.archive_name

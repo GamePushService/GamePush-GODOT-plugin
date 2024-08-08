@@ -8,6 +8,7 @@ var export_path: String
 
 var project_id: String
 var public_token: String 
+var is_archive := false
 var archive_name := 'export_archive.zip'
 
 func _get_name() -> String:
@@ -24,22 +25,18 @@ func _export_end() -> void:
 	file.close()
 	var pos = html.find('</head>')
 	html = html.insert(pos, 
-				'<script async src="https://gamepush.com/sdk/game-score.js?projectId='
-				 + project_id + '&publicToken=' + public_token +
-				'&callback=onGPInit"></script>\n' + 
-				'<script>
+				'<script async src= "https://gamepush.com/sdk/game-score.js?projectId=%s&publicToken=%s&callback=onGPInit"></script>\n 
+				<script>
 					let gp
 					window.onGPInit = async (_gp) => {
-						await _gp.player.ready;
-						await _gp.ads.showPreloader();
-						_gp.ads.showSticky();
 						window.gp = _gp;
 					};
-				</script>')
+				</script>\n' % [project_id, public_token])
 	file = FileAccess.open(export_path, FileAccess.WRITE)
 	file.store_string(html)
 	file.close()
-	zip_export(archive_name)
+	if is_archive:
+		zip_export(archive_name)
 
 
 func zip_export(name_file:String):
