@@ -30,3 +30,8 @@ func _on_signal_close():
 
 func _on_show_fullscreen_pressed():
 	GP.Ads.show_fullscreen()
+
+
+func _on_show_rewarded_video_pressed():
+	GP.Ads.show_rewarded_video(true)
+	

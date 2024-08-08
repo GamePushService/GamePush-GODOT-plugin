@@ -13,10 +13,11 @@ func _enter_tree():
 	add_autoload_singleton(AUTOLOAD_NAME, "res://addons/gamepush/game_push.gd")
 	export_plugin = load("res://addons/gamepush/export_plugin.gd").new()
 	add_export_plugin(export_plugin)
-	main_screen_scene_instance = MainScreenScene.instantiate()
-	EditorInterface.get_editor_main_screen().add_child(main_screen_scene_instance)
 	_make_visible(false)
+	main_screen_scene_instance = MainScreenScene.instantiate()
 	main_screen_scene_instance.main_scene_data_change.connect(_update_data_from_main_screen)
+	EditorInterface.get_editor_main_screen().add_child(main_screen_scene_instance)
+
 
 func _exit_tree():
 	remove_autoload_singleton(AUTOLOAD_NAME)
