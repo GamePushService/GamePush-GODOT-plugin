@@ -19,7 +19,6 @@ signal sticky_render
 signal sticky_refresh
 
 var callback_start = JavaScriptBridge.create_callback(_start)
-var _allback_start = JavaScriptBridge.create_callback(_start)
 var callback_close = JavaScriptBridge.create_callback(_close)
 var callback_fullscreen_start = JavaScriptBridge.create_callback(_fullscreen_start)
 var callback_fullscreen_close = JavaScriptBridge.create_callback(_fullscreen_close)
@@ -36,7 +35,6 @@ var callback_sticky_refresh = JavaScriptBridge.create_callback(_sticky_refresh)
 
 func _ready():
 	if OS.get_name() == "Web":
-		print("Ads start init")
 		window = JavaScriptBridge.get_interface("window")
 		while not gp:
 			gp = window.gp
@@ -56,9 +54,8 @@ func _ready():
 		ads.on('sticky:close', callback_close)
 		ads.on('sticky:render', callback_sticky_render)
 		ads.on('sticky:refresh', callback_sticky_refresh)
-		print("Ads init")
 
-		
+
 func is_adblock_enabled() -> bool:
 	if OS.get_name() == "Web" and ads:
 		return ads.isAdblockEnabled
@@ -131,7 +128,7 @@ func can_show_fullscreen_before_game_play() -> bool:
 func show_fullscreen(show_countdown_overlay=false) -> void:
 	if OS.get_name() == "Web":
 		if show_countdown_overlay:
-			var conf = JavaScriptBridge.create_object("Object")
+			var conf := JavaScriptBridge.create_object("Object")
 			conf["showCountdownOverlay"] = show_countdown_overlay
 			ads.showFullscreen(conf)
 		else:
@@ -147,7 +144,12 @@ func show_preloader() -> void:
 		
 func show_rewarded_video(show_countdown_overlay=false) -> void:
 	if OS.get_name() == "Web":
-		ads.showRewardedVideo({"showCountdownOverlay": show_countdown_overlay})
+		if show_countdown_overlay:
+			var conf := JavaScriptBridge.create_object("Object")
+			conf["showCountdownOverlay"] = show_countdown_overlay
+			ads.showRewardedVideo(conf)
+		else:
+			ads.showRewardedVideo()
 		return
 	push_warning("Not Web")
 		
@@ -171,13 +173,13 @@ func close_sticky() -> void:
 
 
 func _start(args): start.emit()
-func _close(args): close.emit()
+func _close(args): close.emit(args[0])
 func _fullscreen_start(args): fullscreen_start.emit()
-func _fullscreen_close(args): fullscreen_close.emit()
+func _fullscreen_close(args): fullscreen_close.emit(args[0])
 func _preloader_start(args): preloader_start.emit()
-func _preloader_close(args): preloader_close.emit()
-func _rewarded_start(args): rewarded_start.emit()
-func _rewarded_close(args): rewarded_close.emit()
+func _preloader_close(args): preloader_close.emit(args[0])
+func _rewarded_start(args): rewarded_start.emit()	
+func _rewarded_close(args): rewarded_close.emit(args[0])
 func _rewarded_reward(args): rewarded_reward.emit()
 func _sticky_start(args): sticky_start.emit()
 func _sticky_close(args): sticky_close.emit()

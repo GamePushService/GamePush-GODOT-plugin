@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://blekk2vveioqu"]
+[gd_scene load_steps=2 format=3 uid="uid://8dhgiroyhmao"]
 
 [ext_resource type="Script" path="res://addons/gamepush/Demo/demo.gd" id="1_n8j0n"]
 
@@ -25,47 +25,145 @@ theme_override_constants/margin_bottom = 10
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer"]
 layout_mode = 2
-columns = 3
+columns = 5
 
-[node name="is_adblock_enabled" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Ads" type="Button" parent="MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "is_adblock_enabled"
+text = "Ads"
 
-[node name="is_sticky_available" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Achievements" type="Button" parent="MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "is_sticky_available"
+text = "Achievements"
 
-[node name="is_fullscreen_available" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Analytics" type="Button" parent="MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "is_fullscreen_available"
+text = "Analytics"
 
-[node name="is_rewarded_available" type="Button" parent="MarginContainer/GridContainer"]
+[node name="___2" type="Button" parent="MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "is_rewarded_available"
+text = "___
+"
 
-[node name="show_fullscreen" type="Button" parent="MarginContainer/GridContainer"]
+[node name="___3" type="Button" parent="MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "show_fullscreen"
+text = "___
+"
 
-[node name="show_rewarded_video" type="Button" parent="MarginContainer/GridContainer"]
+[node name="___4" type="Button" parent="MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "show_rewarded_video"
+text = "___
+"
 
-[connection signal="pressed" from="MarginContainer/GridContainer/is_adblock_enabled" to="." method="_on_is_adblock_enabled_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/is_sticky_available" to="." method="_on_is_sticky_available_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/is_fullscreen_available" to="." method="_on_is_fullscreen_available_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/is_rewarded_available" to="." method="_on_is_rewarded_available_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/show_fullscreen" to="." method="_on_show_fullscreen_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/show_rewarded_video" to="." method="_on_show_rewarded_video_pressed"]
+[node name="___5" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___6" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___7" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___8" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___9" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___10" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___11" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___12" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___13" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___14" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___15" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___16" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___17" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[node name="___18" type="Button" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "___
+"
+
+[connection signal="pressed" from="MarginContainer/GridContainer/Ads" to="." method="_on_ads_pressed"]
+[connection signal="pressed" from="MarginContainer/GridContainer/Achievements" to="." method="_on_achievements_pressed"]
+[connection signal="pressed" from="MarginContainer/GridContainer/Analytics" to="." method="_on_analytics_pressed"]
