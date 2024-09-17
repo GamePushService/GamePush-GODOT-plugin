@@ -103,7 +103,16 @@ func fetch(player_id=null, tags=null, limit=null, offset=null):
 		conf["playerId"] = player_id
 		conf["limit"] = limit
 		conf["offset"] = offset
-		return await files.fetch(conf)
+		var result:Array
+		var _result
+		_result = await files.fetch(conf)
+		var arr_file:Array
+		for i in _result[0]:
+			#Need test
+			arr_file.append(File.new()._from_js(i))
+		result.append(arr_file)
+		result.append(_result[1])
+		return result
 
 func fetch_more(player_id=null, tags=null, limit=null, offset=null):
 	if OS.get_name() == "Web":
@@ -117,8 +126,12 @@ func fetch_more(player_id=null, tags=null, limit=null, offset=null):
 		conf["offset"] = offset
 		var result:Array
 		var _result
-		_result = await files.fetch(conf)
-		result.append(_result[0])
+		_result = await files.fetchMore(conf)
+		var arr_file:Array
+		for i in _result[0]:
+			#Need test
+			arr_file.append(File.new()._from_js(i))
+		result.append(arr_file)
 		result.append(_result[1])
 		return result
 		
@@ -133,9 +146,25 @@ func _load_content(args): loaded_content.emit(args[0])
 func _error_load_content(args): error_load_content.emit(args[0])
 func _choose(args): choosed.emit(args[0])
 func _error_choose(args): error_choose.emit(args[0])
-func _fetch(args): fetched.emit(args[0])
+func _fetch(args):
+	var result
+	var arr_file:Array
+	for i in args[0][0]:
+		#Need test
+		arr_file.append(File.new()._from_js(i))
+	result.append(arr_file)
+	result.append(args[0][1])
+	fetched.emit(result)
 func _error_fetch(args): error_fetch.emit(args[0])
-func _fetch_more(args): fetched_more.emit(args[0])
+func _fetch_more(args):
+	var result
+	var arr_file:Array
+	for i in args[0][0]:
+		#Need test
+		arr_file.append(File.new()._from_js(i))
+	result.append(arr_file)
+	result.append(args[0][1])
+	fetched_more.emit(result)
 func _error_fetch_more(args): error_fetch_more.emit(args[0])
 
 class File:
