@@ -45,7 +45,7 @@ func fetch(tag=null, id=null):
 
 func _open(args): opened.emit()
 func _close(args): closed.emit()
-func _fetch(args): fetched.emit(args[0])
+func _fetch(args): fetched.emit(Collection.new()._from_js(args[0]))
 func _error_fetch(args): error_fetch.emit(args[0])
 
 
