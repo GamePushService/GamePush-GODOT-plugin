@@ -159,6 +159,7 @@ class File:
 		for t in tags:
 			_tags.push(t)
 		js_object["tags"] = _tags
+		return js_object
 		
 		
 	func _from_js(js_object):
