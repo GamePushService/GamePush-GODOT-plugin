@@ -35,6 +35,8 @@ func open(tag=null, id=null, share_params=null):
 				_share_params[key] = value
 			conf['shareParams'] = share_params
 		gp.open(conf)
+	else:
+		push_warning("Not Web")
 		
 func fetch(tag=null, id=null):
 	if OS.get_name() == "Web":
@@ -42,6 +44,8 @@ func fetch(tag=null, id=null):
 		conf['tag'] = tag
 		conf['id'] = id
 		return await games_collections.fetch(conf)
+	else:
+		push_warning("Not Web")
 
 func _open(args): opened.emit()
 func _close(args): closed.emit()

@@ -44,18 +44,16 @@ func _ready():
 		files.on("error:fetch", callback_error_fetch)
 
 
-func upload(file=null, accept=null, tags=null):
+func upload(tags=null):
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		var _tags := JavaScriptBridge.create_object("Array")
-		if file and file is File:
-			conf["file"] = file._to_js()
-		conf["accept"] = accept
 		for t in tags:
 			_tags.push(t)
 		conf["tags"] = _tags
 		files.upload(conf)
-	push_warning("Not Web")
+	else:
+		push_warning("Not Web")
 	
 func upload_url(url:String, tags=null):
 	if OS.get_name() == "Web":
@@ -66,7 +64,8 @@ func upload_url(url:String, tags=null):
 			_tags.push(t)
 		conf["tags"] = _tags
 		files.uploadUrl(conf)
-	push_warning("Not Web")
+	else:
+		push_warning("Not Web")
 	
 func upload_content(file_name:String, content:String="", tags=null):
 	if OS.get_name() == "Web":
@@ -74,11 +73,14 @@ func upload_content(file_name:String, content:String="", tags=null):
 		conf["file_name"] = file_name
 		conf["content"] = content
 		files.uploadContent(conf)
-	push_warning("Not Web")
+	else:
+		push_warning("Not Web")
 	
 func load_сontent(url:String):
 	if OS.get_name() == "Web":
 		return await files.loadContent(url)
+	else:
+		push_warning("Not Web")
 
 func choose_file(type_file=null):
 	if OS.get_name() == "Web":
@@ -91,7 +93,8 @@ func choose_file(type_file=null):
 		result.append(File.new()._from_js(_result[0]))
 		result.append(_result[1])
 		return result
-
+	else:
+		push_warning("Not Web")
 
 func fetch(player_id=null, tags=null, limit=null, offset=null):
 	if OS.get_name() == "Web":
@@ -113,6 +116,8 @@ func fetch(player_id=null, tags=null, limit=null, offset=null):
 		result.append(arr_file)
 		result.append(_result[1])
 		return result
+	else:
+		push_warning("Not Web")
 
 func fetch_more(player_id=null, tags=null, limit=null, offset=null):
 	if OS.get_name() == "Web":
@@ -134,18 +139,17 @@ func fetch_more(player_id=null, tags=null, limit=null, offset=null):
 		result.append(arr_file)
 		result.append(_result[1])
 		return result
+	else:
+		push_warning("Not Web")
 		
 		
 func _upload(args):
-	var js_object = args[0]
-	#NEED TEST
-	uploaded.emit(js_object)
-	
-func _error_upload(args): error_upload.emit(args[0])
-func _load_content(args): loaded_content.emit(args[0])
-func _error_load_content(args): error_load_content.emit(args[0])
-func _choose(args): choosed.emit(args[0])
-func _error_choose(args): error_choose.emit(args[0])
+	uploaded.emit(File.new()._from_js(args[0]))
+func _error_upload(args): error_upload.emit(args[0]) #String
+func _load_content(args): loaded_content.emit(args[0]) #String
+func _error_load_content(args): error_load_content.emit(args[0]) #String
+func _choose(args): choosed.emit(args[0]) # ?
+func _error_choose(args): error_choose.emit(args[0]) #String
 func _fetch(args):
 	var result
 	var arr_file:Array
@@ -155,7 +159,7 @@ func _fetch(args):
 	result.append(arr_file)
 	result.append(args[0][1])
 	fetched.emit(result)
-func _error_fetch(args): error_fetch.emit(args[0])
+func _error_fetch(args): error_fetch.emit(args[0]) #String
 func _fetch_more(args):
 	var result
 	var arr_file:Array
@@ -165,7 +169,7 @@ func _fetch_more(args):
 	result.append(arr_file)
 	result.append(args[0][1])
 	fetched_more.emit(result)
-func _error_fetch_more(args): error_fetch_more.emit(args[0])
+func _error_fetch_more(args): error_fetch_more.emit(args[0]) #String
 
 class File:
 	var id:String

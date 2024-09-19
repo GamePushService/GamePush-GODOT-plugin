@@ -19,31 +19,45 @@ func _ready():
 		#game = gp.game
 		gp.on("pause", callback_pause)
 		gp.on("resume", callback_resume)
+	else:
+		push_warning("Not Web")
 		
 		
 func is_paused():
 	if OS.get_name() == "Web":
 		return gp.isPaused
+	else:
+		push_warning("Not Web")
 
 func pause():
 	if OS.get_name() == "Web":
 		gp.pause()
+	else:
+		push_warning("Not Web")
 		
 func resume():
 	if OS.get_name() == "Web":
 		gp.resume()
+	else:
+		push_warning("Not Web")
 
 func game_start():
 	if OS.get_name() == "Web":
 		gp.gameStart()
+	else:
+		push_warning("Not Web")
 		
 func gameplay_start():
 	if OS.get_name() == "Web":
 		gp.gameplayStart()
-		
+	else:
+		push_warning("Not Web")
+
 func gameplay_stop():
 	if OS.get_name() == "Web":
 		gp.gameplayStop()
+	else:
+		push_warning("Not Web")
 
 #TODO happytime
 
