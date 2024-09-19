@@ -1,11 +1,26 @@
 extends Node
 
+var window:JavaScriptObject
+var gp:JavaScriptObject
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
-	pass # Replace with function body.
+	if OS.get_name() == "Web":
+		window = JavaScriptBridge.get_interface("window")
+		while not gp:
+			gp = window.gp
+			await get_tree().create_timer(0.1).timeout
+			
 
+func current() -> String:
+	if OS.get_name() == "Web":
+		return gp.language
+	else:
+		push_warning("Not Web")
+		return ""
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func change(lang:String)-> void:
+	if OS.get_name() == "Web":
+		gp.changeLanguage()
+	else:
+		push_warning("Not Web")

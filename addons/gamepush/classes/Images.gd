@@ -114,7 +114,14 @@ func fetch_more(player_id=null, tags=null, limit=null, offset=null):
 	else:
 		push_warning("Not Web")
 
-
+func resize(url:String, width:int, height:int, crop:bool) -> String:
+	if OS.get_name() == "Web":
+		return await images.resize(url, width, height, crop) 
+	else:
+		push_warning("Not Web")
+		return ""
+	
+	
 func _upload(args):
 	uploaded.emit(GPImage.new()._from_js(args[0]))
 func _error_upload(args): error_upload.emit(args[0])
