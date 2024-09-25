@@ -11,6 +11,8 @@ signal error_fetch
 
 var callback_open := JavaScriptBridge.create_callback(_open)
 var callback_close := JavaScriptBridge.create_callback(_close)
+var callback_fetch := JavaScriptBridge.create_callback(_fetch)
+var callback_error_fetch := JavaScriptBridge.create_callback(_error_fetch)
 
 func _ready():
 	if OS.get_name() == "Web":
@@ -21,6 +23,8 @@ func _ready():
 		games_collections = gp.gamesCollections
 		games_collections.on("open", callback_open)
 		games_collections.on("close", callback_close)
+		games_collections.on("fetch", callback_fetch)
+		games_collections.on("error:fetch", callback_error_fetch)
 		
 		
 func open(tag=null, id=null, share_params=null):
