@@ -35,7 +35,7 @@ func _ready():
 		while not gp:
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
-		player = gp.platform
+		player = gp.player
 		player.on("sync", callback_sync)
 		player.on("load", callback_load)
 		player.on("login", callback_login)
@@ -284,7 +284,8 @@ func get_playtime_all() -> int:
 # Get the field by key
 func get_field(key: String) -> Variant:
 	if OS.get_name() == "Web":
-		return await player.getField(key)
+		var _result = await player.getField(key)
+		return Field.new()._from_js(_result)
 	push_warning("Not Web")
 	return null
 

@@ -24,7 +24,6 @@ func description():
 	push_warning("Not Web")
 	
 func image():
-	# Return url? need test
 	if OS.get_name() == "Web":
 		return app.image
 	push_warning("Not Web")

@@ -204,7 +204,6 @@ class PlayerPurchase:
 	var subscribed: bool
 	var expired_at: String
 
-	# Преобразование в JavaScript объект с camelCase
 	func _to_js():
 		var js_object := JavaScriptBridge.create_object("Object")
 		js_object["productId"] = product_id
@@ -215,7 +214,6 @@ class PlayerPurchase:
 		js_object["expiredAt"] = expired_at
 		return js_object
 
-	# Загрузка данных из JavaScript объекта с camelCase
 	func _from_js(js_object):
 		product_id = js_object["productId"]
 		payload = js_object["payload"]
