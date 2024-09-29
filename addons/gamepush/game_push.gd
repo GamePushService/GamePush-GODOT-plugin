@@ -28,14 +28,13 @@ var Segments:Node
 var Server:Node
 var Socials:Node
 var System:Node
-var Triggers:Node
+@onready var Triggers := preload("res://addons/gamepush/classes/Triggers.gd").new()
 var Variables:Node
 var Uniques:Node
 var Storage:Node
 
 
 func _ready():
-	
 	Achievements = await preload("res://addons/gamepush/classes/Achievements.gd").new()
 	Ads = await preload("res://addons/gamepush/classes/Ads.gd").new()
 	Analytics = await preload("res://addons/gamepush/classes/Analytics.gd").new()
@@ -64,7 +63,7 @@ func _ready():
 	#Server = await preload("res://addons/gamepush/classes/Server.gd").new()
 	#Socials = await preload("res://addons/gamepush/classes/Socials.gd").new()
 	#System = await preload("res://addons/gamepush/classes/System.gd").new()
-	#Triggers = await preload("res://addons/gamepush/classes/Triggers.gd").new()
+	Triggers = await preload("res://addons/gamepush/classes/Triggers.gd").new()
 	#Variables = await preload("res://addons/gamepush/classes/Variables.gd").new()
 	#Uniques = await preload("res://addons/gamepush/classes/Uniques.gd").new()
 	#Storage = await preload("res://addons/gamepush/classes/Storage.gd").new()
@@ -73,4 +72,5 @@ func _ready():
 	add_child(Achievements)
 	add_child(Ads)
 	add_child(Analytics)
+	add_child(Triggers)
 	
