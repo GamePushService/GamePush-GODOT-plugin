@@ -203,49 +203,49 @@ func can_claim_all_day(id_or_tag: Variant, day: int) -> bool:
 	return false
 
 
-func _on_error_register(err: Variant) -> void:
-	error_register.emit(err)
+func _on_error_register(args) -> void:
+	error_register.emit(args[0])
 	
-func _on_claim_day(scheduler_day_info_js: JavaScriptObject) -> void:
+func _on_claim_day(args) -> void:
 	var scheduler_day_info: SchedulerDayInfo = SchedulerDayInfo.new()
-	scheduler_day_info._from_js(scheduler_day_info_js)
+	scheduler_day_info._from_js(args[0])
 	signal_claim_day.emit(scheduler_day_info)
 
-func _on_error_claim_day(err) -> void:
-	error_claim_day.emit(err)
+func _on_error_claim_day(args) -> void:
+	error_claim_day.emit(args[0])
 
-func _on_register(scheduler_info_js: JavaScriptObject) -> void:
-	var scheduler_info := SchedulerInfo.new()._from_js(scheduler_info_js)
+func _on_register(args) -> void:
+	var scheduler_info := SchedulerInfo.new()._from_js(args[0])
 	signal_register.emit(scheduler_info)
 
-func _on_claim_day_additional(scheduler_day_info_js: JavaScriptObject) -> void:
-	var scheduler_day_info := SchedulerDayInfo.new()._from_js(scheduler_day_info_js)
+func _on_claim_day_additional(args) -> void:
+	var scheduler_day_info := SchedulerDayInfo.new()._from_js(args[0])
 	signal_claim_day_additional.emit(scheduler_day_info)
 
-func _on_error_claim_day_additional(error_message) -> void:
-	error_claim_day_additional.emit(error_message)
+func _on_error_claim_day_additional(args) -> void:
+	error_claim_day_additional.emit(args[0])
 
-func _on_claim_all_day(scheduler_day_info_js: JavaScriptObject) -> void:
-	var scheduler_day_info := SchedulerDayInfo.new()._from_js(scheduler_day_info_js)
+func _on_claim_all_day(args) -> void:
+	var scheduler_day_info := SchedulerDayInfo.new()._from_js(args[0])
 	signal_claim_all_day.emit(scheduler_day_info)
 
-func _on_error_claim_all_day(error_message) -> void:
-	error_claim_all_day.emit(error_message)
+func _on_error_claim_all_day(args) -> void:
+	error_claim_all_day.emit(args[0])
 
-func _on_claim_all_days(scheduler_info_js: JavaScriptObject) -> void:
-	var scheduler_info := SchedulerInfo.new()._from_js(scheduler_info_js)
+func _on_claim_all_days(args) -> void:
+	var scheduler_info := SchedulerInfo.new()._from_js(args[0])
 	signal_claim_all_days.emit(scheduler_info)
 
-func _on_error_claim_all_days(error_message) -> void:
-	error_claim_all_days.emit(error_message)
+func _on_error_claim_all_days(args) -> void:
+	error_claim_all_days.emit(args[0])
 
-func _on_join(join_info_js: JavaScriptObject) -> void:
-	var scheduler := Scheduler.new()._from_js(join_info_js.scheduler)
-	var player_scheduler := PlayerScheduler.new()._from_js(join_info_js.playerScheduler)
+func _on_join(args) -> void:
+	var scheduler := Scheduler.new()._from_js(args[0].scheduler)
+	var player_scheduler := PlayerScheduler.new()._from_js(args[0].playerScheduler)
 	signal_join.emit(scheduler, player_scheduler)
 
-func _on_error_join(error_message) -> void:
-	error_join.emit(error_message)
+func _on_error_join(args) -> void:
+	error_join.emit(args[0])
 
 
 class Scheduler:

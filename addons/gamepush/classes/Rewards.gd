@@ -126,8 +126,7 @@ func _on_reward_error(args) -> void:
 func _on_reward_accept_error(args) -> void:
 	reward_accept_error.emit(args[0])
 	
-# Method to handle reward acceptance
-func _on_reward_accepted(args: Dictionary) -> void:
+func _on_reward_accepted(args) -> void:
 	var reward = Reward.new()._from_js(args[0][0])
 	var player_reward = PlayerReward.new()._from_js(args[0][1])
 	reward_accepted.emit(reward, player_reward)
