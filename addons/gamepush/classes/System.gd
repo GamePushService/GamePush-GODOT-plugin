@@ -1,11 +1,25 @@
 extends Node
 
+var window:JavaScriptObject
+var gp:JavaScriptObject
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if OS.get_name() == "Web":
+		window = JavaScriptBridge.get_interface("window")
+		while not gp:
+			gp = window.gp
+			await get_tree().create_timer(0.1).timeout
 
+# Method to check if the game is in development mode
+func is_dev() -> bool:
+	if OS.get_name() == "Web":
+		return gp.isDev
+	push_warning("Not running on Web")
+	return false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+# Method to check if the game host is in trusted sources
+func is_allowed_origin() -> bool:
+	if OS.get_name() == "Web":
+		return gp.isAllowedOrigin
+	push_warning("Not running on Web")
+	return false
