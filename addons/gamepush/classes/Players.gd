@@ -1,11 +1,30 @@
 extends Node
 
+var window:JavaScriptObject
+var gp:JavaScriptObject
+var players:JavaScriptObject
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
-	pass # Replace with function body.
+	if OS.get_name() == "Web":
+		window = JavaScriptBridge.get_interface("window")
+		while not gp:
+			gp = window.gp
+			await get_tree().create_timer(0.1).timeout
+		players = gp.players
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+# Fetch players by their IDs
+func fetch_players(ids: Array) -> Dictionary:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		var _ids := JavaScriptBridge.create_object("Array")
+		for id in ids:
+			_ids.push(id)
+		conf["ids"] = _ids
+		var _result = await players.fetch(conf)
+		#_result.forEach()
+		#TODO
+		
+	push_warning("Not Web")
+	return {}

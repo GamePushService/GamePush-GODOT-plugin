@@ -90,11 +90,11 @@ func is_claimed(id_or_tag: String) -> bool:
 	return false
 
 func _activated(args) -> void:
-	var trigger = Trigger.new()._from_js(args[0])
+	var trigger = Trigger.new()._from_js(args[0].trigger)
 	activated.emit(trigger)  # Emit the signal with the trigger information
 
 func _claimed(args) -> void:
-	var trigger = Trigger.new()._from_js(args[0])
+	var trigger = Trigger.new()._from_js(args[0].trigger)
 	claimed.emit(trigger)  # Emit the signal with the trigger information
 
 func _error_claim(args) -> void:
