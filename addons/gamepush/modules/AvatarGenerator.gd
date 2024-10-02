@@ -19,7 +19,7 @@ func current() -> String:
 		push_warning("Not running on Web")
 		return ""
 
-func generate_avatar(has:String, size:int) -> String:
+func generate_avatar(has:Variant,	 size:int) -> String:
 	var result := ""
 	if OS.get_name() == "Web":
 		result = await gp.generateAvatar(has, size)
