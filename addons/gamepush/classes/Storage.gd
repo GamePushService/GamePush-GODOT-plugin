@@ -63,8 +63,8 @@ func get_global_value(key: String) -> Variant:
 		
 # Callback for successful value set
 func _set_success(args) -> void:
-	var key = args[0]["key"]
-	var value = args[0]["value"]
+	var key:String = args[0]["key"]
+	var value:String = args[0]["value"]
 	set_success.emit(key, value)
 	
 # Callback for successful value retrieval

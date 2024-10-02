@@ -1,76 +1,68 @@
 extends Node
 
-var Achievements:Node
-var Ads:Node
-var Analytics:Node
-var App:Node
-var AvatarGenerator:Node
-var Channels:Node
-var Custom:Node
-var Device:Node
-var Documents:Node
-var Events:Node
-var Experiments:Node
-var Fullscreen:Node
-var Game:Node
-var GamesCollections:Node
-var Images:Node
-var Language:Node 
-var Leaderboard:Node
-var LeaderboardScoped:Node
-var Payments:Node
-var Platform:Node
-var Player:Node
-var Players:Node
-var Rewards:Node
-var Schedulers:Node
-var Segments:Node
-var Server:Node
-var Socials:Node
-var System:Node
+@onready var Achievements := preload("res://addons/gamepush/classes/Achievements.gd").new()
+@onready var Ads := preload("res://addons/gamepush/classes/Ads.gd").new()
+@onready var Analytics := preload("res://addons/gamepush/classes/Analytics.gd").new()
 @onready var Triggers := preload("res://addons/gamepush/classes/Triggers.gd").new()
-var Variables:Node
-var Uniques:Node
-var Storage:Node
-
+@onready var App := preload("res://addons/gamepush/classes/App.gd").new()
+@onready var AvatarGenerator := preload("res://addons/gamepush/classes/AvatarGenerator.gd").new()
+@onready var Channels := preload("res://addons/gamepush/classes/Channels.gd").new()
+@onready var Custom := preload("res://addons/gamepush/classes/Custom.gd").new()
+@onready var Device := preload("res://addons/gamepush/classes/Device.gd").new()
+@onready var Documents := preload("res://addons/gamepush/classes/Documents.gd").new()
+@onready var Events := preload("res://addons/gamepush/classes/Events.gd").new()
+@onready var Experiments := preload("res://addons/gamepush/classes/Experiments.gd").new()
+@onready var Fullscreen := preload("res://addons/gamepush/classes/Fullscreen.gd").new()
+@onready var Game := preload("res://addons/gamepush/classes/Game.gd").new()
+@onready var GamesCollections := preload("res://addons/gamepush/classes/GameCollections.gd").new()
+@onready var Images := preload("res://addons/gamepush/classes/Images.gd").new()
+@onready var Language := preload("res://addons/gamepush/classes/Language.gd").new()
+@onready var Leaderboard := preload("res://addons/gamepush/classes/Leaderboard.gd").new()
+@onready var LeaderboardScoped := preload("res://addons/gamepush/classes/LeaderboardScoped.gd").new()
+@onready var Payments := preload("res://addons/gamepush/classes/Payments.gd").new()
+@onready var Platform := preload("res://addons/gamepush/classes/Platform.gd").new()
+@onready var Player := preload("res://addons/gamepush/classes/Player.gd").new()
+@onready var Players := preload("res://addons/gamepush/classes/Players.gd").new()
+@onready var Rewards := preload("res://addons/gamepush/classes/Rewards.gd").new()
+@onready var Schedulers := preload("res://addons/gamepush/classes/Schedulers.gd").new()
+@onready var Segments := preload("res://addons/gamepush/classes/Segments.gd").new()
+@onready var Server := preload("res://addons/gamepush/classes/Server.gd").new()
+@onready var Socials := preload("res://addons/gamepush/classes/Socials.gd").new()
+@onready var System := preload("res://addons/gamepush/classes/System.gd").new()
+@onready var Variables := preload("res://addons/gamepush/classes/Variables.gd").new()
+@onready var Uniques := preload("res://addons/gamepush/classes/Uniques.gd").new()
+@onready var Storage := preload("res://addons/gamepush/classes/Storage.gd").new()
 
 func _ready():
-	Achievements = await preload("res://addons/gamepush/classes/Achievements.gd").new()
-	Ads = await preload("res://addons/gamepush/classes/Ads.gd").new()
-	Analytics = await preload("res://addons/gamepush/classes/Analytics.gd").new()
-	#App = await preload("res://addons/gamepush/classes/App.gd").new()
-	#AvatarGenerator = await preload("res://addons/gamepush/classes/AvatarGenerator.gd").new()
-	#Channels = await preload("res://addons/gamepush/classes/Channels.gd").new()
-	#Custom = await preload("res://addons/gamepush/classes/Custom.gd").new()
-	#Device = await preload("res://addons/gamepush/classes/Device.gd").new()
-	#Documents = await preload("res://addons/gamepush/classes/Documents.gd").new()
-	#Events = await preload("res://addons/gamepush/classes/Events.gd").new()
-	#Experiments = await preload("res://addons/gamepush/classes/Experiments.gd").new()
-	#Fullscreen = await preload("res://addons/gamepush/classes/Fullscreen.gd").new()
-	#Game = await preload("res://addons/gamepush/classes/Game.gd").new()
-	#GamesCollections = await preload("res://addons/gamepush/classes/GamesCollections.gd").new()
-	#Images = await preload("res://addons/gamepush/classes/Images.gd").new()
-	#Language = await preload("res://addons/gamepush/classes/Language.gd").new()
-	#Leaderboard = await preload("res://addons/gamepush/classes/Leaderboard.gd").new()
-	#LeaderboardScoped = await preload("res://addons/gamepush/classes/LeaderboardScoped.gd").new()
-	#Payments = await preload("res://addons/gamepush/classes/Payments.gd").new()
-	#Platform = await preload("res://addons/gamepush/classes/Platform.gd").new()
-	#Player = await preload("res://addons/gamepush/classes/Player.gd").new()
-	#Players = await preload("res://addons/gamepush/classes/Players.gd").new()
-	#Rewards = await preload("res://addons/gamepush/classes/Rewards.gd").new()
-	#Schedulers = await preload("res://addons/gamepush/classes/Schedulers.gd").new()
-	#Segments = await preload("res://addons/gamepush/classes/Segments.gd").new()
-	#Server = await preload("res://addons/gamepush/classes/Server.gd").new()
-	#Socials = await preload("res://addons/gamepush/classes/Socials.gd").new()
-	#System = await preload("res://addons/gamepush/classes/System.gd").new()
-	Triggers = await preload("res://addons/gamepush/classes/Triggers.gd").new()
-	#Variables = await preload("res://addons/gamepush/classes/Variables.gd").new()
-	#Uniques = await preload("res://addons/gamepush/classes/Uniques.gd").new()
-	#Storage = await preload("res://addons/gamepush/classes/Storage.gd").new()
-
-
 	add_child(Achievements)
 	add_child(Ads)
 	add_child(Analytics)
 	add_child(Triggers)
-	
+	add_child(App)
+	add_child(AvatarGenerator)
+	add_child(Channels)
+	add_child(Custom)
+	add_child(Device)
+	add_child(Documents)
+	add_child(Events)
+	add_child(Experiments)
+	add_child(Fullscreen)
+	add_child(Game)
+	add_child(GamesCollections)
+	add_child(Images)
+	add_child(Language)
+	add_child(Leaderboard)
+	add_child(LeaderboardScoped)
+	add_child(Payments)
+	add_child(Platform)
+	add_child(Player)
+	add_child(Players)
+	add_child(Rewards)
+	add_child(Schedulers)
+	add_child(Segments)
+	add_child(Server)
+	add_child(Socials)
+	add_child(System)
+	add_child(Variables)
+	add_child(Uniques)
+	add_child(Storage)

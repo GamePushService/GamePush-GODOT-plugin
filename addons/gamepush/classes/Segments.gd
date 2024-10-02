@@ -14,11 +14,11 @@ func _ready():
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
 		segments = gp.segments
-		gp.segments.on("enter", JavaScriptBridge.create_callback(func(segment_tag):
-			entered.emit(segment_tag)
+		gp.segments.on("enter", JavaScriptBridge.create_callback(func(args):
+			entered.emit(args[0])
 		))
-		gp.segments.on("leave", JavaScriptBridge.create_callback(func(segment_tag):
-			left.emit(segment_tag)
+		gp.segments.on("leave", JavaScriptBridge.create_callback(func(args):
+			left.emit(args[0])
 		))
 
 func list() -> Array:

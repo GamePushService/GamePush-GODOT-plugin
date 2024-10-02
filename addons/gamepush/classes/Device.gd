@@ -5,7 +5,6 @@ var gp:JavaScriptObject
 
 signal change_orientation
 
-var callback_change_orientation = JavaScriptBridge.create_callback(_change_orientation)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,7 +13,7 @@ func _ready():
 		while not gp:
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
-		gp.on("change:orientation", callback_change_orientation)
+		gp.on("change:orientation", JavaScriptBridge.create_callback(_change_orientation))
 			
 
 func is_mobile():

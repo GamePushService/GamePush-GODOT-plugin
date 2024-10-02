@@ -20,9 +20,6 @@ func _ready():
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
 		fullscreen = gp.fullscreen
-	else:
-		push_warning("Not Web")
-		
 
 func open():
 	if OS.get_name() == "Web":

@@ -6,7 +6,7 @@ var games_collections:JavaScriptObject
 
 signal opened
 signal closed
-signal fetched
+signal fetched(collection:Collection)
 signal error_fetch
 
 var callback_open := JavaScriptBridge.create_callback(_open)

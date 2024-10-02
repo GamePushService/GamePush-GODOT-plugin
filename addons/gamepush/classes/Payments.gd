@@ -134,7 +134,6 @@ func unsubscribe(id=null, tag=null):
 		push_warning("Not Web")
 	
 	
-
 func _purchase(args): purchased.emit([Purchase.new()._from_js(args[0][0]), PlayerPurchase.new()._from_js(args[0][1])])
 func _error_purchase(args): error_purchase.emit(args[0])
 func _consume(args): consumed.emit([Purchase.new()._from_js(args[0][0]), PlayerPurchase.new()._from_js(args[0][1])])

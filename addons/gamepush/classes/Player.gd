@@ -46,6 +46,8 @@ func _ready():
 		player.on("field:maximum", callback_maximum_reached)
 		player.on("field:minimum", callback_minimum_reached)
 		player.on("field:increment", callback_field_incremented)
+		
+
 
 # ID игрока
 func get_id():
@@ -312,8 +314,9 @@ func _login(args):
 	logged_in.emit(args[0])  # Emit signal with success status
 func _logout(args):
 	logged_out.emit(args[0])  # Emit signal with success status
+	
 func _fetch_fields(args):
-	fields_fetched.emit(args[0])  # Emit signal with success status
+	fields_fetched.emit(args[0]) 
 # Callback function for when the player opens another window
 func _on_window_connected(args):
 	window_connected.emit()  # Emit signal indicating a new window connection

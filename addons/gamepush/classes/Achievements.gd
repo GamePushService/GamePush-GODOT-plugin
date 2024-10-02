@@ -34,6 +34,7 @@ func _ready():
 		
 		achievements.on("unlock", callback_unlock)
 		achievements.on("error:unlock", callback_error_unlock)
+		#TODO FIX IT
 		
 		print("Achievements init")
 

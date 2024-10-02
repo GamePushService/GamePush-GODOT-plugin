@@ -4,7 +4,7 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var app:JavaScriptObject
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
@@ -37,7 +37,7 @@ func request_review():
 	if OS.get_name() == "Web":
 		var result:Dictionary = {"success": null, "rating": null, "error": null}
 		var js_result = await app.requestReview()
-		result["success"] = js_result["success"] # bool true/false
+		result["success"] = js_result["success"] # bool 
 		result["rating"] = js_result["rating"] # int 0-5
 		result["error"] = js_result["error"] # String 
 		return result
@@ -55,10 +55,10 @@ func is_already_reviewed():
 
 func add_shortcut():
 	if OS.get_name() == "Web":
-		return await app.addShortcut() #true/false
+		return await app.addShortcut() #bool
 	push_warning("Not Web")
 
 func can_add_shortcut():
 	if OS.get_name() == "Web":
-		return app.canAddShortcut #true/false
+		return app.canAddShortcut #bool
 	push_warning("Not Web")
