@@ -7,7 +7,6 @@ extends Node
 @onready var App := preload("res://addons/gamepush/modules/App.gd").new()
 @onready var AvatarGenerator := preload("res://addons/gamepush/modules/AvatarGenerator.gd").new()
 @onready var Channels := preload("res://addons/gamepush/modules/Channels.gd").new()
-@onready var Custom := preload("res://addons/gamepush/modules/Custom.gd").new()
 @onready var Device := preload("res://addons/gamepush/modules/Device.gd").new()
 @onready var Documents := preload("res://addons/gamepush/modules/Documents.gd").new()
 @onready var Events := preload("res://addons/gamepush/modules/Events.gd").new()
@@ -33,6 +32,7 @@ extends Node
 @onready var Uniques := preload("res://addons/gamepush/modules/Uniques.gd").new()
 @onready var Storage := preload("res://addons/gamepush/modules/Storage.gd").new()
 
+
 func _ready():
 	add_child(Achievements)
 	add_child(Ads)
@@ -41,7 +41,6 @@ func _ready():
 	add_child(App)
 	add_child(AvatarGenerator)
 	add_child(Channels)
-	add_child(Custom)
 	add_child(Device)
 	add_child(Documents)
 	add_child(Events)
@@ -66,3 +65,17 @@ func _ready():
 	add_child(Variables)
 	add_child(Uniques)
 	add_child(Storage)
+	var timer := Timer.new()
+	var is_preloader_show = false
+	var ready_delay = 0.0
+	is_preloader_show = ProjectSettings.get_setting("gp/config/is_preloader_show")
+	ready_delay = ProjectSettings.get_setting("gp/config/ready_delay")
+	if is_preloader_show:
+		Ads.show_preloader()
+	add_child(timer)
+	timer.timeout.connect(_on_timer_timeout)
+	timer.start(ready_delay)
+
+
+func _on_timer_timeout():
+	Game.game_start()

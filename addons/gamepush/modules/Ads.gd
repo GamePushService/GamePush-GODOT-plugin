@@ -138,6 +138,8 @@ func show_fullscreen(show_countdown_overlay=false) -> void:
 		
 func show_preloader() -> void:
 	if OS.get_name() == "Web":
+		while not ads:
+			await get_tree().create_timer(0.1).timeout
 		ads.showPreloader()
 		return
 	push_warning("Not Web")

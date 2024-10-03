@@ -10,6 +10,10 @@ var is_archive := false
 var config = ConfigFile.new()
 
 func _ready():
+	if !ProjectSettings.has_setting("gp/config/is_preloader_show"):
+		ProjectSettings.set_setting("gp/config/is_preloader_show", false)
+	if !ProjectSettings.has_setting("gp/config/ready_delay"):
+		ProjectSettings.set_setting("gp/config/ready_delay", 0.0)
 	var err = config.load("res://addons/gamepush/config.cfg")
 	if err != OK:
 		push_warning(err)
@@ -21,6 +25,8 @@ func _ready():
 	$MarginContainer/VBoxContainer/HBoxContainer2/Token.text = token
 	$MarginContainer/VBoxContainer/HBoxContainer3/NameArchive.text = archive_name
 	$MarginContainer/VBoxContainer/HBoxContainer4/IsArchive.button_pressed = is_archive
+	#$MarginContainer/VBoxContainer/HBoxContainer5/ShowPreload.button_pressed = is_preloader_show
+	#$MarginContainer/VBoxContainer/HBoxContainer6/ReadyDelay.text = str(ready_delay)
 	_config_change()
 	
 
@@ -53,11 +59,10 @@ func _on_name_archive_text_changed(new_text: String) -> void:
 
 
 func _on_show_preload_toggled(toggled_on: bool) -> void:
-	pass #TODO Replace with function body.
-
+	pass
 
 func _on_ready_delay_text_changed(new_text: String) -> void:
-	pass #TODO Replace with function body.
+	pass
 	
 	
 func _config_change():
@@ -66,4 +71,6 @@ func _config_change():
 	config.set_value("config", "token", token)
 	config.set_value("config", "is_archive", is_archive)
 	config.set_value("config", "archive_name", archive_name)
+	#config.set_value("config", "is_preloader_show", is_preloader_show)
+	#config.set_value("config", "ready_delay", ready_delay)
 	config.save("res://addons/gamepush/config.cfg")

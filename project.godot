@@ -22,3 +22,8 @@ GP="*res://addons/gamepush/game_push.gd"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gamepush/plugin.cfg", "res://addons/script-ide/plugin.cfg", "res://addons/wakatime/plugin.cfg")
+
+[gp]
+
+config/is_preloader_show=true
+config/ready_delay=13.0
