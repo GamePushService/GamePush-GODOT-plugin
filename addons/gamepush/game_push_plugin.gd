@@ -22,6 +22,7 @@ func _enter_tree():
 func _exit_tree():
 	remove_autoload_singleton(AUTOLOAD_NAME)
 	remove_export_plugin(export_plugin)
+	EditorInterface.get_editor_main_screen().remove_child(main_screen_scene_instance)
 
 
 func _has_main_screen():
