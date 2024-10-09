@@ -25,6 +25,28 @@ signal event_channel_updated(channel: Channel)
 signal channel_deleted(channel: Channel)
 signal error_delete_channel(error: String)
 signal event_channel_deleted(channel: Channel)
+signal channel_fetched(channel: Channel)
+signal fetch_channel_error(err: String)
+signal channels_fetched(channels: Array, can_load_more: bool)
+signal fetch_channels_error(error: String)
+signal more_channels_fetched(channels: Array, can_load_more: bool)
+signal fetch_more_channels_error(error: String)
+signal chat_opened
+signal chat_closed
+signal chat_error(error: String)
+signal joined()
+signal error_join(err: String)
+signal event_joined(member: Dictionary)
+signal join_request_received(join_request: Dictionary)
+signal cancel_joined()
+signal cancel_join_error(error: String)
+signal event_cancel_join(join_request: Dictionary)
+signal leave_successful()
+signal leave_error(error: String)
+signal leave_event(member: Dictionary)
+signal kick_successful()
+signal kick_error(error: Dictionary)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -54,8 +76,23 @@ func _ready():
 		gp.channels.on("event:updateChannel", JavaScriptBridge.create_callback(_on_event_update_channel))
 		gp.channels.on('deleteChannel', JavaScriptBridge.create_callback(_on_delete_channel))
 		gp.channels.on('error:deleteChannel', JavaScriptBridge.create_callback(_on_delete_channel_error))
-		
-		
+		gp.channels.on("fetchChannel", JavaScriptBridge.create_callback(_on_fetch_channel))
+		gp.channels.on("error:fetchChannel", JavaScriptBridge.create_callback(_on_fetch_channel_error))
+		gp.channels.on("fetchChannels", JavaScriptBridge.create_callback(_on_fetch_channels))
+		gp.channels.on("error:fetchChannels", JavaScriptBridge.create_callback(_on_fetch_channels_error))
+		gp.channels.on("openChat", JavaScriptBridge.create_callback(_on_open_chat))
+		gp.channels.on("closeChat", JavaScriptBridge.create_callback(_on_close_chat))
+		gp.channels.on("error:openChat", JavaScriptBridge.create_callback(_on_chat_error))
+		gp.channels.on("join", JavaScriptBridge.create_callback(_on_join))
+		gp.channels.on("error:join", JavaScriptBridge.create_callback(_on_join_error))
+		gp.channels.on("event:join", JavaScriptBridge.create_callback(_on_event_join))
+		gp.channels.on("event:joinRequest", JavaScriptBridge.create_callback(_on_event_join_request))
+		gp.channels.on("leave", JavaScriptBridge.create_callback(_on_leave_successful))
+		gp.channels.on("error:leave", JavaScriptBridge.create_callback(_on_leave_error))
+		gp.channels.on("event:leave", JavaScriptBridge.create_callback(_on_leave_event))
+		gp.channels.on("kick", JavaScriptBridge.create_callback(_on_kick_successful))
+		gp.channels.on("error:kick", JavaScriptBridge.create_callback(_on_kick_error))
+
 func join(channel_id:int) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
@@ -416,6 +453,139 @@ func delete_channel(channel_id: int) -> void:
 	else:
 		push_warning("Not running on Web")
 
+
+func fetch_channel(channel_id:int) -> Channel:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		var response = await gp.channels.fetchChannel(conf)
+		return Channel.new()._from_js(response)
+	else:
+		push_warning("Not running on Web")
+		return Channel.new()
+
+func fetch_channels(ids: Array, tags: Array, search: String = "", only_joined: bool = true, only_owned: bool = true, limit: int = 100, offset: int = 0) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["ids"] = JavaScriptBridge.create_object("Array")
+		for id in ids:
+			conf["ids"].push(id)
+
+		conf["tags"] = JavaScriptBridge.create_object("Array")
+		for tag in tags:
+			conf["tags"].push(tag)
+
+		conf["search"] = search
+		conf["onlyJoined"] = only_joined
+		conf["onlyOwned"] = only_owned
+		conf["limit"] = limit
+		conf["offset"] = offset
+
+		await gp.channels.fetchChannels(conf)
+	else:
+		push_warning("Not running on Web")
+		
+
+func fetch_more_channels(channel_id: int, tags: Array, limit: int = 100) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		# Convert GDScript Array to JavaScript Array
+		var js_tags := JavaScriptBridge.create_object("Array")
+		for tag in tags:
+			js_tags.push(tag)
+		conf["tags"] = js_tags
+		
+		conf["limit"] = limit
+		var response = await gp.channels.fetchMoreChannels(conf)
+		return 
+	else:
+		push_warning("Not running on Web")
+		
+func open_chat(channel_id: int = 0, tags: Array = []) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		# If a valid channel ID is provided, use it
+		if channel_id > 0:
+			conf["id"] = channel_id
+		# Convert GDScript Array to JavaScript Array for tags if they are provided
+		if tags.size() > 0:
+			var js_tags := JavaScriptBridge.create_object("Array")
+			for tag in tags:
+				js_tags.push(tag)
+			conf["tags"] = js_tags
+		# Call the gp.channels.openChat with the config
+		gp.channels.openChat(conf)
+	else:
+		push_warning("Not running on Web")
+
+func is_main_chat_enabled() -> bool:
+	if OS.get_name() == "Web":
+		return gp.channels.isMainChatEnabled
+	else:
+		push_warning("Not running on Web")
+		return false
+
+
+func main_chat_id() -> int:
+	if OS.get_name() == "Web":
+		return gp.channels.mainChatId
+	else:
+		push_warning("Not running on Web")
+		return 0
+
+
+func open_personal_chat(player_id: int, tags: Array) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["playerId"] = player_id
+		# Convert GDScript Array to JavaScript Array
+		var js_tags := JavaScriptBridge.create_object("Array")
+		for tag in tags:
+			js_tags.push(tag)
+		conf["tags"] = js_tags
+		# Open the personal chat using the GamePush API
+		gp.channels.openPersonalChat(conf)
+	else:
+		push_warning("Not running on Web")
+
+# Function to open a feed for a player
+func open_feed(player_id: int, tags: Array) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["playerId"] = player_id
+		# Convert GDScript Array to JavaScript Array
+		var js_tags := JavaScriptBridge.create_object("Array")
+		for tag in tags:
+			js_tags.push(tag)
+		conf["tags"] = js_tags
+		# Open the feed using the GamePush API
+		gp.channels.openFeed(conf)
+	else:
+		push_warning("Not running on Web")
+		
+		
+func cancel_join(channel_id:int) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		gp.channels.cancelJoin(conf)
+	else:
+		push_warning("Not running on Web")
+		
+# Function to kick a player from a channel
+func kick_player(channel_id: int, player_id: int) -> void:
+	if OS.get_name() == "Web":
+		# Create a JavaScript object to hold parameters
+		var params := JavaScriptBridge.create_object("Object")
+		params["channelId"] = channel_id
+		params["playerId"] = player_id
+		# Call the kick function with the JavaScript object
+		gp.channels.kick(params)
+	else:
+		push_warning("Not running on Web")
+		
+
 func _event_message(args):
 	var message = Message.new()
 	message._from_js(args[0])  # Populate message data from the JS object
@@ -535,6 +705,118 @@ func _on_event_delete_channel(args) -> void:
 	var channel = Channel.new()
 	channel._from_js(args[0])
 	channel_updated.emit(channel)
+
+# Handling successful channel fetch
+func _on_fetch_channel(args) -> void:
+	channel_fetched.emit(Channel.new()._from_js(args[0]))
+	
+func _on_fetch_channel_error(args) -> void:
+	fetch_channel_error.emit(args[0])
+
+# Handling successful channel fetch
+func _on_fetch_channels(args) -> void:
+	var channels := []
+	for ch_data in args[0].items:
+		channels.append(Channel.new()._from_js(ch_data))
+	emit_signal("channels_fetched", channels, args[0].canLoadMore)
+
+# Handling error during channel fetch
+func _on_fetch_channels_error(args) -> void:
+	emit_signal("fetch_channels_error", args[0])
+	
+# Handling successful fetch of more channels
+func _on_fetch_more_channels(args) -> void:
+	var channels := []
+	for ch_data in args[0].items:
+		channels.append(Channel.new()._from_js(ch_data))
+	var can_load_more: bool = args[0].canLoadMore
+	emit_signal("more_channels_fetched", channels, can_load_more)
+	
+# Handling error during fetch of more channels
+func _on_fetch_more_channels_error(args) -> void:
+	emit_signal("fetch_more_channels_error", args[0])
+
+# Handling successful chat opening
+func _on_open_chat() -> void:
+	emit_signal("chat_opened")
+
+# Handling chat closure
+func _on_close_chat() -> void:
+	emit_signal("chat_closed")
+
+# Handling errors during chat opening
+func _on_chat_error(args) -> void:
+	emit_signal("chat_error", args[0])
+
+# Function to handle successful join
+func _on_join(args) -> void:
+	joined.emit()
+	
+func _on_join_error(args) -> void:
+	error_join.emit(args[0])
+	
+func _on_event_join(args) -> void:
+	var member = args[0]  # Get member data
+	var result = {}
+	result["channel_id"] = member.channelId
+	result["id"] = member.id
+	result["state"] = member.state
+	result["mute"] = member.mute
+	event_joined.emit(result)
+	
+func _on_event_join_request(args) -> void:
+	var join_request = args[0]  # Get the join request data
+	var result = {}
+	result["channel_id"] = join_request.channelId
+	result["id"] = join_request.id
+	result["state"] = join_request.state
+	result["mute"] = join_request.mute
+	emit_signal("join_request_received", result)
+	
+# Cancel join successful event handler
+func _on_cancel_join_success() -> void:
+	emit_signal("cancel_join_success")  # Emit signal for successful cancellation
+
+# Cancel join error event handler
+func _on_cancel_join_error(args) -> void:
+	emit_signal("cancel_join_error", args[0])  # Emit error data
+
+# Cancel join event handler
+func _on_cancel_join_event(args) -> void:
+	var join_request = args[0]  # Join request data
+	var result = {}
+	result["channel_id"] = join_request.channelId
+	result["player_id"] = join_request.playerId
+	emit_signal("cancel_join_event", result)  # Emit cancellation data
+	
+# Leave successful event handler
+func _on_leave_successful() -> void:
+	print("Successfully left the channel.")
+	emit_signal("leave_successful")  # Emit signal for successful leave
+
+# Leave error event handler
+func _on_leave_error(args) -> void:
+	print("Error while leaving the channel:", args[0])
+	emit_signal("leave_error", args[0])  # Emit error data
+
+# Leave event handler
+func _on_leave_event(args) -> void:
+	var member = args[0]  # Member data from leave event
+	var result = {}
+	result["channel_id"] = member.channelId
+	result["player_id"] = member.playerId
+	result["reason"] = member.reason
+	emit_signal("leave_event", result)  # Emit leave event data
+	
+# Kick successful event handler
+func _on_kick_successful() -> void:
+	emit_signal("kick_successful")  # Emit signal for successful kick
+
+# Kick error event handler
+func _on_kick_error(args) -> void:
+	emit_signal("kick_error", args[0])  # Emit error data
+	
+	
 # Message class to encapsulate message data
 class Message:
 	var id: String
