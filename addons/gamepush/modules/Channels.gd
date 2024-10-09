@@ -45,7 +45,18 @@ signal leave_successful()
 signal leave_error(error: String)
 signal leave_event(member: Dictionary)
 signal kick_successful()
-signal kick_error(error: Dictionary)
+signal kick_error(error: String)
+signal members_fetched(members:Array, can_load_more:bool)
+signal fetch_members_error(error: String)
+signal fetch_more_members_success(members: Array, can_load_more:bool)
+signal fetch_more_members_error(error: String)
+signal mute_success()
+signal mute_error(error: String)
+signal event_mute(mute: Mute)
+signal unmute_success()
+signal unmute_error(error: String)
+signal event_unmute(unmute: Dictionary)
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -92,6 +103,17 @@ func _ready():
 		gp.channels.on("event:leave", JavaScriptBridge.create_callback(_on_leave_event))
 		gp.channels.on("kick", JavaScriptBridge.create_callback(_on_kick_successful))
 		gp.channels.on("error:kick", JavaScriptBridge.create_callback(_on_kick_error))
+		gp.channels.on("fetchMembers", JavaScriptBridge.create_callback(_on_fetch_members))
+		gp.channels.on("error:fetchMembers", JavaScriptBridge.create_callback(_on_fetch_members_error))
+		gp.channels.on("fetchMoreMembers", JavaScriptBridge.create_callback(_on_fetch_more_members))
+		gp.channels.on("error:fetchMoreMembers", JavaScriptBridge.create_callback(_on_fetch_more_members_error))
+		gp.channels.on("mute", JavaScriptBridge.create_callback(_on_mute))
+		gp.channels.on("error:mute", JavaScriptBridge.create_callback(_on_mute_error))
+		gp.channels.on("event:mute", JavaScriptBridge.create_callback(_on_event_mute))
+		gp.channels.on("unmute", JavaScriptBridge.create_callback(_on_unmute))
+		gp.channels.on("error:unmute", JavaScriptBridge.create_callback(_on_error_unmute))
+		gp.channels.on("event:unmute", JavaScriptBridge.create_callback(_on_event_unmute))
+		
 
 func join(channel_id:int) -> void:
 	if OS.get_name() == "Web":
@@ -585,6 +607,55 @@ func kick_player(channel_id: int, player_id: int) -> void:
 	else:
 		push_warning("Not running on Web")
 		
+# Function to fetch members of a channel
+func fetch_members(channel_id: int, search: String = "", only_online: bool = true, limit: int = 100, offset: int = 0) -> void:
+	if OS.get_name() == "Web":
+		# Create a JavaScript object to hold parameters
+		var params := JavaScriptBridge.create_object("Object")
+		params["channelId"] = channel_id
+		params["search"] = search
+		params["onlyOnline"] = only_online
+		params["limit"] = limit
+		params["offset"] = offset
+		# Call the fetchMembers function with the JavaScript object
+		var response = await gp.channels.fetchMembers(params)
+	else:
+		push_warning("Not running on Web")
+		
+		
+func fetch_more_members(channel_id: int, search: String = "", only_online: bool = true, limit: int = 100) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["search"] = search
+		conf["onlyOnline"] = only_online
+		conf["limit"] = limit
+		
+		var response = await gp.channels.fetchMoreMembers(conf)
+	else:
+		push_warning("Not running on Web")
+
+	
+func mute(channel_id: int, player_id: int, unmute_at: String) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["playerId"] = player_id
+		conf["unmuteAt"] = unmute_at
+		
+		var response = await gp.channels.mute(conf)
+	else:
+		push_warning("Not running on Web")
+
+func unmute_player(channel_id: int, player_id: int) -> void:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["playerId"] = player_id
+		gp.channels.unmute(conf)
+	else:
+		push_warning("Not running on Web")
+
 
 func _event_message(args):
 	var message = Message.new()
@@ -694,7 +765,7 @@ func _on_event_update_channel(args) -> void:
 	channel_updated.emit(channel)
 	
 # Handling successful channel deletion
-func _on_delete_channel() -> void:
+func _on_delete_channel(args) -> void:
 	channel_deleted.emit()
 	
 	
@@ -737,11 +808,11 @@ func _on_fetch_more_channels_error(args) -> void:
 	emit_signal("fetch_more_channels_error", args[0])
 
 # Handling successful chat opening
-func _on_open_chat() -> void:
+func _on_open_chat(args) -> void:
 	emit_signal("chat_opened")
 
 # Handling chat closure
-func _on_close_chat() -> void:
+func _on_close_chat(args) -> void:
 	emit_signal("chat_closed")
 
 # Handling errors during chat opening
@@ -774,7 +845,7 @@ func _on_event_join_request(args) -> void:
 	emit_signal("join_request_received", result)
 	
 # Cancel join successful event handler
-func _on_cancel_join_success() -> void:
+func _on_cancel_join_success(args) -> void:
 	emit_signal("cancel_join_success")  # Emit signal for successful cancellation
 
 # Cancel join error event handler
@@ -790,13 +861,11 @@ func _on_cancel_join_event(args) -> void:
 	emit_signal("cancel_join_event", result)  # Emit cancellation data
 	
 # Leave successful event handler
-func _on_leave_successful() -> void:
-	print("Successfully left the channel.")
+func _on_leave_successful(args) -> void:
 	emit_signal("leave_successful")  # Emit signal for successful leave
 
 # Leave error event handler
 func _on_leave_error(args) -> void:
-	print("Error while leaving the channel:", args[0])
 	emit_signal("leave_error", args[0])  # Emit error data
 
 # Leave event handler
@@ -809,14 +878,62 @@ func _on_leave_event(args) -> void:
 	emit_signal("leave_event", result)  # Emit leave event data
 	
 # Kick successful event handler
-func _on_kick_successful() -> void:
+func _on_kick_successful(args) -> void:
 	emit_signal("kick_successful")  # Emit signal for successful kick
 
 # Kick error event handler
 func _on_kick_error(args) -> void:
 	emit_signal("kick_error", args[0])  # Emit error data
 	
-	
+func _on_fetch_members(args) -> void:
+	var result = args[0]  # Extract the result from the event arguments
+	var members_array: Array = []
+	# Process each member in the result
+	for member_data in result.items:
+		var member = Member.new()._from_js(member_data)
+		members_array.append(member)
+	# Check if more members can be loaded
+	var can_load_more :bool = result.canLoadMore
+	# Emit the members fetched signal with the array of members
+	emit_signal("members_fetched", members_array, can_load_more)
+		
+func _on_fetch_members_error(args) -> void:
+	emit_signal("fetch_members_error", args[0])
+
+func _on_fetch_more_members(args) -> void:
+	var members = []
+	for member in args[0].items:
+		members.append(Member.new()._from_js(member))
+	emit_signal("fetch_more_members_success", members, args[0].canLoadMore)
+
+func _on_fetch_more_members_error(args) -> void:
+	emit_signal("fetch_more_members_error", args[0])
+
+func _on_mute(result) -> void:
+	emit_signal("mute_success")
+
+func _on_mute_error(args) -> void:
+	emit_signal("mute_error", args[0])
+
+func _on_event_mute(args) -> void:
+	var mute = Mute.new()._from_js(args[0])
+	emit_signal("event_mute", mute)
+
+func _on_unmute(args) -> void:
+	emit_signal("unmute_success")
+
+func _on_error_unmute(args) -> void:
+	emit_signal("unmute_error", args[0])
+
+func _on_event_unmute(args) -> void:
+	var mute_info = {
+		"channel_id": args[0]["channelId"],
+		"player_id": args[0]["playerId"]
+	}
+	# Handle the unmute event as needed
+	event_unmute.emit(mute_info)
+
+
 # Message class to encapsulate message data
 class Message:
 	var id: String
@@ -1015,3 +1132,42 @@ class Channel:
 		js_guest_acl["canMutePlayer"] = guest_acl.get("canMutePlayer", false)
 		data["guestAcl"] = js_guest_acl
 		return data
+		
+class Member:
+	var id: int
+	var is_online: bool
+	var state: Player
+	var mute: Mute
+
+	# Method to convert from JS object to Member instance
+	func _from_js(js_object: JavaScriptObject) -> Member:
+		self.id = js_object.id
+		self.is_online = js_object.isOnline
+		self.state = Player.new()._from_js(js_object.state)
+		self.mute = Mute.new()._from_js(js_object.mute)
+		return self
+	
+	func _to_js() -> JavaScriptObject:
+		var js_object = JavaScriptBridge.create_object("Object")
+		js_object["id"] = id
+		js_object["isOnline"] = is_online
+		js_object["state"] = state._to_js()
+		js_object["mute"] = mute._to_js()
+		return js_object
+
+class Mute:
+	var is_muted: bool
+	var unmute_at: String
+
+	# Method to populate Mute from a JavaScript object
+	func _from_js(js_object: JavaScriptObject) -> Mute:
+		is_muted = js_object.isMuted
+		unmute_at = js_object.unmuteAt
+		return self
+
+	# Method to convert Mute to a JavaScript object
+	func _to_js() -> JavaScriptObject:
+		var js_object := JavaScriptBridge.create_object("Object")
+		js_object["isMuted"] = is_muted
+		js_object["unmuteAt"] = unmute_at
+		return js_object
