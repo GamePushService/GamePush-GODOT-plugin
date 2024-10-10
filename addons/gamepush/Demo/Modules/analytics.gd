@@ -10,7 +10,7 @@ func _on_hit_text_text_changed(new_text):
 
 
 func _on_hit_pressed():
-	GP.Analytics.hit()
+	GP.Analytics.hit("")
 
 
 func _on_goal_text_text_changed(new_text):

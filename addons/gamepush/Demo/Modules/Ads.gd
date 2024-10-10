@@ -36,3 +36,5 @@ func _on_show_fullscreen_pressed():
 func _on_show_rewarded_video_pressed():
 	GP.Ads.show_rewarded_video(true)
 	
+func ddd():
+	gui_input.connect(func(): pass)

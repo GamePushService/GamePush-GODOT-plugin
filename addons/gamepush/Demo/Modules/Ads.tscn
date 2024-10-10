@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://blekk2vveioqu"]
 
-[ext_resource type="Script" path="res://addons/gamepush/Demo/Ads.gd" id="1_n7pjb"]
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/Ads.gd" id="1_n7pjb"]
 
 [node name="Ads" type="Control"]
 layout_mode = 3

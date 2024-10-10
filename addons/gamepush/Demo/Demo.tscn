@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://8dhgiroyhmao"]
+[gd_scene load_steps=3 format=3 uid="uid://8dhgiroyhmao"]
 
 [ext_resource type="Script" path="res://addons/gamepush/Demo/demo.gd" id="1_n8j0n"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_dly2q"]
 
 [node name="Demo" type="Control"]
 layout_mode = 3
@@ -23,147 +24,247 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-columns = 5
 
-[node name="Ads" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Ads"
+size_flags_stretch_ratio = 0.1
+theme_override_styles/panel = ExtResource("2_dly2q")
 
-[node name="Achievements" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Main Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 6
+
+[node name="Achievements" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Achievements"
 
-[node name="Analytics" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Ads" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Ads"
+
+[node name="Analytics" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Analytics"
 
-[node name="___2" type="Button" parent="MarginContainer/GridContainer"]
+[node name="App" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "App"
 
-[node name="___3" type="Button" parent="MarginContainer/GridContainer"]
+[node name="AvatarGenerator" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Avatar Generator"
 
-[node name="___4" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Channels" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Channels"
 
-[node name="___5" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Device" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Device"
 
-[node name="___6" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Documents" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Documents"
 
-[node name="___7" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Events" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Events"
 
-[node name="___8" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Experiments" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Experiments"
 
-[node name="___9" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Fullscreen" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Fullscreen"
 
-[node name="___10" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Game" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Game"
 
-[node name="___11" type="Button" parent="MarginContainer/GridContainer"]
+[node name="GamesCollections" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Games Collections"
 
-[node name="___12" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Images" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Images"
 
-[node name="___13" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Language" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Language"
 
-[node name="___14" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Leaderboard" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Leaderboard"
 
-[node name="___15" type="Button" parent="MarginContainer/GridContainer"]
+[node name="LeaderboardScoped" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Leaderboard Scoped"
 
-[node name="___16" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Payments" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Payments"
 
-[node name="___17" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Platform" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Platform"
 
-[node name="___18" type="Button" parent="MarginContainer/GridContainer"]
+[node name="Player" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "___
-"
+text = "Player"
 
-[connection signal="pressed" from="MarginContainer/GridContainer/Ads" to="." method="_on_ads_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/Achievements" to="." method="_on_achievements_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/Analytics" to="." method="_on_analytics_pressed"]
+[node name="Players" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Players"
+
+[node name="Rewards" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Rewards"
+
+[node name="Schedulers" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Schedulers"
+
+[node name="Segments" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Segments"
+
+[node name="Server" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Server"
+
+[node name="Socials" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Socials"
+
+[node name="Storage" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Storage"
+
+[node name="System" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "System"
+
+[node name="Triggers" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Triggers"
+
+[node name="Uniques" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Uniques"
+
+[node name="Variables" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Variables"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Achievements" to="." method="_on_achievements_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Ads" to="." method="_on_ads_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Analytics" to="." method="_on_analytics_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/App" to="." method="_on_app_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/AvatarGenerator" to="." method="_on_avatar_generator_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Channels" to="." method="_on_channels_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Device" to="." method="_on_device_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Documents" to="." method="_on_documents_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Events" to="." method="_on_events_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Experiments" to="." method="_on_experiments_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Fullscreen" to="." method="_on_fullscreen_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Game" to="." method="_on_game_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/GamesCollections" to="." method="_on_games_collections_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Images" to="." method="_on_images_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Language" to="." method="_on_language_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Leaderboard" to="." method="_on_leaderboard_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/LeaderboardScoped" to="." method="_on_leaderboard_scoped_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Payments" to="." method="_on_payments_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Platform" to="." method="_on_platform_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Player" to="." method="_on_player_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Players" to="." method="_on_players_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Rewards" to="." method="_on_rewards_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Schedulers" to="." method="_on_schedulers_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Segments" to="." method="_on_segments_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Server" to="." method="_on_server_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Socials" to="." method="_on_socials_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Storage" to="." method="_on_storage_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/System" to="." method="_on_system_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Triggers" to="." method="_on_triggers_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Uniques" to="." method="_on_uniques_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Variables" to="." method="_on_variables_pressed"]

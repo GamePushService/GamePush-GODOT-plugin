@@ -1,0 +1,346 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl81qxvmtylkr"]
+
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/player.gd" id="1_rrtb8"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_7r535"]
+
+[node name="Player" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rrtb8")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Main Menu"
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Head" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+theme_override_styles/panel = ExtResource("2_7r535")
+
+[node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -11.5
+offset_right = 29.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "PLAYER"
+
+[node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+offset_left = 185.0
+offset_top = 21.0
+offset_right = 293.0
+offset_bottom = 44.0
+text = "ID: 455715383"
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+offset_left = 185.0
+offset_top = 67.0
+offset_right = 293.0
+offset_bottom = 90.0
+text = "NAME:"
+
+[node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 13.0
+offset_right = 62.0
+offset_bottom = 53.0
+scale = Vector2(2.99168, 2.908)
+expand_mode = 3
+
+[node name="Header#KeyInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 59.0
+offset_right = 834.0
+offset_bottom = 90.0
+placeholder_text = "Key..."
+
+[node name="Header#ValueInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 16.0
+offset_right = 834.0
+offset_bottom = 47.0
+placeholder_text = "Value..."
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 5
+
+[node name="ButtonGrid#GetIDButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get ID"
+
+[node name="ButtonGrid#GetScoreButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get Score"
+
+[node name="ButtonGrid#LoginButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Login"
+
+[node name="ButtonGrid#SyncButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Sync"
+
+[node name="ButtonGrid#GetName" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get Name"
+
+[node name="ButtonGrid#GetAvatar" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get Avatar"
+
+[node name="ButtonGrid#IsStub" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is stub"
+
+[node name="ButtonGrid#is_logged_in" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Is logged in"
+
+[node name="ButtonGrid#has_any_credentials" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Has any credentials"
+
+[node name="ButtonGrid#enable_auto_sync" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Enable auto sync"
+
+[node name="ButtonGrid#disable_auto_sync" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Disable auto sync"
+
+[node name="ButtonGrid#load" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "load"
+
+[node name="ButtonGrid#logout" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Logout"
+
+[node name="ButtonGrid#fetch_fields" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Fetch fields"
+
+[node name="ButtonGrid#get_value" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get value"
+
+[node name="ButtonGrid#set_value" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Set value"
+
+[node name="ButtonGrid#add_value" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Add value"
+
+[node name="ButtonGrid#toggle" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Toggle"
+
+[node name="ButtonGrid#has" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Has"
+
+[node name="ButtonGrid#reset" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Reset"
+
+[node name="ButtonGrid#remove" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Remove"
+
+[node name="ButtonGrid#get_min_value" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get min value "
+
+[node name="ButtonGrid#set_min_value" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Set min value"
+
+[node name="ButtonGrid#get_max_value" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get max value"
+
+[node name="ButtonGrid#set_max_value" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Set max value"
+
+[node name="ButtonGrid#get_active_days" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get active days"
+
+[node name="ButtonGrid#get_active_days_consecutive" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get active days consecutive"
+
+[node name="ButtonGrid#get_playtime_today" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get playtime today "
+
+[node name="ButtonGrid#get_playtime_all" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get playtime all"
+
+[node name="ButtonGrid#get_field" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get field"
+
+[node name="ButtonGrid#get_field_name" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get field name"
+
+[node name="ButtonGrid#get_field_variant_name" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Get variant name"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetIDButton" to="." method="_on_button_grid_get_id_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetScoreButton" to="." method="_on_button_grid_get_score_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#LoginButton" to="." method="_on_button_grid_login_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#SyncButton" to="." method="_on_button_grid_sync_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetName" to="." method="_on_button_grid_get_name_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetAvatar" to="." method="_on_button_grid_get_avatar_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#IsStub" to="." method="_on_button_grid_is_stub_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#is_logged_in" to="." method="_on_button_gridis_logged_in_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#has_any_credentials" to="." method="_on_button_gridhas_any_credentials_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#enable_auto_sync" to="." method="_on_button_gridenable_auto_sync_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#disable_auto_sync" to="." method="_on_button_griddisable_auto_sync_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#load" to="." method="_on_button_gridload_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#logout" to="." method="_on_button_gridlogout_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#fetch_fields" to="." method="_on_button_gridfetch_fields_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_value" to="." method="_on_button_gridget_value_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#set_value" to="." method="_on_button_gridset_value_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#add_value" to="." method="_on_button_gridadd_value_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#toggle" to="." method="_on_button_gridtoggle_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#has" to="." method="_on_button_gridhas_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#reset" to="." method="_on_button_gridreset_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#remove" to="." method="_on_button_gridremove_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_min_value" to="." method="_on_button_gridget_min_value_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#set_min_value" to="." method="_on_button_gridset_min_value_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_max_value" to="." method="_on_button_gridget_max_value_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#set_max_value" to="." method="_on_button_gridset_max_value_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_active_days" to="." method="_on_button_gridget_active_days_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_active_days_consecutive" to="." method="_on_button_gridget_active_days_consecutive_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_playtime_today" to="." method="_on_button_gridget_playtime_today_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_playtime_all" to="." method="_on_button_gridget_playtime_all_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_field" to="." method="_on_button_gridget_field_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_field_name" to="." method="_on_button_gridget_field_name_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#get_field_variant_name" to="." method="_on_button_gridget_field_variant_name_pressed"]

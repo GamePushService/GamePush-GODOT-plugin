@@ -163,7 +163,7 @@ func fetch_fields() -> void:
 # Get the value of the key field
 func get_value(key: String) -> Variant:
 	if OS.get_name() == "Web":
-		return await player.get(key)
+		return player.get(key)
 	push_warning("Not Web")
 	return
 
@@ -198,7 +198,7 @@ func has(key: String) -> bool:
 # Return the player state as an object
 func to_json() -> JavaScriptObject:
 	if OS.get_name() == "Web":
-		return player.toJSON()
+		return await player.toJSON()
 	push_warning("Not Web")
 	return JavaScriptBridge.create_object("Object")
 
@@ -231,7 +231,7 @@ func get_min_value(key: String) -> int:
 	if OS.get_name() == "Web":
 		return player.getMinValue(key)
 	push_warning("Not Web")
-	return 0  # or some default value
+	return 0
 
 
 # Set the minimum value for the field key
@@ -246,7 +246,7 @@ func get_max_value(key: String) -> int:
 	if OS.get_name() == "Web":
 		return player.getMaxValue(key)
 	push_warning("Not Web")
-	return 0  # or some default value
+	return 0
 
 # Set the maximum value for the field key
 func set_max_value(key: String, value: Variant) -> void:
@@ -286,7 +286,7 @@ func get_playtime_all() -> int:
 # Get the field by key
 func get_field(key: String) -> Variant:
 	if OS.get_name() == "Web":
-		var _result = await player.getField(key)
+		var _result = player.getField(key)
 		return Field.new()._from_js(_result)
 	push_warning("Not Web")
 	return null
@@ -294,14 +294,14 @@ func get_field(key: String) -> Variant:
 # Get the translated field name by key
 func get_field_name(key: String) -> String:
 	if OS.get_name() == "Web":
-		return await player.getFieldName(key)
+		return player.getFieldName(key)
 	push_warning("Not Web")
 	return ""
 
 # Get the translated name of the field variant by the key and its value
 func get_field_variant_name(key: String, value: Variant) -> String:
 	if OS.get_name() == "Web":
-		return await player.getFieldVariantName(key, value)
+		return player.getFieldVariantName(key, value)
 	push_warning("Not Web")
 	return ""
 
@@ -394,18 +394,18 @@ class Field:
 		js_object["variants"].forEach(JavaScriptBridge.create_callback(_load_variant))
 
 		# Загрузка limits, если оно есть
-		if js_object.has("limits") and js_object["limits"] != null:
+		if js_object["limits"]:
 			limits = FieldLimits.new()
 			limits._from_js(js_object["limits"])
 		else:
-			limits = null
+			limits = FieldLimits.new()
 
 		# Загрузка intervalIncrement, если оно есть
-		if js_object.has("intervalIncrement") and js_object["intervalIncrement"] != null:
+		if js_object["intervalIncrement"]:
 			interval_increment = IntervalIncrement.new()
 			interval_increment._from_js(js_object["intervalIncrement"])
 		else:
-			interval_increment = null
+			interval_increment = IntervalIncrement.new()
 
 	func _load_variant(args):
 		var variant_js = args[0] #Need test
@@ -417,7 +417,6 @@ class Field:
 class FieldVariant:
 	var name: String
 	var value: Variant  # Может быть String, int или bool
-
 
 	# Преобразование в JavaScript объект
 	func _to_js():

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://yappmgi52nb7"]
 
-[ext_resource type="Script" path="res://addons/gamepush/Demo/achievements.gd" id="1_m6x68"]
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/achievements.gd" id="1_m6x68"]
 
 [node name="Achievements" type="Control"]
 layout_mode = 3
