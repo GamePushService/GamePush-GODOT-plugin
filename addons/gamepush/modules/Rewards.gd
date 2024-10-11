@@ -144,15 +144,15 @@ class Reward:
 
 	# Function to convert from JS object to GDScript object
 	func _from_js(js_object: Dictionary) -> Reward:
-		id = js_object.get("id", 0)
-		tag = js_object.get("tag", "")
-		name = js_object.get("name", "")
-		description = js_object.get("description", "")
-		icon = js_object.get("icon", "")
-		icon_small = js_object.get("iconSmall", "")
-		is_auto_accept = js_object.get("isAutoAccept", false)
+		id = js_object["id"]
+		tag = js_object["tag"]
+		name = js_object["name"]
+		description = js_object["description"]
+		icon = js_object["icon"]
+		icon_small = js_object["iconSmall"]
+		is_auto_accept = js_object["isAutoAccept"]
 		mutations = []
-		var _mutations = js_object.get("mutations", [])
+		var _mutations = js_object["mutations"]
 		_mutations.forEach(JavaScriptBridge.create_callback(func (m): DataMutation.new()._from_js(m)))
 		return self
 		
@@ -173,17 +173,6 @@ class Reward:
 		js_object["isAutoAccept"] = is_auto_accept
 		return js_object
 
-	# Helper function to print details about the reward
-	func _print_details() -> void:
-		print("Reward ID: ", id)
-		print("Tag: ", tag)
-		print("Name: ", name)
-		print("Description: ", description)
-		print("Icon: ", icon)
-		print("Icon Small: ", icon_small)
-		print("Mutations: ", mutations)
-		print("Auto Accept: ", is_auto_accept)
-
 
 class PlayerReward:
 	var reward_id: int
@@ -192,24 +181,19 @@ class PlayerReward:
 
 	# Function to convert from JS object to GDScript object
 	func _from_js(js_object: Dictionary) -> PlayerReward:
-		reward_id = js_object.get("rewardId", 0)
-		count_total = js_object.get("countTotal", 0)
-		count_accepted = js_object.get("countAccepted", 0)
+		reward_id = js_object["rewardId"]
+		count_total = js_object["countTotal"]
+		count_accepted = js_object["countAccepted"]
 		return self
 
 	# Function to convert this object back to JS format
-	func _to_js() -> Dictionary:
+	func _to_js() -> JavaScriptObject:
 		var js_object = JavaScriptBridge.create_object("Object")
 		js_object["rewardId"] = reward_id
 		js_object["countTotal"] = count_total
 		js_object["countAccepted"] = count_accepted
 		return js_object
 
-	# Helper function to print details about the player reward
-	func _print_details() -> void:
-		print("Reward ID: ", reward_id)
-		print("Total Count: ", count_total)
-		print("Accepted Count: ", count_accepted)
 
 
 class DataMutation:
@@ -220,10 +204,10 @@ class DataMutation:
 
 	# Function to convert from JS object to GDScript object
 	func _from_js(js_object: Dictionary) -> DataMutation:
-		type = js_object.get("type", "")
-		key = js_object.get("key", "")
-		action = js_object.get("action", "")
-		value = js_object.get("value", null)
+		type = js_object["type"]
+		key = js_object["key"]
+		action = js_object["action"]
+		value = js_object["value"]
 		return self
 
 	# Function to convert this object back to JS format
@@ -234,10 +218,3 @@ class DataMutation:
 		js_object["action"] = action
 		js_object["value"] = value
 		return js_object
-
-	# Helper function to print details about the data mutation
-	func _print_details() -> void:
-		print("Mutation Type: ", type)
-		print("Key: ", key)
-		print("Action: ", action)
-		print("Value: ", value)

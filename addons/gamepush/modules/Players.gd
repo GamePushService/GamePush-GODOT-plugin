@@ -15,7 +15,7 @@ func _ready():
 
 
 # Fetch players by their IDs
-func fetch_players(ids: Array) -> Dictionary:
+func fetch(ids: Array) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		var _ids := JavaScriptBridge.create_object("Array")

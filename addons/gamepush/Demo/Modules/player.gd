@@ -146,7 +146,8 @@ func _on_button_gridget_playtime_all_pressed():
 
 
 func _on_button_gridget_field_pressed():
-	GP.Logger.info(GP.Player.get_field(key_node.text))
+	var field := GP.Player.get_field(key_node.text)
+	print(field.variants)
 
 
 func _on_button_gridget_field_name_pressed():

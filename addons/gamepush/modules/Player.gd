@@ -64,8 +64,12 @@ func get_score():
 # Имя игрока
 func get_name():
 	if OS.get_name() == "Web":
-		return player.name
+		if player.name:
+			return player.name
+		else:
+			return ""
 	push_warning("Not Web")
+	return ""
 
 # Ссылка на аватар игрока
 func get_avatar():
@@ -351,7 +355,7 @@ class Field:
 
 
 	# Преобразование в JavaScript объект
-	func _to_js():
+	func _to_js() -> JavaScriptObject:
 		var js_object := JavaScriptBridge.create_object("Object")
 		js_object["name"] = name
 		js_object["key"] = key
@@ -381,31 +385,29 @@ class Field:
 		return js_object
 
 	# Загрузка данных из JavaScript объекта
-	func _from_js(js_object):
+	func _from_js(js_object:JavaScriptObject) -> Field:
 		name = js_object["name"]
 		key = js_object["key"]
 		type = js_object["type"]
 		important = js_object["important"]
 		public = js_object["public"]
 		default_value = js_object["default"]
-
 		# Загрузка variants
 		variants = []
 		js_object["variants"].forEach(JavaScriptBridge.create_callback(_load_variant))
-
 		# Загрузка limits, если оно есть
 		if js_object["limits"]:
 			limits = FieldLimits.new()
 			limits._from_js(js_object["limits"])
 		else:
 			limits = FieldLimits.new()
-
 		# Загрузка intervalIncrement, если оно есть
 		if js_object["intervalIncrement"]:
 			interval_increment = IntervalIncrement.new()
 			interval_increment._from_js(js_object["intervalIncrement"])
 		else:
 			interval_increment = IntervalIncrement.new()
+		return self
 
 	func _load_variant(args):
 		var variant_js = args[0] #Need test
@@ -449,6 +451,7 @@ class FieldLimits:
 		min = js_object["min"]
 		max = js_object["max"]
 		could_go_over_limit = js_object["couldGoOverLimit"]
+		return self
 
 class IntervalIncrement:
 	var interval: float  
@@ -466,3 +469,4 @@ class IntervalIncrement:
 	func _from_js(js_object):
 		interval = js_object["interval"]
 		increment = js_object["increment"]
+		return self

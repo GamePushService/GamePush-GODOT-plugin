@@ -22,7 +22,7 @@ func current() -> String:
 func generate_avatar(has:Variant, size:int) -> String:
 	var result := ""
 	if OS.get_name() == "Web":
-		result = await gp.generateAvatar(has, size)
+		result = gp.generateAvatar(has, size)
 	else:
 		push_warning("Not running on Web")
 	return result
