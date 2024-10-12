@@ -14,7 +14,7 @@ func _on_analytics_pressed():
 
 
 func _on_app_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/App.tscn")
 
 
 func _on_avatar_generator_pressed():

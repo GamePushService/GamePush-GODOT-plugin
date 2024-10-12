@@ -1,64 +1,75 @@
 extends Node
 
-var window:JavaScriptObject
-var gp:JavaScriptObject
-var app:JavaScriptObject
+var window: JavaScriptObject
+var gp: JavaScriptObject
+var app: JavaScriptObject
 
+signal review_requested(review)
+signal shortcut_added(sucess:bool)
 
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
-		while not gp:
-			gp = window.gp
-			await get_tree().create_timer(0.1).timeout
-		app = gp.app
-		
-func title():
-	if OS.get_name() == "Web":
-		return app.title
-	push_warning("Not Web")
-	
-func description():
-	if OS.get_name() == "Web":
-		return app.description
-	push_warning("Not Web")
-	
-func image():
-	if OS.get_name() == "Web":
-		return app.image
-	push_warning("Not Web")
-	
-func url():
-	if OS.get_name() == "Web":
-		return app.url
-	push_warning("Not Web")
+		await yield_until_app_ready()
+	else:
+		push_warning("Not running on Web")
 
-func request_review():
-	if OS.get_name() == "Web":
-		var result:Dictionary = {"success": null, "rating": null, "error": null}
-		var js_result = await app.requestReview()
-		result["success"] = js_result["success"] # bool 
-		result["rating"] = js_result["rating"] # int 0-5
-		result["error"] = js_result["error"] # String 
-		return result
-	push_warning("Not Web")
-	
-func can_request_review():
-	if OS.get_name() == "Web":
-		return app.canRequestReview
-	push_warning("Not Web")
-	
-func is_already_reviewed():
-	if OS.get_name() == "Web":
-		return app.isAlreadyReviewed
-	push_warning("Not Web")
+func yield_until_app_ready():
+	while not gp:
+		gp = window.gp
+		await get_tree().create_timer(0.1).timeout
+	app = gp.app
 
-func add_shortcut():
-	if OS.get_name() == "Web":
-		return await app.addShortcut() #bool
-	push_warning("Not Web")
+func get_app_property(property_name: String) -> Variant:
+	if OS.get_name() == "Web" and app:
+		return app[property_name]
+	push_warning("Not running on Web")
+	return null
 
-func can_add_shortcut():
-	if OS.get_name() == "Web":
-		return app.canAddShortcut #bool
-	push_warning("Not Web")
+func title() -> String:
+	return get_app_property("title")
+
+func description() -> String:
+	return get_app_property("description")
+
+func image() -> String:
+	return get_app_property("image")
+
+func url() -> String:
+	return get_app_property("url")
+
+var _callback_request_review = JavaScriptBridge.create_callback(_request_review)
+
+func request_review() -> void:
+	if OS.get_name() == "Web" and app:
+		app.requestReview().then(_callback_request_review)
+		return
+	push_warning("Not running on Web")
+	
+func _request_review(args):
+	var result ={
+		"success" : args[0]["success"],
+		"rating" : args[0]["rating"],
+		"error" : args[0]["error"],
+	}
+	review_requested.emit(result)
+
+func can_request_review() -> bool:
+	return get_app_property("canRequestReview")
+
+func is_already_reviewed() -> bool:
+	return get_app_property("isAlreadyReviewed")
+
+var _callback_add_shortcut = JavaScriptBridge.create_callback(_add_shortcut)
+
+func add_shortcut() -> void:
+	if OS.get_name() == "Web" and app:
+		app.addShortcut().then(_callback_add_shortcut)
+		return
+	push_warning("Not running on Web")
+	
+func _add_shortcut(args):
+	shortcut_added.emit(args[0])
+
+func can_add_shortcut() -> bool:
+	return get_app_property("canAddShortcut")

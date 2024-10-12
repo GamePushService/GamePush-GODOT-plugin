@@ -48,7 +48,6 @@ func _ready():
 		player.on("field:increment", callback_field_incremented)
 		
 
-
 # ID игрока
 func get_id():
 	if OS.get_name() == "Web":
