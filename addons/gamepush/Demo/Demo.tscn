@@ -207,7 +207,6 @@ text = "Schedulers"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Segments"
 
 [node name="Server" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]

@@ -95,7 +95,7 @@ func _on_schedulers_pressed():
 
 
 func _on_segments_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Segments.tscn")
 
 
 func _on_server_pressed():

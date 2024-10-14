@@ -4,10 +4,10 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var rewards:JavaScriptObject
 
-signal reward_given(reward, player_reward)
-signal reward_error(err)
-signal reward_accept_error(err)
-signal reward_accepted(reward, player_reward)
+signal reward_given(reward:Reward, player_reward:PlayerReward)
+signal reward_error(err:String)
+signal reward_accept_error(err:String)
+signal reward_accepted(reward:Reward, player_reward:PlayerReward)
 
 
 var callback_reward_given := JavaScriptBridge.create_callback(_on_reward_given)
@@ -97,19 +97,19 @@ func get_reward(id_or_tag:Variant) -> Array:
 
 func has(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
-		return await gp.rewards.has(id_or_tag)
+		return gp.rewards.has(id_or_tag)
 	push_warning("Not Web")
 	return false
 	
 func has_accepted(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
-		return await gp.rewards.hasAccepted(id_or_tag)
+		return gp.rewards.hasAccepted(id_or_tag)
 	push_warning("Not Web")
 	return false
 	
 func has_unaccepted(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
-		return await gp.rewards.hasUnaccepted(id_or_tag)
+		return gp.rewards.hasUnaccepted(id_or_tag)
 	push_warning("Not Web")
 	return false
 
@@ -197,9 +197,9 @@ class PlayerReward:
 
 
 class DataMutation:
-	var type: JavaScriptObject #TODO need test
+	var type: String #TODO need test
 	var key: String
-	var action: JavaScriptObject
+	var action: String
 	var value: Variant # Supports number, string, or boolean
 
 	# Function to convert from JS object to GDScript object

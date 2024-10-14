@@ -25,6 +25,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | [Payments](#Payments)                         |
 | [Platform](#Platform)                         |
 | [Player](#Player)                             |
+| [Segments](#Segments)                         |
 
 ### Payments
 ### Signals
@@ -186,3 +187,19 @@ IntervalIncrement
 |-----------------------|--------------------------|
 | `interval`            | `float`                  |
 | `increment`           | `float`                  |
+
+### Segments
+
+#### Signals
+
+| **Signal** | **Emitted Parameters** |
+|------------|------------------------|
+| `entered`  | `segment_tag: String`  |
+| `left`     | `segment_tag: String`  |
+
+#### Methods
+
+| **Method Name** | **Arguments**            | **Return Type** |
+|-----------------|--------------------------|-----------------|
+| `list`          | None                     | `Array`         |
+| `has`           | `tag: String`            | `bool`          |
