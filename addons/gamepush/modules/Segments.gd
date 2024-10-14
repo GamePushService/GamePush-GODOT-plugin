@@ -25,8 +25,8 @@ func _ready():
 func list() -> Array:
 	if OS.get_name() == "Web":
 		var segment_list: Array = []
-		var _callback_f_e = func(segment: String):
-			segment_list.append(segment)
+		var _callback_f_e = func(args):
+			segment_list.append(args[0])
 		var _callback = JavaScriptBridge.create_callback(_callback_f_e)
 		segments.list.forEach(_callback)
 		return segment_list

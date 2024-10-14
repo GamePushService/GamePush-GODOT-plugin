@@ -46,7 +46,7 @@ func _ready():
 		player.on("field:maximum", callback_maximum_reached)
 		player.on("field:minimum", callback_minimum_reached)
 		player.on("field:increment", callback_field_incremented)
-		
+
 
 # ID игрока
 func get_id():
@@ -409,7 +409,7 @@ class Field:
 		return self
 
 	func _load_variant(args):
-		var variant_js = args[0] #Need test
+		var variant_js = args[0] 
 		var variant = FieldVariant.new()
 		variant._from_js(variant_js)
 		variants.append(variant)

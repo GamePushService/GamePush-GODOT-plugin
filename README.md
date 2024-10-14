@@ -22,10 +22,27 @@ https://docs.gamepush.com/ru/docs/get-start/
 ## Modules
 | Plugin modules                                |
 | --------------------------------------------- |
+| [Logger](#Logger)                         |
 | [Payments](#Payments)                         |
 | [Platform](#Platform)                         |
 | [Player](#Player)                             |
 | [Segments](#Segments)                         |
+| [Server](#server)                         |
+
+### Logger
+### Methods
+
+| **Method Name**  | **Arguments**                               | **Return Type** |
+|------------------|---------------------------------------------|-----------------|
+| `info`           | `arg1`, `arg2`, `arg3`, `arg4`              | `void`          |
+| `warn`           | `arg1`, `arg2`, `arg3`, `arg4`              | `void`          |
+| `error`          | `arg1`, `arg2`, `arg3`, `arg4`              | `void`          |
+| `log`            | `arg1`, `arg2`, `arg3`, `arg4`              | `void`          |
+| `info_array`     | `args: Array`                               | `void`          |
+| `warn_array`     | `args: Array`                               | `void`          |
+| `error_array`    | `args: Array`                               | `void`          |
+
+
 
 ### Payments
 ### Signals

@@ -124,3 +124,7 @@ func _on_uniques_pressed():
 
 func _on_variables_pressed():
 	pass # Replace with function body.
+
+
+func _on_logger_pressed():
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Logger.tscn")
