@@ -5,11 +5,11 @@ var gp:JavaScriptObject
 var player:JavaScriptObject
 
 
-signal synced
-signal loaded
-signal logged_in
-signal logged_out
-signal fields_fetched
+signal synced(success:bool)
+signal loaded(success:bool)
+signal logged_in(success:bool)
+signal logged_out(success:bool)
+signal fields_fetched(success:bool)
 signal window_connected
 signal player_state_changed
 signal field_maximum_reached
