@@ -203,3 +203,12 @@ IntervalIncrement
 |-----------------|--------------------------|-----------------|
 | `list`          | None                     | `Array`         |
 | `has`           | `tag: String`            | `bool`          |
+
+
+### Server
+
+#### Methods
+
+| **Method Name** | **Arguments** | **Return Type** |
+|-----------------|---------------|-----------------|
+| `time`          | None          | `String`        |

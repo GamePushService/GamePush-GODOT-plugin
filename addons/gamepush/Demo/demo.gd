@@ -99,7 +99,7 @@ func _on_segments_pressed():
 
 
 func _on_server_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Server.tscn")
 
 
 func _on_socials_pressed():

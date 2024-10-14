@@ -213,7 +213,6 @@ text = "Segments"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Server"
 
 [node name="Socials" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
