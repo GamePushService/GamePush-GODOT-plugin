@@ -169,14 +169,12 @@ text = "Leaderboard Scoped"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Payments"
 
 [node name="Platform" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Platform"
 
 [node name="Player" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]

@@ -22,11 +22,11 @@ func _get_platform_property(property_name: String) -> Variant:
 	if OS.get_name() == "Web" and platform:
 		return platform[property_name]
 	push_warning("Not running on Web")
-	return null
+	return false
 
 # Проверка типа платформы, например Yandex или Vk
 func type() -> String:
-	return _get_platform_property("type")
+	return str(_get_platform_property("type"))
 
 # Проверка, доступна ли интегрированная аутентификация
 func has_integrated_auth() -> bool:

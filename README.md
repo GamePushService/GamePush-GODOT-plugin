@@ -7,7 +7,6 @@ Development of GamePush Godot plugin - [Anatoly Kulagin](https://github.com/talk
 
 ## Get started:
 
-[English](https://docs.gamepush.com/tutorials/adding-plugin-to-a-unity-project/) and [Russian](https://docs.gamepush.com/ru/tutorials/adding-plugin-to-a-unity-project/) tutorials
 
 ## Documentation:
 
@@ -23,8 +22,65 @@ https://docs.gamepush.com/ru/docs/get-start/
 ## Modules
 | Plugin modules                                |
 | --------------------------------------------- |
+| [Payments](#Payments)                         |
 | [Platform](#Platform)                         |
 | [Player](#Player)                             |
+
+### Payments
+### Signals
+
+| **Signal**         | **Emitted Parameters**                                           |
+|--------------------|------------------------------------------------------------------|
+| `purchased`        | `result: Array`                                                 |
+| `error_purchase`   | `error: String`                                                 |
+| `consumed`         | `result: Array`                                                 |
+| `error_consume`    | `error: String`                                                 |
+| `fetched_products` | `result: Array`                                                 |
+| `error_fetch_products` | `error: String`                                             |
+
+### Methods
+
+| **Method Name**                | **Arguments**                         | **Return Type**  |
+|---------------------------------|---------------------------------------|------------------|
+| `ready`                         | None                                  | `void`           |
+| `is_available`                  | None                                  | `bool`           |
+| `consume`                       | `id :int , tag :String`               | `Array`          |
+| `purchase`                      | `id :int , tag :String`               | `Array`          |
+| `get_products`                  | None                                  | `Array`          |
+| `get_purchases`                 | None                                  | `Array`          |
+| `fetch_products`                | None                                  | `void`           |
+| `is_subscriptions_available`    | None                                  | `bool`           |
+| `subscribe`                     | `id :int , tag :String`               | `void`           |
+| `unsubscribe`                   | `id :int , tag :String`               | `void`           |
+
+### Class: Purchase
+
+| **Variable**        | **Type**           |
+|---------------------|--------------------|
+| `id`                | `int`              |
+| `tag`               | `String`           |
+| `name`              | `String`           |
+| `description`       | `String`           |
+| `icon`              | `String`           |
+| `icon_small`        | `String`           |
+| `price`             | `String`           |
+| `currency`          | `String`           |
+| `currency_symbol`   | `String`           |
+| `is_subscription`   | `String`           |
+| `period`            | `int`              |
+| `trial_period`      | `int`              |
+
+### Class: PlayerPurchase
+
+| **Variable**        | **Type**             |
+|---------------------|----------------------|
+| `product_id`        | `int`                |
+| `payload`           | `JavaScriptObject`   |
+| `created_at`        | `String`             |
+| `gift`              | `bool`               |
+| `subscribed`        | `bool`               |
+| `expired_at`        | `String`             |
+
 
 ### Platform
 
@@ -42,6 +98,20 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 
 ### Player
+
+#### Signals
+| Signal                 | Emitted Parameters                                     |
+|------------------------|-------------------------------------------------------|
+| `synced`               | `success_status: bool`                                |
+| `loaded`               | `success_status: bool`                                |
+| `logged_in`            | `success_status: bool`                                |
+| `logged_out`           | `success_status: bool`                                |
+| `fields_fetched`       | `success_status: bool`                             |
+| `window_connected`     | `None`                                                |
+| `player_state_changed` | `None`                                                |
+| `field_maximum_reached`| `field: Field`                                        |
+| `field_minimum_reached`| `field: Field`                                        |
+| `field_incremented`    | `field: Field, old_value: Variant, new_value: Variant`|
 
 #### Methods
 
@@ -83,19 +153,6 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `get_field_name`        | `key: String`                                      | `String`               |
 | `get_field_variant_name`| `key: String`, `value: Variant`                    | `String`               |
 
-#### Signals
-| Signal                 | Emitted Parameters                                     |
-|------------------------|-------------------------------------------------------|
-| `synced`               | `success_status: bool`                                |
-| `loaded`               | `success_status: bool`                                |
-| `logged_in`            | `success_status: bool`                                |
-| `logged_out`           | `success_status: bool`                                |
-| `fields_fetched`       | `success_status: bool`                             |
-| `window_connected`     | `None`                                                |
-| `player_state_changed` | `None`                                                |
-| `field_maximum_reached`| `field: Field`                                        |
-| `field_minimum_reached`| `field: Field`                                        |
-| `field_incremented`    | `field: Field, old_value: Variant, new_value: Variant`|
 
 #### Classes
 Field

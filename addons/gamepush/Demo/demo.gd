@@ -71,11 +71,11 @@ func _on_leaderboard_scoped_pressed():
 
 
 func _on_payments_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Payments.tscn")
 
 
 func _on_platform_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Platform.tscn")
 
 
 func _on_player_pressed():
