@@ -62,7 +62,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 #### Signals
 
-| **Signal**          | **Arguments**                                 |
+| **Signal**          | **Emitted Parameters**                        |
 |---------------------|-----------------------------------------------|
 | `unlocked`          | `achievement: Achievement`                    |
 | `error_unlock`      | `error: String`                               |
@@ -128,6 +128,47 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `unlocked`          | `bool`        |
 
 ### Ads
+
+
+#### Signals
+
+| **Signal**               | **Emitted Parameters**    |
+|--------------------------|------------------|
+| `start`                  | None             |
+| `close`                  | `success: bool`  |
+| `fullscreen_start`       | None             |
+| `fullscreen_close`       | `success: bool`  |
+| `preloader_start`        | None             |
+| `preloader_close`        | `success: bool`  |
+| `rewarded_start`         | None             |
+| `rewarded_close`         | `success: bool`  |
+| `rewarded_reward`        | None             |
+| `sticky_start`           | None             |
+| `sticky_close`           | None             |
+| `sticky_render`          | None             |
+| `sticky_refresh`         | None             |
+
+#### Methods
+
+| **Method**                                | **Arguments**                            | **Return Type** |
+|-------------------------------------------|------------------------------------------|-----------------|
+| `is_adblock_enabled`                      | None                                     | `bool`          |
+| `is_sticky_available`                     | None                                     | `bool`          |
+| `is_fullscreen_available`                 | None                                     | `bool`          |
+| `is_rewarded_available`                   | None                                     | `bool`          |
+| `is_sticky_playing`                       | None                                     | `bool`          |
+| `is_fullscreen_playing`                   | None                                     | `bool`          |
+| `is_rewarded_playing`                     | None                                     | `bool`          |
+| `is_preloader_playing`                    | None                                     | `bool`          |
+| `is_countdown_overlay_enabled`            | None                                     | `bool`          |
+| `is_rewarded_failed_overlay_enabled`      | None                                     | `bool`          |
+| `can_show_fullscreen_before_game_play`    | None                                     | `bool`          |
+| `show_fullscreen`                         | `show_countdown_overlay: bool = false`   | `void`          |
+| `show_preloader`                          | None                                     | `void`          |
+| `show_rewarded_video`                     | `show_countdown_overlay: bool = false`   | `void`          |
+| `show_sticky`                             | None                                     | `void`          |
+| `refresh_sticky`                          | None                                     | `void`          |
+| `close_sticky`                            | None                                     | `void`          |
 
 ### Analytics
 

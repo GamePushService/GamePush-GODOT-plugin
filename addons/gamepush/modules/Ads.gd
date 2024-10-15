@@ -4,33 +4,33 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var ads:JavaScriptObject
 
-signal start
-signal close
-signal fullscreen_start
-signal fullscreen_close
-signal preloader_start
-signal preloader_close
-signal rewarded_start
-signal rewarded_close
-signal rewarded_reward
-signal sticky_start
-signal sticky_close
-signal sticky_render
-signal sticky_refresh
+signal start()
+signal close(success:bool)
+signal fullscreen_start()
+signal fullscreen_close(success:bool)
+signal preloader_start()
+signal preloader_close(success:bool)
+signal rewarded_start()
+signal rewarded_close(success:bool)
+signal rewarded_reward()
+signal sticky_start()
+signal sticky_close()
+signal sticky_render()
+signal sticky_refresh()
 
-var callback_start = JavaScriptBridge.create_callback(_start)
-var callback_close = JavaScriptBridge.create_callback(_close)
-var callback_fullscreen_start = JavaScriptBridge.create_callback(_fullscreen_start)
-var callback_fullscreen_close = JavaScriptBridge.create_callback(_fullscreen_close)
-var callback_preloader_start = JavaScriptBridge.create_callback(_preloader_start)
-var callback_preloader_close = JavaScriptBridge.create_callback(_preloader_close)
-var callback_rewarded_start = JavaScriptBridge.create_callback(_rewarded_start)
-var callback_rewarded_close = JavaScriptBridge.create_callback(_rewarded_close)
-var callback_rewarded_reward = JavaScriptBridge.create_callback(_rewarded_reward)
-var callback_sticky_start = JavaScriptBridge.create_callback(_sticky_start)
-var callback_sticky_close = JavaScriptBridge.create_callback(_sticky_close)
-var callback_sticky_render = JavaScriptBridge.create_callback(_sticky_render)
-var callback_sticky_refresh = JavaScriptBridge.create_callback(_sticky_refresh)
+var _callback_start = JavaScriptBridge.create_callback(_start)
+var _callback_close = JavaScriptBridge.create_callback(_close)
+var _callback_fullscreen_start = JavaScriptBridge.create_callback(_fullscreen_start)
+var _callback_fullscreen_close = JavaScriptBridge.create_callback(_fullscreen_close)
+var _callback_preloader_start = JavaScriptBridge.create_callback(_preloader_start)
+var _callback_preloader_close = JavaScriptBridge.create_callback(_preloader_close)
+var _callback_rewarded_start = JavaScriptBridge.create_callback(_rewarded_start)
+var _callback_rewarded_close = JavaScriptBridge.create_callback(_rewarded_close)
+var _callback_rewarded_reward = JavaScriptBridge.create_callback(_rewarded_reward)
+var _callback_sticky_start = JavaScriptBridge.create_callback(_sticky_start)
+var _callback_sticky_close = JavaScriptBridge.create_callback(_sticky_close)
+var _callback_sticky_render = JavaScriptBridge.create_callback(_sticky_render)
+var _callback_sticky_refresh = JavaScriptBridge.create_callback(_sticky_refresh)
 
 
 func _ready():
@@ -41,19 +41,19 @@ func _ready():
 			await get_tree().create_timer(0.1).timeout
 		ads = gp.ads
 		
-		ads.on('start', callback_start)
-		ads.on('close', callback_close)
-		ads.on('fullscreen:start', callback_fullscreen_start)
-		ads.on('fullscreen:close', callback_fullscreen_close)
-		ads.on('preloader:start', callback_preloader_start)
-		ads.on('preloader:close', callback_preloader_close)
-		ads.on('rewarded:start', callback_preloader_start)
-		ads.on('rewarded:close', callback_preloader_close)
-		ads.on('rewarded:reward', callback_rewarded_reward)
-		ads.on('sticky:start', callback_sticky_start)
-		ads.on('sticky:close', callback_close)
-		ads.on('sticky:render', callback_sticky_render)
-		ads.on('sticky:refresh', callback_sticky_refresh)
+		ads.on('start', _callback_start)
+		ads.on('close', _callback_close)
+		ads.on('fullscreen:start', _callback_fullscreen_start)
+		ads.on('fullscreen:close', _callback_fullscreen_close)
+		ads.on('preloader:start', _callback_preloader_start)
+		ads.on('preloader:close', _callback_preloader_close)
+		ads.on('rewarded:start', _callback_preloader_start)
+		ads.on('rewarded:close', _callback_preloader_close)
+		ads.on('rewarded:reward', _callback_rewarded_reward)
+		ads.on('sticky:start', _callback_sticky_start)
+		ads.on('sticky:close', _callback_close)
+		ads.on('sticky:render', _callback_sticky_render)
+		ads.on('sticky:refresh', _callback_sticky_refresh)
 
 
 func is_adblock_enabled() -> bool:
@@ -122,7 +122,6 @@ func can_show_fullscreen_before_game_play() -> bool:
 		return ads.canShowFullscreenBeforeGamePlay
 	push_warning("Not Web")
 	return false
-	
 
 
 func show_fullscreen(show_countdown_overlay=false) -> void:
@@ -180,7 +179,7 @@ func _fullscreen_start(args): fullscreen_start.emit()
 func _fullscreen_close(args): fullscreen_close.emit(args[0])
 func _preloader_start(args): preloader_start.emit()
 func _preloader_close(args): preloader_close.emit(args[0])
-func _rewarded_start(args): rewarded_start.emit()	
+func _rewarded_start(args): rewarded_start.emit()
 func _rewarded_close(args): rewarded_close.emit(args[0])
 func _rewarded_reward(args): rewarded_reward.emit()
 func _sticky_start(args): sticky_start.emit()
