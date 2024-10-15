@@ -34,7 +34,7 @@ func _on_unlock_pressed():
 
 
 func _on_set_progress_pressed():
-	GP.Achievements.set_progress(progress_node.text, id_node.text, tag_node.text)
+	GP.Achievements.set_progress(int(progress_node.text), id_node.text, tag_node.text)
 
 
 func _on_get_progress_pressed():

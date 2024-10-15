@@ -4,42 +4,43 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var achievements:JavaScriptObject
 
-signal unlocked
-signal error_unlock 
-signal progress
-signal error_progress
+signal unlocked(achievement:Achievement)
+signal error_unlock(error:String)
+signal progress(achievement:Achievement)
+signal error_progress(error:String)
 signal opened
 signal closed
-signal fetched
-signal error_fetch
+signal fetched(achievement:Array[Achievement], achievements_groups:Array[AchievementsGroup], player_achievements:Array[PlayerAchievement])
+signal error_fetch(error:String)
 
-var callback_unlock = JavaScriptBridge.create_callback(_unlock)
-var callback_error_unlock = JavaScriptBridge.create_callback(_error_unlock)
-var callback_progress = JavaScriptBridge.create_callback(_progress)
-var callback_error_progress = JavaScriptBridge.create_callback(_error_progress)
-var callback_opened = JavaScriptBridge.create_callback(_opened)
-var callback_closed = JavaScriptBridge.create_callback(_closed)
-var callback_fetched = JavaScriptBridge.create_callback(_fetched)
-var callback_error_fetched = JavaScriptBridge.create_callback(_error_fetched)
+var _callback_unlock = JavaScriptBridge.create_callback(_unlock)
+var _callback_error_unlock = JavaScriptBridge.create_callback(_error_unlock)
+var _callback_progress = JavaScriptBridge.create_callback(_progress)
+var _callback_error_progress = JavaScriptBridge.create_callback(_error_progress)
+var _callback_opened = JavaScriptBridge.create_callback(_opened)
+var _callback_closed = JavaScriptBridge.create_callback(_closed)
+var _callback_fetched = JavaScriptBridge.create_callback(_fetched)
+var _callback_error_fetched = JavaScriptBridge.create_callback(_error_fetched)
 
 
 func _ready():
 	if OS.get_name() == "Web":
-		print("Achievements start init")
 		window = JavaScriptBridge.get_interface("window")
 		while not gp:
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
 		achievements = gp.achievements
-		
-		achievements.on("unlock", callback_unlock)
-		achievements.on("error:unlock", callback_error_unlock)
-		#TODO FIX IT
-		
-		print("Achievements init")
+		achievements.on("unlock", _callback_unlock)
+		achievements.on("error:unlock", _callback_error_unlock)
+		achievements.on("progress", _callback_unlock)
+		achievements.on("error:progress", _callback_error_unlock)
+		achievements.on("open", _callback_opened)
+		achievements.on("close", _callback_closed)
+		achievements.on("fetch", _callback_fetched)
+		achievements.on("error:fetch", _callback_error_fetched)
 
 
-func unlock(id=null, tag=null):
+func unlock(id=null, tag=null) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		if id:
@@ -51,85 +52,109 @@ func unlock(id=null, tag=null):
 			achievements.unlock(conf)
 			return
 		push_error("No id or tag")
+		return
 	push_warning("Not Web")
 	
 
-func set_progress(progress:int, id=null, tag=null):
+func set_progress(progress:int, id=null, tag=null) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
+		conf["progress"] = progress
 		if id:
 			conf["id"] = id
-			conf["progress"] = progress
 			achievements.setProgress(conf)
 			return
 		if tag:
 			conf["tag"] = tag
-			conf["progress"] = progress
 			achievements.setProgress(conf)
 			return
 		push_error("No id or tag")
+		return
 	push_warning("Not Web")
 	
 	
-func has(id=null, tag=null):
+func has(id_or_tag:Variant ) -> bool:
 	if OS.get_name() == "Web":
-		if id:
-			return achievements.has(id)
-		if tag:
-			return achievements.has(tag)
-		push_error("No id or tag")
+		return achievements.has(id_or_tag)
 	push_warning("Not Web")
+	return false		
 
-func get_progress(id=null, tag=null):
+
+func get_progress(id_or_tag:Variant) -> int:
 	if OS.get_name() == "Web":
-		if id:
-			return achievements.getProgress(id)
-		if tag:
-			return achievements.getProgress(tag)
-		push_error("No id or tag")
+		return achievements.getProgress(id_or_tag)
 	push_warning("Not Web")
+	return 0
 		
 		
-func open():
+func open() -> void:
 	if OS.get_name() == "Web":
-		return await achievements.open()
-	push_warning("Not Web")
+		achievements.open()
+	else:
+		push_warning("Not Web")
+
+
+func fetch() -> void:
+	if OS.get_name() == "Web":
+		achievements.fetch()
+	else:
+		push_warning("Not Web")
 	
-func fetch():
+	
+func list() -> Array[Achievement]:
+	var result : Array[Achievement] = []
 	if OS.get_name() == "Web":
-		var achive:JavaScriptObject
-		achive = achievements.fetch()
-		var achievements := []
-		var achievements_groups := []
-		var player_achievements := []
-		for a in achive.achievements:
-			achievements.append(Achievement.new()._from_js(a))
-		for ag in achive.achievementsGroups:
-			achievements.append(AchievementsGroup.new()._from_js(ag))
-		for pa in achive.playerAchievements:
-			achievements.append(PlayerAchievement.new()._from_js(pa))
-		return [achievements, achievements_groups, player_achievements]
-	push_warning("Not Web")
+		var callback := JavaScriptBridge.create_callback(func(args):
+			result.append(Achievement.new()._from_js(args[0])))
+		achievements.list.forEach(callback)
+	else:
+		push_warning("Not Web")
+	return result
 	
 
-func _unlock(args): unlocked.emit(args[0])
+func player_achievements_list() -> Array[PlayerAchievement]:
+	var result : Array[PlayerAchievement] = []
+	if OS.get_name() == "Web":
+		var callback := JavaScriptBridge.create_callback(func(args):
+			result.append(PlayerAchievement.new()._from_js(args[0])))
+		achievements.playerAchievementsList.forEach(callback)
+	else:
+		push_warning("Not Web")
+	return result
+	
+	
+func groups_list() -> Array[AchievementsGroup]:
+	var result : Array[AchievementsGroup] = []
+	if OS.get_name() == "Web":
+		var callback := JavaScriptBridge.create_callback(func(args):
+			result.append(AchievementsGroup.new()._from_js(args[0])))
+		achievements.groupsList.forEach(callback)
+	else:
+		push_warning("Not Web")
+	return result
+
+
+func _unlock(args): unlocked.emit(Achievement.new()._from_js(args[0]))
 func _error_unlock(args): error_unlock.emit(args[0])
-func _progress(args): progress.emit(args[0])
+func _progress(args): progress.emit(Achievement.new()._from_js(args[0]))
 func _error_progress(args): error_progress.emit(args[0])
-func _opened(args): opened.emit(args[0])
-func _closed(args): closed.emit(args[0])
+func _opened(args): opened.emit()
+func _closed(args): closed.emit()
 func _fetched(args):
 	var achive:JavaScriptObject = args[0]
 	var achievements := []
 	var achievements_groups := []
 	var player_achievements := []
-	for a in achive.achievements:
-		achievements.append(Achievement.new()._from_js(a))
-	for ag in achive.achievementsGroups:
-		achievements.append(AchievementsGroup.new()._from_js(ag))
-	for pa in achive.playerAchievements:
-		achievements.append(PlayerAchievement.new()._from_js(pa))
-	fetched.emit([achievements, achievements_groups, player_achievements])
+	var _callback_achievements := JavaScriptBridge.create_callback(func(args):
+		achievements.append(Achievement.new()._from_js(args[0])))
+	achive.achievements.forEach(_callback_achievements)
+	var _callback_achievements_groups:= JavaScriptBridge.create_callback(func(args):
+		achievements_groups.append(AchievementsGroup.new()._from_js(args[0])))
+	achive.achievementsGroups.forEach(_callback_achievements_groups)
+	var _callback_player_achievements:= JavaScriptBridge.create_callback(func(args):
+		player_achievements.append(PlayerAchievement.new()._from_js(args[0])))
+	achive.playerAchievements.forEach(_callback_player_achievements)
+	fetched.emit(achievements, achievements_groups, player_achievements)
 	
 func _error_fetched(args): error_fetch.emit(args[0])
 
@@ -146,8 +171,8 @@ class Achievement:
 	var rare: String
 	var max_progress: int
 	var progress_step: int
-	var locked_visible: bool
-	var locked_description_visible: bool
+	var is_locked_visible: bool
+	var is_locked_description_visible: bool
 
 	func _from_js(js_object: JavaScriptObject) -> Achievement:
 		id = js_object["id"]
@@ -161,8 +186,8 @@ class Achievement:
 		rare = js_object["rare"]
 		max_progress = js_object["maxProgress"]
 		progress_step = js_object["progressStep"]
-		locked_visible = js_object["lockedVisible"]
-		locked_description_visible = js_object["lockedDescriptionVisible"]
+		is_locked_visible = js_object["isLockedVisible"]
+		is_locked_description_visible = js_object["isLockedDescriptionVisible"]
 		return self
 
 	func _to_js() -> JavaScriptObject:
@@ -178,8 +203,8 @@ class Achievement:
 		js_object["rare"] = rare
 		js_object["maxProgress"] = max_progress
 		js_object["progressStep"] = progress_step
-		js_object["lockedVisible"] = locked_visible
-		js_object["lockedDescriptionVisible"] = locked_description_visible
+		js_object["isLockedVisible"] = is_locked_visible
+		js_object["isLockedDescriptionVisible"] = is_locked_description_visible
 		return js_object
 
 class AchievementsGroup:
@@ -195,8 +220,9 @@ class AchievementsGroup:
 		name = js_object["name"]
 		description = js_object["description"]
 		achievements = []
-		for a in js_object["achievements"]:
-			achievements.append(a)
+		var callback := JavaScriptBridge.create_callback(func(args):
+			achievements.append(args[0]))
+		js_object["achievements"].forEach(callback)
 		return self
 
 	func _to_js() -> JavaScriptObject:
