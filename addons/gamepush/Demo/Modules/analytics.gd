@@ -1,21 +1,18 @@
 extends Control
 
-var text_hit:String
+@onready var url_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/url"
+@onready var name_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/name"
+@onready var value_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/value"
 
-func _on_hit_text_text_changed(new_text):
-	if new_text != "":
-		$MarginContainer/GridContainer/hit.disabled = false
-	else:
-		$MarginContainer/GridContainer/hit.disabled = true
+
+func _on_main_menu_button_pressed():
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Demo.tscn")
+
 
 
 func _on_hit_pressed():
-	GP.Analytics.hit("")
-
-
-func _on_goal_text_text_changed(new_text):
-	pass # Replace with function body.
+	GP.Analytics.hit(url_node.text)
 
 
 func _on_goal_pressed():
-	pass # Replace with function body.
+	GP.Analytics.goal(name_node.text, value_node.text)
