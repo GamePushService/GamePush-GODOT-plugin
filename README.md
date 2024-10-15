@@ -22,18 +22,41 @@ https://docs.gamepush.com/ru/docs/get-start/
 ## Modules
 | Plugin modules                                |
 | --------------------------------------------- |
-| [Achievements](#achievements)                             |
+| [Achievements](#achievements)                 |
+| [Ads](#ads)                                   |
+| [Analytics](#analytics)                       |
+| [App](#app)                                   |
+| [Avatar Generator](#avatargenerator)          |
+| [Channels](#channels)                         |
 | [Device](#device)                             |
 | [Documents](#documents)                       |
 | [Events](#events)                             |
-| [Experiments](#experiments)                             |
-| [Language](#language)                             |
+| [Experiments](#experiments)                   |
+| [Files](#files)                               |
+| [Fullscreen](#fullscreen)                     |
+| [Game](#game)                                 |
+| [GamesCollections](#gamescollections)         |
+| [Images](#images)                             |
+| [Language](#language)                         |
+| [Leaderboard](#leaderboard)                   |
+| [LeaderboardScoped](#leaderboardscoped)       |
 | [Logger](#logger)                             |
 | [Payments](#payments)                         |
 | [Platform](#platform)                         |
 | [Player](#player)                             |
+| [Players](#players)                           |
+| [Rewards](#rewards)                           |
+| [Schedulers](#schedulers)                     |
 | [Segments](#segments)                         |
 | [Server](#server)                             |
+| [Socials](#socials)                           |
+| [System](#system)                             |
+| [Triggers](#triggers)                         |
+| [Variables](#variables)                       |
+| [Uniques](#uniques)                           |
+| [Storage](#storage)                           |
+
+
 
 ### Achievements
 
@@ -104,6 +127,15 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `progress`          | `int`         |
 | `unlocked`          | `bool`        |
 
+### Ads
+
+### Analytics
+
+### App
+
+### AvatarGenerator
+
+### Channels
 
 ### Device
 
@@ -224,6 +256,12 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `toggle`       | None           | `void`          |
 | `is_enabled`   | None           | `bool`          |
 
+### Game
+
+### GamesCollections
+
+### Images
+
 ### Language
 
 #### Methods
@@ -232,6 +270,10 @@ https://docs.gamepush.com/ru/docs/get-start/
 |------------|------------------------|-----------------|
 | `current`  | None                   | `String`        |
 | `change`   | `lang: String`         | `void`          |
+
+### Leaderboard
+
+### LeaderboardScoped
 
 ### Logger
 
@@ -417,6 +459,12 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `interval`            | `float`                  |
 | `increment`           | `float`                  |
 
+### Players
+
+### Rewards
+
+### Schedulers
+
 ### Segments
 
 #### Signals
@@ -441,3 +489,16 @@ https://docs.gamepush.com/ru/docs/get-start/
 | **Method Name** | **Arguments** | **Return Type** |
 |-----------------|---------------|-----------------|
 | `time`          | None          | `String`        |
+
+
+### Socials
+
+### System
+
+### Triggers
+
+### Variables
+
+### Uniques
+
+### Storage
