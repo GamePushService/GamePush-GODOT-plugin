@@ -35,7 +35,7 @@ func _on_documents_pressed():
 
 
 func _on_events_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Events.tscn")
 
 
 func _on_experiments_pressed():

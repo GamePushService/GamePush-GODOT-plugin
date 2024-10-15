@@ -24,6 +24,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | --------------------------------------------- |
 | [Device](#device)                             |
 | [Documents](#documents)                       |
+| [Events](#events)                       |
 | [Logger](#logger)                             |
 | [Payments](#payments)                         |
 | [Platform](#platform)                         |
@@ -65,7 +66,62 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `open`              | `type: String`                                 | `void`          |
 | `fetch`             | `type: String`, `format: String = "HTML"`      | `void`          |
 
+### Events
 
+### Signals
+
+| **Signal Name**    | **Arguments**                                 |
+|--------------------|-----------------------------------------------|
+| `joined`           | `event: Event`, `player_event: PlayerEvent`   |
+| `error_join`       | `error: String`                               |
+
+### Methods
+
+| **Method Name**     | **Arguments**                                         | **Return Type**  |
+|---------------------|-------------------------------------------------------|------------------|
+| `join`              | `id: int = 0`, `tag: String = ""`                     | `void`           |
+| `list`              | None                                                  | `Array`          |
+| `active_list`       | None                                                  | `Array`          |
+| `get_event`         | `id_or_tag: String`                                   | `Event`          |
+| `has`               | `id_or_tag: String`                                   | `bool`           |
+| `is_joined`         | `id_or_tag: String`                                   | `bool`           |
+
+### Classes
+
+#### Event
+
+| **Property Name**    | **Type**  |
+|----------------------|-----------|
+| `id`                 | `int`     |
+| `tag`                | `String`  |
+| `name`               | `String`  |
+| `description`        | `String`  |
+| `icon`               | `String`  |
+| `icon_small`         | `String`  |
+| `date_start`         | `String`  |
+| `date_end`           | `String`  |
+| `is_active`          | `bool`    |
+| `time_left`          | `int`     |
+| `is_auto_join`       | `bool`    |
+| `triggers`           | `Array`   |
+
+---
+
+#### PlayerEvent 
+
+| **Property Name**    | **Type**  |
+|----------------------|-----------|
+| `event_id`           | `int`     |
+| `stats`              | `PlayerStats` |
+
+---
+
+#### PlayerStats 
+
+| **Property Name**        | **Type**  |
+|--------------------------|-----------|
+| `active_days`            | `int`     |
+| `active_days_consecutive`| `int`     |
 
 ### Logger
 #### Methods

@@ -142,20 +142,19 @@ class Trigger:
 		
 		# Initialize conditions from JavaScript
 		conditions = Array()
-		for js_condition_list in js_object["conditions"]:
-			var condition_list = Array()
-			for js_condition in js_condition_list:
-				var condition = Condition.new()
-				condition._from_js(js_condition)
-				condition_list.append(condition)
-			conditions.append(condition_list)
+		var callback_conditions := JavaScriptBridge.create_callback(func(args):
+			var condition_list := Array()
+			var callback_condition_list := JavaScriptBridge.create_callback(func(args):
+				condition_list.append(Condition.new()._from_js(args[0])))
+			args[0].forEach(callback_condition_list)
+			conditions.append(condition_list))
+		js_object["conditions"].forEach(callback_conditions)
 		
 		# Initialize bonuses from JavaScript
 		bonuses = Array()
-		for js_bonus in js_object["bonuses"]:
-			var bonus = Bonus.new()
-			bonus._from_js(js_bonus)
-			bonuses.append(bonus)
+		var callback_bonuses := JavaScriptBridge.create_callback(func(args):
+			bonuses.append(Bonus.new()._from_js(args[0])))
+		js_object["bonuses"].forEach(callback_bonuses)
 		return self
 
 class Bonus:
