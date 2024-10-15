@@ -29,7 +29,6 @@ layout_mode = 2
 [node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
 text = "Main Menu"
 
 [node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
@@ -66,8 +65,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
-text = "Segments
-"
+text = "Logger"
 
 [node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -152,31 +150,31 @@ text = "warn"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "has"
+text = "error"
 
 [node name="log" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "has"
+text = "log"
 
 [node name="info_array" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "has"
+text = "info_array"
 
 [node name="warn_array" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "has"
+text = "warn_array"
 
 [node name="error_array" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "has"
+text = "error_array"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/info" to="." method="_on_info_pressed"]

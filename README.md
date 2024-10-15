@@ -22,15 +22,33 @@ https://docs.gamepush.com/ru/docs/get-start/
 ## Modules
 | Plugin modules                                |
 | --------------------------------------------- |
-| [Logger](#Logger)                         |
+| [Device](#Device)                             |
+| [Logger](#Logger)                             |
 | [Payments](#Payments)                         |
 | [Platform](#Platform)                         |
 | [Player](#Player)                             |
 | [Segments](#Segments)                         |
-| [Server](#server)                         |
+| [Server](#server)                             |
+
+### Device
+
+### Signals
+
+| **Signal Name**      |  **Emitted Parameters**     |    
+|----------------------|-----------------------------|
+| `change_orientation`  | `is_portrait: bool`        |
+
+### Methods
+
+| **Method Name**           | **Arguments**      | **Return Type** |
+|---------------------------|--------------------|-----------------|
+| `is_mobile`               | None               | `bool`          |
+| `is_portrait`             | None               | `bool`          |
+
+
 
 ### Logger
-### Methods
+#### Methods
 
 | **Method Name**  | **Arguments**                               | **Return Type** |
 |------------------|---------------------------------------------|-----------------|

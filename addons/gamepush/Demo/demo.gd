@@ -27,7 +27,7 @@ func _on_channels_pressed():
 
 
 func _on_device_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Device.tscn")
 
 
 func _on_documents_pressed():

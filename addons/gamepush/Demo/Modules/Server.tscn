@@ -29,7 +29,6 @@ layout_mode = 2
 [node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 0
 text = "Main Menu"
 
 [node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]

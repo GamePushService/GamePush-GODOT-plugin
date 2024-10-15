@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://csdhecaroyyo5"]
+[gd_scene load_steps=3 format=3 uid="uid://cedhv0waewehx"]
 
-[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/players.gd" id="1_tji0y"]
-[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_p3ni5"]
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/device.gd" id="1_tcfps"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_7gker"]
 
-[node name="Players" type="Control"]
+[node name="Device" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_tji0y")
+script = ExtResource("1_tcfps")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -48,7 +48,7 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
-theme_override_styles/panel = ExtResource("2_p3ni5")
+theme_override_styles/panel = ExtResource("2_7gker")
 
 [node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
 layout_mode = 1
@@ -65,7 +65,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
-text = "PLAYERS"
+text = "Device"
 
 [node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 visible = false
@@ -73,6 +73,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 1
 offset_left = 185.0
 offset_top = 21.0
@@ -81,6 +82,7 @@ offset_bottom = 44.0
 text = "ID: 455715383"
 
 [node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 1
 offset_left = 185.0
 offset_top = 67.0
@@ -97,21 +99,21 @@ offset_bottom = 53.0
 scale = Vector2(2.99168, 2.908)
 expand_mode = 3
 
-[node name="Header#KeyInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+[node name="size_input" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 0
 offset_left = 647.0
 offset_top = 59.0
 offset_right = 834.0
 offset_bottom = 90.0
-placeholder_text = "Key..."
+placeholder_text = "Size..."
 
-[node name="Header#ValueInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+[node name="Has_input" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 0
 offset_left = 647.0
 offset_top = 16.0
 offset_right = 834.0
 offset_bottom = 47.0
-placeholder_text = "Value..."
+placeholder_text = "Has..."
 
 [node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -119,18 +121,19 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 2.71
 columns = 2
 
-[node name="ButtonGrid#GetIDButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+[node name="is_mobile" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get ID"
+text = "is_mobile
+"
 
-[node name="ButtonGrid#GetScoreButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+[node name="is_portrait" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Score"
+text = "is_portrait"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetIDButton" to="." method="_on_button_grid_get_id_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetScoreButton" to="." method="_on_button_grid_get_score_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/is_mobile" to="." method="_on_is_mobile_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/is_portrait" to="." method="_on_is_portrait_pressed"]
