@@ -19,13 +19,13 @@ func _ready():
 func is_mobile():
 	if OS.get_name() == "Web":
 		return gp.isMobile
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 	
 
 func is_portrait():
 	if OS.get_name() == "Web":
 		return gp.isPortrait
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 	
 
 func _change_orientation(args): change_orientation.emit(args[0])

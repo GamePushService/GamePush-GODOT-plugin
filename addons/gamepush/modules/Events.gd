@@ -32,35 +32,36 @@ func join(id=null, tag=null):
 			events.join(conf)
 			return
 		push_error("No id or tag")
-	push_warning("Not Web")
+		return
+	push_warning("Not running on Web")
 	
 func list():
 	if OS.get_name() == "Web":
 		#NEED DATA STRUCTURE
 		return await events.list
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 	
 func active_list():
 	if OS.get_name() == "Web":
 		#NEED DATA STRUCTURE
 		return events.activeList
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 	
 func get_event(id_or_tag:String):
 	if OS.get_name() == "Web":
 		#NEED DATA STRUCTURE
 		return await events.getEvent(id_or_tag)
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 	
 func has(id_or_tag:String):
 	if OS.get_name() == "Web":
 		return await events.has(id_or_tag)
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 	
 func is_joined(id_or_tag:String):
 	if OS.get_name() == "Web":
 		return await events.isJoined(id_or_tag)
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 
 
 func _join(args):

@@ -22,12 +22,13 @@ https://docs.gamepush.com/ru/docs/get-start/
 ## Modules
 | Plugin modules                                |
 | --------------------------------------------- |
-| [Device](#Device)                             |
-| [Logger](#Logger)                             |
-| [Payments](#Payments)                         |
-| [Platform](#Platform)                         |
-| [Player](#Player)                             |
-| [Segments](#Segments)                         |
+| [Device](#device)                             |
+| [Documents](#documents)                       |
+| [Logger](#logger)                             |
+| [Payments](#payments)                         |
+| [Platform](#platform)                         |
+| [Player](#player)                             |
+| [Segments](#segments)                         |
 | [Server](#server)                             |
 
 ### Device
@@ -36,7 +37,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Signal Name**      |  **Emitted Parameters**     |    
 |----------------------|-----------------------------|
-| `change_orientation`  | `is_portrait: bool`        |
+| `change_orientation` | `is_portrait: bool`         |
 
 ### Methods
 
@@ -44,6 +45,25 @@ https://docs.gamepush.com/ru/docs/get-start/
 |---------------------------|--------------------|-----------------|
 | `is_mobile`               | None               | `bool`          |
 | `is_portrait`             | None               | `bool`          |
+
+### Documents
+
+### Signals
+
+| **Signal Name**    |  **Emitted Parameters**   |
+|--------------------|---------------------------|
+| `opened`           | None                      |
+| `closed`           | None                      |
+| `fetched`          | `document: JavaScriptObject` |
+| `error_fetch`      | `error: String`           |
+
+### Methods
+
+| **Method Name**     | **Arguments**                                  | **Return Type** |
+|---------------------|------------------------------------------------|-----------------|
+| `ready`             | None                                           | `void`          |
+| `open`              | `type: String`                                 | `void`          |
+| `fetch`             | `type: String`, `format: String = "HTML"`      | `void`          |
 
 
 

@@ -16,11 +16,11 @@ func current() -> String:
 	if OS.get_name() == "Web":
 		return gp.language
 	else:
-		push_warning("Not Web")
+		push_warning("Not running on Web")
 		return ""
 
 func change(lang:String)-> void:
 	if OS.get_name() == "Web":
 		gp.changeLanguage()
 	else:
-		push_warning("Not Web")
+		push_warning("Not running on Web")
