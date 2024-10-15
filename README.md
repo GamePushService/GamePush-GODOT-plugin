@@ -22,6 +22,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 ## Modules
 | Plugin modules                                |
 | --------------------------------------------- |
+| [Achievements](#achievements)                             |
 | [Device](#device)                             |
 | [Documents](#documents)                       |
 | [Events](#events)                             |
@@ -32,6 +33,76 @@ https://docs.gamepush.com/ru/docs/get-start/
 | [Player](#player)                             |
 | [Segments](#segments)                         |
 | [Server](#server)                             |
+
+### Achievements
+
+#### Signals
+
+| **Signal**          | **Arguments**                                 |
+|---------------------|-----------------------------------------------|
+| `unlocked`          | `achievement: Achievement`                    |
+| `error_unlock`      | `error: String`                               |
+| `progress`          | `achievement: Achievement`                    |
+| `error_progress`    | `error: String`                               |
+| `opened`            | None                                          |
+| `closed`            | None                                          |
+| `fetched`           | `achievement: Array[Achievement]`, `achievements_groups: Array[AchievementsGroup]`, `player_achievements: Array[PlayerAchievement]` |
+| `error_fetch`       | `error: String`                               |
+
+#### Methods
+
+| **Method**          | **Arguments**                 | **Return Type**   |
+|---------------------|-------------------------------|-------------------|
+| `unlock`            | `id: int`, `tag: String`      | `void`            |
+| `set_progress`      | `progress: int`, `id: int`, `tag: String` | `void`    |
+| `has`               | `id_or_tag: Variant`          | `bool`            |
+| `get_progress`      | `id_or_tag: Variant`          | `int`             |
+| `open`              | None                          | `void`            |
+| `fetch`             | None                          | `void`            |
+| `list`              | None                          | `Array[Achievement]` |
+| `player_achievements_list` | None                  | `Array[PlayerAchievement]` |
+| `groups_list`       | None                          | `Array[AchievementsGroup]` |
+
+
+#### Classes
+
+##### Achievement
+
+| **Property**        | **Type**      |
+|---------------------|---------------|
+| `id`                | `int`         |
+| `tag`               | `String`      |
+| `name`              | `String`      |
+| `description`       | `String`      |
+| `icon`              | `String`      |
+| `icon_small`        | `String`      |
+| `locked_icon`       | `String`      |
+| `locked_icon_small` | `String`      |
+| `rare`              | `String`      |
+| `max_progress`      | `int`         |
+| `progress_step`     | `int`         |
+| `is_locked_visible` | `bool`        |
+| `is_locked_description_visible` | `bool` |
+
+##### AchievementsGroup
+
+| **Property**        | **Type**      |
+|---------------------|---------------|
+| `id`                | `int`         |
+| `tag`               | `String`      |
+| `name`              | `String`      |
+| `description`       | `String`      |
+| `achievements`      | `Array`       |
+
+##### PlayerAchievement
+
+| **Property**        | **Type**      |
+|---------------------|---------------|
+| `achievement_id`    | `int`         |
+| `created_at`        | `String`      |
+| `progress`          | `int`         |
+| `unlocked`          | `bool`        |
+
 
 ### Device
 
@@ -166,7 +237,6 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `info_array`     | `args: Array`                               | `void`          |
 | `warn_array`     | `args: Array`                               | `void`          |
 | `error_array`    | `args: Array`                               | `void`          |
-
 
 
 ### Payments
