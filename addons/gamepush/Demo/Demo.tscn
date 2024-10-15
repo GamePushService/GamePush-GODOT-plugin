@@ -112,11 +112,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Experiments"
 
+[node name="Files" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+disabled = true
+text = "Files"
+
 [node name="Fullscreen" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Fullscreen"
 
 [node name="Game" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
@@ -267,6 +271,7 @@ text = "Variables"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Documents" to="." method="_on_documents_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Events" to="." method="_on_events_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Experiments" to="." method="_on_experiments_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Files" to="." method="_on_files_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Fullscreen" to="." method="_on_fullscreen_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Game" to="." method="_on_game_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/GamesCollections" to="." method="_on_games_collections_pressed"]

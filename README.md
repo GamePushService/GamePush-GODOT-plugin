@@ -71,7 +71,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 #### Signals
 
-| **Signal Name**    | **Arguments**                                 |
+| **Signal Name**    | **Emitted Parameters**                                 |
 |--------------------|-----------------------------------------------|
 | `joined`           | `event: Event`, `player_event: PlayerEvent`   |
 | `error_join`       | `error: String`                               |
@@ -131,8 +131,30 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `map`      | None          | `JavaScriptObject` |
 | `has`      | `tag: String`, `cohort: String` | `bool` |
 
+### Files 
+
+### Fullscreen
+
+#### Signals
+
+| **Signal**     | **Emitted Parameters**  |
+|----------------|----------------|
+| `opened`       | None           |
+| `closed`       | None           |
+| `changed`      | None           |
+
+#### Methods
+
+| **Method**     | **Arguments**  | **Return Type** |
+|----------------|----------------|-----------------|
+| `open`         | None           | `void`          |
+| `close`        | None           | `void`          |
+| `toggle`       | None           | `void`          |
+| `is_enabled`   | None           | `bool`          |
+
 
 ### Logger
+
 #### Methods
 
 | **Method Name**  | **Arguments**                               | **Return Type** |
@@ -279,7 +301,9 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 
 #### Classes
+
 ##### Field
+
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `name`                | `String`                 |
@@ -293,12 +317,14 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `interval_increment`   | `IntervalIncrement` or `null` |
 
 ##### FieldVariant
+
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `name`                | `String`                 |
 | `value`               | `Variant`                |  # String, int или bool
 
 ##### FieldLimits
+
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `min`                 | `float`                  |
@@ -306,6 +332,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `could_go_over_limit` | `bool`                   |
 
 ##### IntervalIncrement
+
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `interval`            | `float`                  |

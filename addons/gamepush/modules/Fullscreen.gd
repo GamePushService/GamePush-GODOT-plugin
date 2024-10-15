@@ -8,9 +8,9 @@ signal opened
 signal closed
 signal changed
 
-var callback_open := JavaScriptBridge.create_callback(_open)
-var callback_close := JavaScriptBridge.create_callback(_close) 
-var callback_change := JavaScriptBridge.create_callback(_change) 
+var _callback_open := JavaScriptBridge.create_callback(_open)
+var _callback_close := JavaScriptBridge.create_callback(_close) 
+var _callback_change := JavaScriptBridge.create_callback(_change) 
 
 
 func _ready():
@@ -20,6 +20,9 @@ func _ready():
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
 		fullscreen = gp.fullscreen
+		fullscreen.on("open", _callback_open)
+		fullscreen.on("close", _callback_close)
+		fullscreen.on("change", _callback_change)
 
 func open():
 	if OS.get_name() == "Web":
@@ -39,11 +42,12 @@ func toggle():
 	else:
 		push_warning("Not Web")
 		
-func is_enabled():
+func is_enabled() -> bool:
 	if OS.get_name() == "Web":
 		return fullscreen.isEnabled
 	else:
 		push_warning("Not Web")
+		return false
 
 func _open(args): opened.emit()
 func _close(args): closed.emit()

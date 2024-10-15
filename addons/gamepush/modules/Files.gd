@@ -15,16 +15,16 @@ signal error_fetch
 signal fetched_more
 signal error_fetch_more
 
-var callback_upload = JavaScriptBridge.create_callback(_upload)
-var callback_error_upload = JavaScriptBridge.create_callback(_error_upload)
-var callback_load_content = JavaScriptBridge.create_callback(_load_content)
-var callback_error_load_content = JavaScriptBridge.create_callback(_error_load_content)
-var callback_choose = JavaScriptBridge.create_callback(_choose)
-var callback_error_choose = JavaScriptBridge.create_callback(_error_choose)
-var callback_fetch = JavaScriptBridge.create_callback(_fetch)
-var callback_error_fetch = JavaScriptBridge.create_callback(_error_fetch)
-var callback_fetch_more = JavaScriptBridge.create_callback(_fetch_more)
-var callback_error_fetch_more = JavaScriptBridge.create_callback(_error_fetch_more)
+var _callback_upload = JavaScriptBridge.create_callback(_upload)
+var _callback_error_upload = JavaScriptBridge.create_callback(_error_upload)
+var _callback_load_content = JavaScriptBridge.create_callback(_load_content)
+var _callback_error_load_content = JavaScriptBridge.create_callback(_error_load_content)
+var _callback_choose = JavaScriptBridge.create_callback(_choose)
+var _callback_error_choose = JavaScriptBridge.create_callback(_error_choose)
+var _callback_fetch = JavaScriptBridge.create_callback(_fetch)
+var _callback_error_fetch = JavaScriptBridge.create_callback(_error_fetch)
+var _callback_fetch_more = JavaScriptBridge.create_callback(_fetch_more)
+var _callback_error_fetch_more = JavaScriptBridge.create_callback(_error_fetch_more)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,14 +34,16 @@ func _ready():
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
 		files = gp.files
-		files.on("upload", callback_upload)
-		files.on("error:upload", callback_error_upload)
-		files.on("loadContent", callback_load_content)
-		files.on("error:loadContent", callback_error_load_content)
-		files.on("choose", callback_choose)
-		files.on("error:choose", callback_error_choose)
-		files.on("fetch", callback_fetch)
-		files.on("error:fetch", callback_error_fetch)
+		files.on("upload", _callback_upload)
+		files.on("error:upload", _callback_error_upload)
+		files.on("loadContent", _callback_load_content)
+		files.on("error:loadContent", _callback_error_load_content)
+		files.on("choose", _callback_choose)
+		files.on("error:choose", _callback_error_choose)
+		files.on("fetch", _callback_fetch)
+		files.on("error:fetch", _callback_error_fetch)
+		files.on("fetchMore", _callback_fetch_more)
+		files.on("error:fetchMore", _callback_error_fetch_more)
 
 
 func upload(tags=null):

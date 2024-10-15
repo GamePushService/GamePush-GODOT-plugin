@@ -43,7 +43,7 @@ func _on_experiments_pressed():
 
 
 func _on_fullscreen_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Fullscreen.tscn")
 
 
 func _on_game_pressed():
@@ -128,3 +128,7 @@ func _on_variables_pressed():
 
 func _on_logger_pressed():
 	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Logger.tscn")
+
+
+func _on_files_pressed():
+	pass # Replace with function body.
