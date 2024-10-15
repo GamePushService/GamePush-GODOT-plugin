@@ -146,7 +146,7 @@ text = "Sync"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Name"
+text = "Get Player Name"
 
 [node name="ButtonGrid#GetAvatar" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2

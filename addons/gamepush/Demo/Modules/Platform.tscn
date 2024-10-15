@@ -130,37 +130,37 @@ text = "Type
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Score"
+text = "has_integrated_auth"
 
 [node name="is_logout_available" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Score"
+text = "is_logout_available"
 
 [node name="is_external_links_allowed" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Score"
+text = "is_external_links_allowed"
 
 [node name="is_secret_code_auth_available" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Score"
+text = "is_secret_code_auth_available"
 
 [node name="get_SDK" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Score"
+text = "get_SDK"
 
 [node name="get_native_SDK" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get Score"
+text = "get_native_SDK"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/type" to="." method="_on_type_pressed"]

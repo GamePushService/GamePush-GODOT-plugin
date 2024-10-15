@@ -61,7 +61,7 @@ func get_score():
 	push_warning("Not Web")
 
 # Имя игрока
-func get_name():
+func get_player_name():
 	if OS.get_name() == "Web":
 		if player.name:
 			return player.name

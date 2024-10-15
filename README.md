@@ -427,7 +427,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 |-------------------------|---------------------------------------------------|------------------------|
 | `get_id`                | None                                               | `Variant`              |
 | `get_score`             | None                                               | `Variant`              |
-| `get_name`              | None                                               | `String`               |
+| `get_player_name`              | None                                               | `String`               |
 | `get_avatar`            | None                                               | `String`               |
 | `is_stub`               | None                                               | `bool`                 |
 | `is_logged_in`          | None                                               | `bool`                 |

@@ -185,5 +185,5 @@ class GPImage:
 		tags = Array()
 		js_object["tags"].forEach(callback_f_e)
 		
-	func _f_e(cValue, index, arr):
-		tags.append(cValue)
+	func _f_e(args):
+		tags.append(args[0])

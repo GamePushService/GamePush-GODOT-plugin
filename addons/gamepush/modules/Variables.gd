@@ -20,17 +20,17 @@ func _ready():
 		gp.variables.on("fetchPlatformVariables", JavaScriptBridge.create_callback(_fetch_platform_variables))
 		gp.variables.on("error:fetchPlatformVariables", JavaScriptBridge.create_callback(_error_fetch_platform_variables))
 
-# Asynchronously fetch variables
+
 func fetch() -> void:
 	if OS.get_name() == "Web":
-		# Wait for the variables to be fetched
-		var result = await gp.variables.fetch()
+		gp.variables.fetch()
 	else:
 		push_warning("Not running on Web")
 		
+
 func get_variable(variable_name: String) -> Variant:
 	if OS.get_name() == "Web":
-		var result = await gp.variables.get(variable_name)
+		var result = gp.variables.get(variable_name)
 		if result:
 			return result
 		push_warning("Variable not found: " + variable_name)
@@ -41,14 +41,14 @@ func get_variable(variable_name: String) -> Variant:
 
 func has_variable(variable_name: String) -> bool:
 	if OS.get_name() == "Web":
-		return await gp.variables.has(variable_name)
+		return gp.variables.has(variable_name)
 	else:
 		push_warning("Not running on Web")
 		return false
 
 func type(variable_name: String) -> String:
 	if OS.get_name() == "Web":
-		return await gp.variables.type(variable_name)
+		return gp.variables.type(variable_name)
 	else:
 		push_warning("Not running on Web")
 		return ""

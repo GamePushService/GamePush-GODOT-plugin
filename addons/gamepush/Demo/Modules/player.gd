@@ -45,7 +45,7 @@ func _on_button_grid_sync_button_pressed():
 
 
 func _on_button_grid_get_name_pressed():
-	GP.Logger.info(GP.Player.get_name())
+	GP.Logger.info(GP.Player.get_player_name())
 
 
 func _on_button_grid_get_avatar_pressed():
