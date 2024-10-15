@@ -24,7 +24,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 | --------------------------------------------- |
 | [Device](#device)                             |
 | [Documents](#documents)                       |
-| [Events](#events)                       |
+| [Events](#events)                             |
+| [Experiments](#experiments)                             |
 | [Logger](#logger)                             |
 | [Payments](#payments)                         |
 | [Platform](#platform)                         |
@@ -34,13 +35,13 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### Device
 
-### Signals
+#### Signals
 
 | **Signal Name**      |  **Emitted Parameters**     |    
 |----------------------|-----------------------------|
 | `change_orientation` | `is_portrait: bool`         |
 
-### Methods
+#### Methods
 
 | **Method Name**           | **Arguments**      | **Return Type** |
 |---------------------------|--------------------|-----------------|
@@ -49,7 +50,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### Documents
 
-### Signals
+#### Signals
 
 | **Signal Name**    |  **Emitted Parameters**   |
 |--------------------|---------------------------|
@@ -58,7 +59,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `fetched`          | `document: JavaScriptObject` |
 | `error_fetch`      | `error: String`           |
 
-### Methods
+#### Methods
 
 | **Method Name**     | **Arguments**                                  | **Return Type** |
 |---------------------|------------------------------------------------|-----------------|
@@ -68,14 +69,14 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### Events
 
-### Signals
+#### Signals
 
 | **Signal Name**    | **Arguments**                                 |
 |--------------------|-----------------------------------------------|
 | `joined`           | `event: Event`, `player_event: PlayerEvent`   |
 | `error_join`       | `error: String`                               |
 
-### Methods
+#### Methods
 
 | **Method Name**     | **Arguments**                                         | **Return Type**  |
 |---------------------|-------------------------------------------------------|------------------|
@@ -86,9 +87,9 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `has`               | `id_or_tag: String`                                   | `bool`           |
 | `is_joined`         | `id_or_tag: String`                                   | `bool`           |
 
-### Classes
+#### Classes
 
-#### Event
+##### Event
 
 | **Property Name**    | **Type**  |
 |----------------------|-----------|
@@ -105,23 +106,31 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `is_auto_join`       | `bool`    |
 | `triggers`           | `Array`   |
 
----
 
-#### PlayerEvent 
+##### PlayerEvent 
 
 | **Property Name**    | **Type**  |
 |----------------------|-----------|
 | `event_id`           | `int`     |
 | `stats`              | `PlayerStats` |
 
----
 
-#### PlayerStats 
+##### PlayerStats 
 
 | **Property Name**        | **Type**  |
 |--------------------------|-----------|
 | `active_days`            | `int`     |
 | `active_days_consecutive`| `int`     |
+
+### Experiments
+
+#### Methods
+
+| **Method** | **Arguments** | **Return Type** |
+|------------|---------------|-----------------|
+| `map`      | None          | `JavaScriptObject` |
+| `has`      | `tag: String`, `cohort: String` | `bool` |
+
 
 ### Logger
 #### Methods
@@ -139,7 +148,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 
 ### Payments
-### Signals
+
+#### Signals
 
 | **Signal**         | **Emitted Parameters**                                           |
 |--------------------|------------------------------------------------------------------|
@@ -150,7 +160,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `fetched_products` | `result: Array`                                                 |
 | `error_fetch_products` | `error: String`                                             |
 
-### Methods
+#### Methods
 
 | **Method Name**                | **Arguments**                         | **Return Type**  |
 |---------------------------------|---------------------------------------|------------------|
@@ -165,7 +175,9 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `subscribe`                     | `id :int , tag :String`               | `void`           |
 | `unsubscribe`                   | `id :int , tag :String`               | `void`           |
 
-### Class: Purchase
+#### Classes
+
+##### Purchase
 
 | **Variable**        | **Type**           |
 |---------------------|--------------------|
@@ -182,7 +194,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `period`            | `int`              |
 | `trial_period`      | `int`              |
 
-### Class: PlayerPurchase
+##### PlayerPurchase
 
 | **Variable**        | **Type**             |
 |---------------------|----------------------|
@@ -267,7 +279,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 
 #### Classes
-Field
+##### Field
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `name`                | `String`                 |
@@ -280,20 +292,20 @@ Field
 | `limits`              | `FieldLimits` or `null`  |
 | `interval_increment`   | `IntervalIncrement` or `null` |
 
-FieldVariant
+##### FieldVariant
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `name`                | `String`                 |
 | `value`               | `Variant`                |  # String, int или bool
 
-FieldLimits
+##### FieldLimits
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `min`                 | `float`                  |
 | `max`                 | `float`                  |
 | `could_go_over_limit` | `bool`                   |
 
-IntervalIncrement
+##### IntervalIncrement
 | Variable              | Type                     |
 |-----------------------|--------------------------|
 | `interval`            | `float`                  |

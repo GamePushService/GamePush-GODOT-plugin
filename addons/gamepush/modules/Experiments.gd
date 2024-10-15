@@ -13,13 +13,14 @@ func _ready():
 			await get_tree().create_timer(0.1).timeout
 		experiments = gp.experiments
 		
-func map():
+func map() -> JavaScriptObject:
 	if OS.get_name() == "Web":
-	#NEED DATA STRUCTURE
 		return experiments.map
 	push_warning("Not Web")
-	
-func has(tag:String, cohort:String):
+	return JavaScriptBridge.create_object("Object")
+
+func has(tag:String, cohort:String) -> bool:
 	if OS.get_name() == "Web":
-		return await experiments.has(tag, cohort)
+		return experiments.has(tag, cohort)
 	push_warning("Not Web")
+	return false

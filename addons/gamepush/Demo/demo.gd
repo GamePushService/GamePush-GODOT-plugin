@@ -39,7 +39,7 @@ func _on_events_pressed():
 
 
 func _on_experiments_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Experiments.tscn")
 
 
 func _on_fullscreen_pressed():
