@@ -27,6 +27,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | [Documents](#documents)                       |
 | [Events](#events)                             |
 | [Experiments](#experiments)                             |
+| [Language](#language)                             |
 | [Logger](#logger)                             |
 | [Payments](#payments)                         |
 | [Platform](#platform)                         |
@@ -223,6 +224,14 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `toggle`       | None           | `void`          |
 | `is_enabled`   | None           | `bool`          |
 
+### Language
+
+#### Methods
+
+| **Method** | **Arguments**          | **Return Type** |
+|------------|------------------------|-----------------|
+| `current`  | None                   | `String`        |
+| `change`   | `lang: String`         | `void`          |
 
 ### Logger
 

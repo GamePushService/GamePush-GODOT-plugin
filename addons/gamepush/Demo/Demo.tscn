@@ -148,7 +148,6 @@ text = "Images"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Language"
 
 [node name="Leaderboard" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]

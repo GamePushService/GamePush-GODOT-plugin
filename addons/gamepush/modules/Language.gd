@@ -11,7 +11,8 @@ func _ready():
 			gp = window.gp
 			await get_tree().create_timer(0.1).timeout
 			
-
+			
+# format ISO 639-1
 func current() -> String:
 	if OS.get_name() == "Web":
 		return gp.language
@@ -21,6 +22,6 @@ func current() -> String:
 
 func change(lang:String)-> void:
 	if OS.get_name() == "Web":
-		gp.changeLanguage()
+		gp.changeLanguage(lang)
 	else:
 		push_warning("Not running on Web")
