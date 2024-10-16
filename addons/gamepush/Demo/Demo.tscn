@@ -256,7 +256,6 @@ text = "Uniques"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Variables"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Achievements" to="." method="_on_achievements_pressed"]

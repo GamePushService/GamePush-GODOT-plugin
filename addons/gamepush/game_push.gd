@@ -70,8 +70,8 @@ func _ready():
 	var timer := Timer.new()
 	var is_preloader_show = false
 	var ready_delay = 0.0
-	is_preloader_show = ProjectSettings.get_setting("gp/config/is_preloader_show")
-	ready_delay = ProjectSettings.get_setting("gp/config/ready_delay")
+	is_preloader_show = ProjectSettings.get_setting("GamePush/config/is_preloader_show")
+	ready_delay = ProjectSettings.get_setting("GamePush/config/ready_delay")
 	if is_preloader_show:
 		Ads.show_preloader()
 	add_child(timer)

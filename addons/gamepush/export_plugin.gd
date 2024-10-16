@@ -21,6 +21,10 @@ func _export_begin(features: PackedStringArray , is_debug: bool, path: String, f
 	
 
 func _export_end() -> void:
+	var project_id := ProjectSettings.get_setting("GamePush/config/project_id")
+	var public_token := ProjectSettings.get_setting("GamePush/config/token")
+	var is_archive := ProjectSettings.get_setting("GamePush/config/is_archive")
+	var archive_name := ProjectSettings.get_setting("GamePush/config/archive_name")
 	var file := FileAccess.open(export_path, FileAccess.READ)
 	var html := file.get_as_text()
 	file.close()
@@ -37,6 +41,8 @@ func _export_end() -> void:
 	file.store_string(html)
 	file.close()
 	if is_archive:
+		if !archive_name.ends_with(".zip"):
+			archive_name = archive_name + ".zip"
 		zip_export(archive_name)
 
 

@@ -31,6 +31,7 @@ text = "Projet ID:"
 [node name="ProjectId" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+text = "16093"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -42,11 +43,13 @@ text = "Token:"
 [node name="Token" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+text = "oKJmbqUFZzW6H6BNIEqiolvdBGs7UYIl"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
@@ -57,6 +60,7 @@ text = "Show preloader Ad:"
 layout_mode = 2
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer6"]
@@ -65,6 +69,7 @@ text = "Game ready delay:"
 
 [node name="ReadyDelay" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer6"]
 layout_mode = 2
+text = "126"
 placeholder_text = "0"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -76,6 +81,7 @@ text = "Archive export folder to zip:"
 
 [node name="IsArchive" type="CheckBox" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
+button_pressed = true
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -87,9 +93,9 @@ text = "Archive name:"
 [node name="NameArchive" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+text = "export_archive.zip"
 placeholder_text = "export_archive.zip"
 max_length = 20
-editable = false
 expand_to_text_length = true
 
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/ProjectId" to="." method="_on_project_id_text_changed"]
