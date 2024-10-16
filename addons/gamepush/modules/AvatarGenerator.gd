@@ -3,7 +3,7 @@ extends Node
 var window: JavaScriptObject
 var gp: JavaScriptObject
 
-#Needs Docs or something
+
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")

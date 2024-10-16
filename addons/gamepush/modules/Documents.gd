@@ -6,7 +6,7 @@ var documents:JavaScriptObject
 
 signal opened
 signal closed
-signal fetched(document:JavaScriptObject)
+signal fetched(document:Dictionary)
 signal error_fetch(error:String)
 
 var _callback_open = JavaScriptBridge.create_callback(_open)
@@ -50,5 +50,5 @@ func fetch(type:String, format:String="HTML") -> void:
 
 func _open(args): opened.emit()
 func _close(args): closed.emit()
-func _fetch(args): fetched.emit(args[0])
+func _fetch(args): fetched.emit(GP._js_to_dict(args[0]))
 func _error_fetch(args): error_fetch.emit(args[0].message)

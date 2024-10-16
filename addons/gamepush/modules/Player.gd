@@ -88,6 +88,7 @@ func is_stub():
 		#return player.fields
 	#push_warning("Not Web")
 
+
 # The player is logged in
 func is_logged_in():
 	if OS.get_name() == "Web":
@@ -199,11 +200,11 @@ func has(key: String) -> bool:
 	return false
 
 # Return the player state as an object
-func to_json() -> JavaScriptObject:
+func to_json() -> Dictionary:
 	if OS.get_name() == "Web":
-		return await player.toJSON()
+		return GP._js_to_dict(player.toJSON())
 	push_warning("Not Web")
-	return JavaScriptBridge.create_object("Object")
+	return {}
 
 # Set the state from the object
 func from_json(data: Dictionary) -> void:

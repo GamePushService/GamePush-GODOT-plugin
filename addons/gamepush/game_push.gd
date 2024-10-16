@@ -81,3 +81,9 @@ func _ready():
 
 func _on_timer_timeout():
 	Game.game_start()
+	
+	
+func _js_to_dict(js_object:JavaScriptObject) -> Variant:
+	var window := JavaScriptBridge.get_interface("window")
+	var strn = window.JSON.stringify(js_object)
+	return JSON.parse_string(strn)

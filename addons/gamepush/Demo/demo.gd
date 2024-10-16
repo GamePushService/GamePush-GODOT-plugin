@@ -123,7 +123,8 @@ func _on_uniques_pressed():
 
 
 func _on_variables_pressed():
-	pass # Replace with function body.
+	pass
+		
 
 
 func _on_logger_pressed():

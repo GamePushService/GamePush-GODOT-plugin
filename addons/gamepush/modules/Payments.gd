@@ -209,7 +209,7 @@ class Purchase:
 
 class PlayerPurchase:
 	var product_id: int
-	var payload: JavaScriptObject
+	var payload: Dictionary
 	var created_at: String
 	var gift: bool
 	var subscribed: bool
@@ -218,7 +218,8 @@ class PlayerPurchase:
 	func _to_js():
 		var js_object := JavaScriptBridge.create_object("Object")
 		js_object["productId"] = product_id
-		js_object["payload"] = payload
+		for p in payload:
+			js_object["payload"][p] = payload[p]
 		js_object["createdAt"] = created_at
 		js_object["gift"] = gift
 		js_object["subscribed"] = subscribed
@@ -227,7 +228,7 @@ class PlayerPurchase:
 
 	func _from_js(js_object) -> PlayerPurchase:
 		product_id = js_object["productId"]
-		payload = js_object["payload"]
+		payload = GP._js_to_dict(js_object["payload"])
 		created_at = js_object["createdAt"]
 		gift = js_object["gift"]
 		subscribed = js_object["subscribed"]

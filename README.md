@@ -172,9 +172,45 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### Analytics
 
+#### Methods
+
+| **Method**          | **Arguments**                               | **Return Type** |
+|---------------------|---------------------------------------------|-----------------|
+| `hit`               | `url: String`                               | `void`          |
+| `goal`              | `name: String, value: Variant = null`       | `void`          |
+
 ### App
 
+#### Signals
+
+| **Signal**            | **Emitted Parameters**                        |
+|-----------------------|--------------------------------------|
+| `review_requested`     | `success: bool, rating: int, error: String` |
+| `shortcut_added`       | `success: bool`                     |
+
+#### Methods
+
+| **Method**                | **Arguments**                  | **Return Type** |
+|---------------------------|-------------------------------|-----------------|
+| `title()`                 | `None`                        | `String`        |
+| `description()`           | `None`                        | `String`        |
+| `image()`                 | `None`                        | `String`        |
+| `url()`                   | `None`                        | `String`        |
+| `request_review()`        | `None`                        | `void`          |
+| `can_request_review()`    | `None`                        | `bool`          |
+| `is_already_reviewed()`   | `None`                        | `bool`          |
+| `add_shortcut()`          | `None`                        | `void`          |
+| `can_add_shortcut()`      | `None`                        | `bool`          |
+
+
 ### AvatarGenerator
+
+#### Methods
+
+| **Method**                 | **Arguments**                  | **Return Type** |
+|----------------------------|-------------------------------|-----------------|
+| `current()`                | `None`                        | `String`        |
+| `generate_avatar(has, size)`| `has: Variant, size: int`     | `String`        |
 
 ### Channels
 
@@ -201,7 +237,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 |--------------------|---------------------------|
 | `opened`           | None                      |
 | `closed`           | None                      |
-| `fetched`          | `document: JavaScriptObject` |
+| `fetched`          | `document: Dictionary` |
 | `error_fetch`      | `error: String`           |
 
 #### Methods
@@ -273,7 +309,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method** | **Arguments** | **Return Type** |
 |------------|---------------|-----------------|
-| `map`      | None          | `JavaScriptObject` |
+| `map`      | None          | `Dictionary` |
 | `has`      | `tag: String`, `cohort: String` | `bool` |
 
 ### Files 
@@ -298,6 +334,24 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `is_enabled`   | None           | `bool`          |
 
 ### Game
+
+### Signals
+
+| **Signal**  | **Emitted Parameters** |
+|-------------|------------------------|
+| `paused`    | None                   |
+| `resumed`   | None                   |
+
+### Methods
+
+| **Method**          | **Arguments**    | **Return Type** |
+|---------------------|------------------|-----------------|
+| `is_paused`       | `None`           | `bool`          | 
+| `pause`           | `None`           | `void`          |
+| `resume`          | `None`           | `void`          |
+| `game_start`      | `None`           | `void`          |
+| `gameplay_start`  | `None`           | `void`          |
+| `gameplay_stop`   | `None`           | `void`          |
 
 ### GamesCollections
 
@@ -383,7 +437,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | **Variable**        | **Type**             |
 |---------------------|----------------------|
 | `product_id`        | `int`                |
-| `payload`           | `JavaScriptObject`   |
+| `payload`           | `Dictionary`         |
 | `created_at`        | `String`             |
 | `gift`              | `bool`               |
 | `subscribed`        | `bool`               |
@@ -445,7 +499,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `add_value`             | `key: String`, `value: Variant`                    | `void`                 |
 | `toggle`                | `key: String`                                      | `void`                 |
 | `has`                   | `key: String`                                      | `bool`                 |
-| `to_json`               | None                                               | `JavaScriptObject`     |
+| `to_json`               | None                                               | `Dictionary`           |
 | `from_json`             | `data: Dictionary`                                 | `void`                 |
 | `reset`                 | None                                               | `void`                 |
 | `remove`                | None                                               | `void`                 |

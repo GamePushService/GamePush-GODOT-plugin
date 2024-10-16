@@ -13,9 +13,9 @@ func _ready():
 			await get_tree().create_timer(0.1).timeout
 		experiments = gp.experiments
 		
-func map() -> JavaScriptObject:
+func map() -> Dictionary:
 	if OS.get_name() == "Web":
-		return experiments.map
+		return GP._js_to_dict(experiments.map)
 	push_warning("Not Web")
 	return JavaScriptBridge.create_object("Object")
 
