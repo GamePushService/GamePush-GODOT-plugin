@@ -35,6 +35,9 @@ extends Node
 
 
 func _ready():
+	if !OS.get_name() == "Web":
+		push_warning("Not running on Web")
+		return 
 	add_child(Achievements)
 	add_child(Ads)
 	add_child(Analytics)
@@ -68,15 +71,16 @@ func _ready():
 	add_child(Uniques)
 	add_child(Storage)
 	var timer := Timer.new()
-	var is_preloader_show = false
-	var ready_delay = 0.0
-	is_preloader_show = ProjectSettings.get_setting("GamePush/config/is_preloader_show")
-	ready_delay = ProjectSettings.get_setting("GamePush/config/ready_delay")
+	var is_preloader_show := ProjectSettings.get_setting("game_push/config/is_preloader_show", false)
+	var ready_delay := ProjectSettings.get_setting("game_push/config/ready_delay", 0.0)
 	if is_preloader_show:
 		Ads.show_preloader()
-	add_child(timer)
-	timer.timeout.connect(_on_timer_timeout)
-	timer.start(ready_delay)
+	if ready_delay > 0.0:
+		add_child(timer)
+		timer.timeout.connect(_on_timer_timeout)
+		timer.start(ready_delay)
+	else:
+		_on_timer_timeout()
 
 
 func _on_timer_timeout():
