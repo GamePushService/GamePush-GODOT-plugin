@@ -13,7 +13,7 @@ func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
 		while not gp:
-			gp = window.gp
+			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		gp.on("pause", _callback_pause)
 		gp.on("resume", _callback_resume)
@@ -42,6 +42,8 @@ func resume() -> void:
 
 func game_start() -> void:
 	if OS.get_name() == "Web":
+		while not gp:
+			pass
 		gp.gameStart()
 	else:
 		push_warning("Not Web")
