@@ -1,5 +1,5 @@
 extends Node
-
+#
 @onready var Achievements := preload("res://addons/gamepush/modules/Achievements.gd").new()
 @onready var Ads := preload("res://addons/gamepush/modules/Ads.gd").new()
 @onready var Analytics := preload("res://addons/gamepush/modules/Analytics.gd").new()
@@ -33,11 +33,26 @@ extends Node
 @onready var Uniques := preload("res://addons/gamepush/modules/Uniques.gd").new()
 @onready var Storage := preload("res://addons/gamepush/modules/Storage.gd").new()
 
+var gp:JavaScriptObject
+
+signal inited()
 
 func _ready():
 	if !OS.get_name() == "Web":
 		push_warning("Not running on Web")
-		return 
+		return
+	var project_id := str(ProjectSettings.get_setting("game_push/config/project_id"))
+	var public_token := ProjectSettings.get_setting("game_push/config/token")
+	var clbk := JavaScriptBridge.create_callback(func(args):
+		gp = args[0])
+	var win := JavaScriptBridge.get_interface("window")
+	win.setGpInitCallback(clbk)
+	var lib_url := "https://gamepush.com/sdk/game-score.js?projectId=%s&publicToken=%s&callback=onGPInit" % [project_id, public_token]
+	var js_code = "var script = document.createElement('script'); script.src = '" + lib_url + "'; document.head.appendChild(script);"
+	JavaScriptBridge.eval(js_code, true)
+	while not gp:
+		await get_tree().create_timer(0.1).timeout
+		
 	add_child(Achievements)
 	add_child(Ads)
 	add_child(Analytics)
@@ -70,6 +85,7 @@ func _ready():
 	add_child(Variables)
 	add_child(Uniques)
 	add_child(Storage)
+	
 	var timer := Timer.new()
 	var is_preloader_show := ProjectSettings.get_setting("game_push/config/is_preloader_show", false)
 	var ready_delay := ProjectSettings.get_setting("game_push/config/ready_delay", 0.0)
@@ -81,6 +97,8 @@ func _ready():
 		timer.start(ready_delay)
 	else:
 		_on_timer_timeout()
+		
+	inited.emit()
 
 
 func _on_timer_timeout():

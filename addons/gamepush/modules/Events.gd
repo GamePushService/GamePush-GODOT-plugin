@@ -13,9 +13,8 @@ var _callback_error_join := JavaScriptBridge.create_callback(_error_join)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if OS.get_name() == "Web":
-		window = JavaScriptBridge.get_interface("window")
 		while not gp:
-			gp = window.gp
+			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		events = gp.events
 		events.on("join", _callback_joined)

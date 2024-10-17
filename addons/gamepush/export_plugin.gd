@@ -30,13 +30,11 @@ func _export_end() -> void:
 	file.close()
 	var pos = html.find('</head>')
 	html = html.insert(pos, 
-				'<script async src= "https://gamepush.com/sdk/game-score.js?projectId=%s&publicToken=%s&callback=onGPInit"></script>\n 
-				<script>
-					let gp
-					window.onGPInit = async (_gp) => {
-						window.gp = _gp;
+					'<script>
+					function setGpInitCallback(callback) {
+						window.onGPInit = callback;
 					};
-				</script>\n' % [project_id, public_token])
+				</script>\n')
 	file = FileAccess.open(export_path, FileAccess.WRITE)
 	file.store_string(html)
 	file.close()

@@ -14,7 +14,7 @@ func _ready():
 
 func _yield_until_gp_ready():
 	while not gp:
-		gp = window.gp
+		gp = GP.gp
 		await get_tree().create_timer(0.1).timeout
 	platform = gp.platform
 

@@ -33,7 +33,7 @@ func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
 		while not gp:
-			gp = window.gp
+			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		player = gp.player
 		player.on("sync", callback_sync)

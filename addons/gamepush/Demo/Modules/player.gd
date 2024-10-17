@@ -13,7 +13,7 @@ func _ready():
 		request.request_completed.connect(_request_completed)
 		request.request(ulr_avatar)
 		$MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/IDLabel.text = "ID: " + str(GP.Player.get_id())
-		$MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/NameLabel.text = "NAME: " + str(GP.Player.get_name())
+		$MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/NameLabel.text = "NAME: " + str(GP.Player.get_player_name())
 		
 func _request_completed(result: int, response_code: int, headers: Array, body: PackedByteArray) -> void:
 	if response_code == 200:

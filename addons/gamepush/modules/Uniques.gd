@@ -14,7 +14,7 @@ func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
 		while not gp:
-			gp = window.gp
+			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		gp.uniques.on("register", JavaScriptBridge.create_callback(_registered))
 		gp.uniques.on("error:register", JavaScriptBridge.create_callback(_registration_error))
