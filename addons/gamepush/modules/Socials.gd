@@ -16,6 +16,7 @@ func _ready():
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		gp.socials.on("share", JavaScriptBridge.create_callback(_share))
+		gp.socials.on("post", JavaScriptBridge.create_callback(_post))
 		gp.socials.on("invite", JavaScriptBridge.create_callback(_invite))
 		gp.socials.on("joinCommunity", JavaScriptBridge.create_callback(_join_community))
 
@@ -125,6 +126,9 @@ func get_share_param(param: String) -> String:
 	
 func _share(success:bool) -> void:
 	shared.emit(success)
+	
+func _post(success:bool) -> void:
+	posted.emit(success)
 	
 func _invite(success) -> void:
 	invited.connect(success)

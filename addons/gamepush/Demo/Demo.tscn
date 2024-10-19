@@ -221,7 +221,6 @@ text = "Server"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Socials"
 
 [node name="Storage" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
