@@ -39,6 +39,7 @@ signal inited()
 
 func _ready():
 	if !OS.get_name() == "Web":
+		inited.emit()
 		push_warning("Not running on Web")
 		return
 	var project_id := str(ProjectSettings.get_setting("game_push/config/project_id"))
