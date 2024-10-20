@@ -10,18 +10,26 @@ signal check_error(error: String)
 signal deleted(unique_value: UniqueValue)
 signal delete_error(error: String)
 
+var _callback_registered := JavaScriptBridge.create_callback(_registered)
+var _callback_registration_error := JavaScriptBridge.create_callback(_registration_error)
+var _callback_checked := JavaScriptBridge.create_callback(_checked)
+var _callback_check_error := JavaScriptBridge.create_callback(_check_error)
+var _callback_deleted := JavaScriptBridge.create_callback(_deleted)
+var _callback_delete_error := JavaScriptBridge.create_callback(_delete_error)
+
+
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
 		while not gp:
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
-		gp.uniques.on("register", JavaScriptBridge.create_callback(_registered))
-		gp.uniques.on("error:register", JavaScriptBridge.create_callback(_registration_error))
-		gp.uniques.on("check", JavaScriptBridge.create_callback(_checked))
-		gp.uniques.on("error:check", JavaScriptBridge.create_callback(_check_error))
-		gp.uniques.on("delete", JavaScriptBridge.create_callback(_deleted))
-		gp.uniques.on("error:delete", JavaScriptBridge.create_callback(_delete_error))
+		gp.uniques.on("register", _callback_registered)
+		gp.uniques.on("error:register", _callback_registration_error)
+		gp.uniques.on("check", _callback_checked)
+		gp.uniques.on("error:check", _callback_check_error)
+		gp.uniques.on("delete", _callback_deleted)
+		gp.uniques.on("error:delete", _callback_delete_error)
 
 # Method to register or update unique data by tag and value
 func register(tag: String, value: String) -> bool:
@@ -30,7 +38,7 @@ func register(tag: String, value: String) -> bool:
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["tag"] = tag
 		conf["value"] = value
-		result = await gp.uniques.register(conf)
+		result = gp.uniques.register(conf)
 	else:
 		push_warning("Not running on Web")
 	return result
@@ -38,7 +46,7 @@ func register(tag: String, value: String) -> bool:
 # Get a unique value by tag
 func get_value(tag: String) -> String:
 	if OS.get_name() == "Web":
-		return await gp.uniques.get(tag)
+		return gp.uniques.get(tag)
 	push_warning("Not running on Web")
 	return ""
 	
@@ -46,11 +54,12 @@ func get_value(tag: String) -> String:
 func list() -> Array:
 	if OS.get_name() == "Web":
 		var unique_values = []
-		var values_list = gp.uniques.list
-		for js_object in values_list:
+		var callback := JavaScriptBridge.create_callback(func (args):
 			var unique_value = UniqueValue.new()
-			unique_value._from_js(js_object)
+			unique_value._from_js(args[0])
 			unique_values.append(unique_value)
+			)
+		gp.uniques.list.forEach(callback)
 		return unique_values
 	push_warning("Not running on Web")
 	return []
@@ -61,7 +70,7 @@ func check(tag: String, value: String) -> bool:
 		var conf = JavaScriptBridge.create_object("Object")
 		conf["tag"] = tag
 		conf["value"] = value
-		var result = await gp.uniques.check(conf)
+		var result = gp.uniques.check(conf)
 		return result.success
 	push_warning("Not running on Web")
 	return false
@@ -78,11 +87,11 @@ func delete_unique(tag: String) -> void:
 # Callback for successful unique registration
 func _registered(args) -> void:
 	var unique_value = UniqueValue.new()._from_js(args[0])
-	emit_signal("unique_registered", unique_value)
+	registered.emit(unique_value)
 
 # Callback for registration error
 func _registration_error(args) -> void:
-	emit_signal("unique_registration_error", args[0])
+	register_error.emit(args[0])
 	
 # Callback for successful unique value check
 func _checked(args) -> void:
