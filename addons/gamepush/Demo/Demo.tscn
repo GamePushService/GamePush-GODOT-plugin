@@ -240,7 +240,6 @@ text = "System"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Triggers"
 
 [node name="Uniques" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]

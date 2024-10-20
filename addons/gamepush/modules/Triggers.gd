@@ -5,7 +5,20 @@ var gp:JavaScriptObject
 
 signal activated(trigger: Trigger)
 signal claimed(trigger: Trigger)
+signal _inner_claimed(res:Dictionary)
 signal error_claim(err: String)
+
+var _callback_claimed := JavaScriptBridge.create_callback(func(args):
+	var response: Dictionary = {
+			"trigger": Trigger.new()._from_js(args[0].trigger),
+			"isActivated": args[0].isActivated,
+			"isClaimed": args[0].isClaimed
+		}
+	_inner_claimed.emit(response))
+
+var _callback_claim := JavaScriptBridge.create_callback(_claimed)
+var _callback_activate := JavaScriptBridge.create_callback(_claimed)
+var _callback_error_claim := JavaScriptBridge.create_callback(_claimed)
 
 func _ready():
 	if OS.get_name() == "Web":
@@ -13,9 +26,9 @@ func _ready():
 		while not gp:
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
-		gp.triggers.on("activate", JavaScriptBridge.create_callback(_activated))
-		gp.triggers.on("claim", JavaScriptBridge.create_callback(_claimed))
-		gp.triggers.on("error:claim", JavaScriptBridge.create_callback(_error_claim))
+		gp.triggers.on("activate", _callback_activate)
+		gp.triggers.on("claim", _callback_claim)
+		gp.triggers.on("error:claim", _callback_error_claim)
 
 func claim(id: String="", tag: String="") -> Dictionary:
 	if OS.get_name() == "Web":
@@ -27,12 +40,8 @@ func claim(id: String="", tag: String="") -> Dictionary:
 		else:
 			push_warning("No id or tag")
 			return {"trigger": null, "isActivated": false, "isClaimed": false}
-		var result = await gp.triggers.claim(conf)
-		var response: Dictionary = {
-			"trigger": Trigger.new()._from_js(result.trigger),
-			"isActivated": result.isActivated,
-			"isClaimed": result.isClaimed
-		}
+		gp.triggers.claim(conf).then(_callback_claimed)
+		var response = await _inner_claimed
 		return response
 	else:
 		push_warning("Not running on Web")
@@ -42,10 +51,11 @@ func list() -> Array:
 	var trigger_list: Array = []
 	if OS.get_name() == "Web":
 		var triggers = gp.triggers.list
-		triggers.forEach(JavaScriptBridge.create_callback(func(trigger_js):
-			var trigger = Trigger.new()._from_js(trigger_js)
+		var callback = JavaScriptBridge.create_callback(func(args):
+			var trigger = Trigger.new()._from_js(args[0])
 			trigger_list.append(trigger)
-		))
+		)
+		triggers.forEach(callback)
 	else:
 		push_warning("Not running on Web")
 	return trigger_list
@@ -54,13 +64,13 @@ func activated_list() -> Array:
 	var activated_triggers: Array = []
 	if OS.get_name() == "Web":
 		var activated_list = gp.triggers.activatedList
-		activated_list.forEach(JavaScriptBridge.create_callback(func(trigger_js):
-			var trigger = Trigger.new()._from_js(trigger_js)
-			activated_triggers.append(trigger)
-		))
+		var callback = JavaScriptBridge.create_callback(func(args):
+			activated_triggers.append(GP._js_to_dict(args[0]))
+		)
+		activated_list.forEach(callback)
 	else:
 		push_warning("Not running on Web")
-	return activated_triggers
+	return activated_triggers	
 	
 	
 func get_trigger(trigger_id: String) -> Dictionary:
@@ -68,7 +78,7 @@ func get_trigger(trigger_id: String) -> Dictionary:
 	if OS.get_name() == "Web":
 		var result = gp.triggers.getTrigger(trigger_id)
 		if result:
-			trigger_info["trigger"] = result.trigger
+			trigger_info["trigger"] = Trigger.new()._from_js(result.trigger)
 			trigger_info["isActivated"] = result.isActivated
 			trigger_info["isClaimed"] = result.isClaimed
 		else:
@@ -79,13 +89,13 @@ func get_trigger(trigger_id: String) -> Dictionary:
 
 func is_trigger_activated(id_or_tag: String) -> bool:
 	if OS.get_name() == "Web":
-		return await gp.triggers.isActivated(id_or_tag)
+		return gp.triggers.isActivated(id_or_tag)
 	push_warning("Not running on Web")
 	return false
 
 func is_claimed(id_or_tag: String) -> bool:
 	if OS.get_name() == "Web":
-		return await gp.triggers.isClaimed(id_or_tag)
+		return gp.triggers.isClaimed(id_or_tag)
 	push_warning("Not running on Web")
 	return false
 
