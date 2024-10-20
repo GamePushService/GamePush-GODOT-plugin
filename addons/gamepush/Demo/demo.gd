@@ -123,8 +123,8 @@ func _on_uniques_pressed():
 
 
 func _on_variables_pressed():
-	pass
-		
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Variables.tscn")
+
 
 
 func _on_logger_pressed():

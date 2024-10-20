@@ -59,6 +59,12 @@ func is_platform_variables_available() -> bool:
 	push_warning("Not running on Web")
 	return false
 	
+	
+signal _fetched_platform_variables(result:Dictionary)
+
+var _callback_fetch_platform_variables := JavaScriptBridge.create_callback(func(args):
+	_fetched_platform_variables.emit(GP._js_to_dict(args[0])))
+	
 func fetch_platform_variables(client_params:Dictionary={}) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
@@ -68,33 +74,22 @@ func fetch_platform_variables(client_params:Dictionary={}) -> Dictionary:
 				params[k] = client_params[k]
 			conf["clientParams"] = params
 		# Wait for the platform variables to be fetched
-		var result = await gp.variables.fetchPlatformVariables(conf)
-		if result:
-			# Return the object of key-value pairs (platform variables)
-			var _res := {}
-			#TODO need test 	
-			var entries = window.Object.entries(result)
-			entries.forEach(JavaScriptBridge.create_callback(func(kv): _res[kv[0]] = kv[1]))
-			return result
-		else:
-			push_warning("Failed to fetch platform variables")
-			return {}
+		gp.variables.fetchPlatformVariables(conf).then(_callback_fetch_platform_variables)
+		return await _fetched_platform_variables
 	push_warning("Not running on Web")
 	return {}
 
 # Callback for successful variable fetch
 func _fetched() -> void:
-	print("Variables fetched successfully!")
 	fetched.emit()
 
 # Callback for fetch error
 func _fetched_error(args) -> void:
-	print("Error fetching variables: ", args[0])
 	fetched.emit(args[0])
 	
 # Handle successful fetching of platform variables
 func _fetch_platform_variables(args) -> void:
-	var variables = args[0] #TODO convert to Dict
+	var variables = GP._js_to_dict(args[0]) 
 	platform_variables_fetched.emit(variables)
 
 # Handle error during fetching platform variables
