@@ -91,7 +91,7 @@ func _on_rewards_pressed():
 
 
 func _on_schedulers_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Shedulers.tscn")
 
 
 func _on_segments_pressed():

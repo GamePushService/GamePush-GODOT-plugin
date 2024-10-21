@@ -37,6 +37,9 @@ func _ready():
 		schedulers.on("join", JavaScriptBridge.create_callback(_on_join))
 		schedulers.on("error:join", JavaScriptBridge.create_callback(_on_error_join))
 
+
+signal _register(a:JavaScriptObject)
+
 func register(id_or_tag: Variant) -> SchedulerInfo:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
@@ -44,49 +47,68 @@ func register(id_or_tag: Variant) -> SchedulerInfo:
 			conf["id"] = id_or_tag
 		elif typeof(id_or_tag) == TYPE_STRING:
 			conf["tag"] = id_or_tag
-		var _result = gp.schedulers.register(conf)
+		var callback := JavaScriptBridge.create_callback(func(args): _register.emit(args[0]))
+		gp.schedulers.register(conf).then(callback)
+		var _result = await _register
 		var result = SchedulerInfo.new()
 		result._from_js(_result)
 		return result
 	push_warning("Not Web")
 	return SchedulerInfo.new()
 
+signal _claim_day(a:JavaScriptObject)
 
 func claim_day(id_or_tag: Variant, day: int) -> SchedulerDayInfo:
 	if OS.get_name() == "Web":
-		var _result = await schedulers.claimDay(id_or_tag, day)
+		var callback := JavaScriptBridge.create_callback(func(args): _claim_day.emit(args[0]))
+		schedulers.claimDay(id_or_tag, day).then(callback)
+		var _result = await _claim_day
 		var result = SchedulerDayInfo.new()
 		result._from_js(_result)
 		return result
 	push_warning("Not running on Web")
 	return SchedulerDayInfo.new()
+
+signal _claim_day_additional(a:JavaScriptObject)
 
 func claim_day_additional(id_or_tag: Variant, day: int, trigger_id_or_tag: Variant) -> SchedulerDayInfo:
 	if OS.get_name() == "Web":
-		var _result = await schedulers.claimDayAdditional(id_or_tag, day, trigger_id_or_tag)
-		var result = SchedulerDayInfo.new()
-		result._from_js(_result)
-		return result
-	push_warning("Not running on Web")
-	return SchedulerDayInfo.new()
-	
-func claim_all_day(id_or_tag: Variant, day: int) -> SchedulerDayInfo:
-	if OS.get_name() == "Web":
-		var _result = await schedulers.claimAllDay(id_or_tag, day)
+		var callback := JavaScriptBridge.create_callback(func(args): _claim_day_additional.emit(args[0]))
+		schedulers.claimDayAdditional(id_or_tag, day, trigger_id_or_tag).then(callback)
+		var _result = await _claim_day_additional
 		var result = SchedulerDayInfo.new()
 		result._from_js(_result)
 		return result
 	push_warning("Not running on Web")
 	return SchedulerDayInfo.new()
 
+signal _claim_all_day(a:JavaScriptObject)
+
+func claim_all_day(id_or_tag: Variant, day: int) -> SchedulerDayInfo:
+	if OS.get_name() == "Web":
+		var callback := JavaScriptBridge.create_callback(func(args): _claim_all_day.emit(args[0]))
+		schedulers.claimAllDay(id_or_tag, day).then(callback)
+		var _result = await _claim_all_day
+		var result = SchedulerDayInfo.new()
+		result._from_js(_result)
+		return result
+	push_warning("Not running on Web")
+	return SchedulerDayInfo.new()
+
+
+signal _claim_all_days(a:JavaScriptObject)
+
 func claim_all_days(id_or_tag: Variant) -> SchedulerInfo:
 	if OS.get_name() == "Web":
-		var _result = await schedulers.claimAllDays(id_or_tag)
+		var callback := JavaScriptBridge.create_callback(func(args): _claim_all_days.emit(args[0]))
+		schedulers.claimAllDays(id_or_tag).then(callback)
+		var _result = await _claim_all_days
 		var result = SchedulerInfo.new()
 		result._from_js(_result)
 		return result
 	push_warning("Not running on Web")
 	return SchedulerInfo.new()
+
 
 func list() -> Array:
 	var scheduler_list: Array = []
@@ -95,6 +117,7 @@ func list() -> Array:
 	))
 	return scheduler_list
 
+
 func active_list() -> Array:
 	var player_scheduler_list: Array = []
 	schedulers.activeList.forEach(JavaScriptBridge.create_callback(func(ps):
@@ -102,57 +125,48 @@ func active_list() -> Array:
 	))
 	return player_scheduler_list
 
+signal _get_sheduler(a:JavaScriptObject)
+
 func get_scheduler(id_or_tag: Variant) -> SchedulerInfo:
 	if OS.get_name() == "Web":
 		var scheduler_info:SchedulerInfo = SchedulerInfo.new()
-		var result
-		result = await gp.schedulers.getScheduler(id_or_tag)
+		var result = gp.schedulers.getScheduler(id_or_tag)
+		scheduler_info._from_js(result)
+		return scheduler_info
 		
-		if result and result.scheduler:
-			scheduler_info._from_js(result)
-			return scheduler_info
-		
-		push_warning("Scheduler not found")
-		return SchedulerInfo.new()
 	push_warning("Not running on Web")
 	return SchedulerInfo.new()
+
+
+signal _get_scheduler_day(a:JavaScriptObject)
 
 func get_scheduler_day(id_or_tag: Variant, day: int) -> SchedulerDayInfo:
 	if OS.get_name() == "Web":
 		var scheduler_day_info:SchedulerDayInfo = SchedulerDayInfo.new()
-		var result
-		result = await gp.schedulers.getSchedulerDay(id_or_tag, day)
-
-		if result and result.scheduler:
-			scheduler_day_info._from_js(result)
-			return scheduler_day_info
-				
-		push_warning("Scheduler not found")
-		return SchedulerDayInfo.new()
+		var result = gp.schedulers.getSchedulerDay(id_or_tag, day)
+		scheduler_day_info._from_js(result)
+		return scheduler_day_info
+		
 	push_warning("Not running on Web")
 	return SchedulerDayInfo.new()
 
+signal _get_scheduler_current_day(a:JavaScriptObject)
 
 func get_scheduler_current_day(id_or_tag: Variant) -> SchedulerDayInfo:
 	if OS.get_name() == "Web":
 		var scheduler_day_info: SchedulerDayInfo = SchedulerDayInfo.new()
-		var result
-		# Call the JavaScript function to get the current day of the scheduler
-		result = await gp.schedulers.getSchedulerCurrentDay(id_or_tag)
-		# Check if a valid result with a scheduler is returned
-		if result and result.scheduler:
-			scheduler_day_info._from_js(result)
-			return scheduler_day_info
-		# If scheduler not found
-		push_warning("Scheduler not found")
-		return SchedulerDayInfo.new()
-	# If not running on Web
+		var result = gp.schedulers.getSchedulerCurrentDay(id_or_tag)
+		
+		scheduler_day_info._from_js(result)
+		return scheduler_day_info
+
 	push_warning("Not running on Web")
 	return SchedulerDayInfo.new()
+	
 
 func is_registered(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
-		var result = await gp.schedulers.isRegistered(id_or_tag)
+		var result = gp.schedulers.isRegistered(id_or_tag)
 		# Return true if the player is registered
 		if result != null:
 			return result
@@ -164,7 +178,7 @@ func is_registered(id_or_tag: Variant) -> bool:
 
 func is_today_reward_claimed(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
-		var result = await gp.schedulers.isTodayRewardClaimed(id_or_tag)
+		var result = gp.schedulers.isTodayRewardClaimed(id_or_tag)
 		if result != null:
 			return result
 		push_warning("Scheduler not found")
@@ -174,7 +188,7 @@ func is_today_reward_claimed(id_or_tag: Variant) -> bool:
 
 func can_claim_day(id_or_tag: Variant, day: int) -> bool:
 	if OS.get_name() == "Web":
-		var result = await gp.schedulers.canClaimDay(id_or_tag, day)
+		var result = gp.schedulers.canClaimDay(id_or_tag, day)
 		if result != null:
 			return result
 		push_warning("Scheduler not found")
@@ -184,7 +198,7 @@ func can_claim_day(id_or_tag: Variant, day: int) -> bool:
 
 func can_claim_day_additional(id_or_tag: Variant, day: int, trigger_id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
-		var result = await gp.schedulers.canClaimDayAdditional(id_or_tag, day, trigger_id_or_tag)
+		var result = gp.schedulers.canClaimDayAdditional(id_or_tag, day, trigger_id_or_tag)
 		if result != null:
 			return result
 		push_warning("Scheduler not found")
@@ -194,7 +208,7 @@ func can_claim_day_additional(id_or_tag: Variant, day: int, trigger_id_or_tag: V
 
 func can_claim_all_day(id_or_tag: Variant, day: int) -> bool:
 	if OS.get_name() == "Web":
-		var result = await gp.schedulers.canClaimAllDay(id_or_tag, day)
+		var result = gp.schedulers.canClaimAllDay(id_or_tag, day)
 		if result != null:
 			return result
 		push_warning("Scheduler not found")
@@ -284,11 +298,10 @@ class Scheduler:
 		is_auto_register = js_object["isAutoRegister"]
 		
 		triggers = []
-		for js_trigger in js_object["triggers"]:
-			var trigger = GP.Triggers.Trigger.new()
-			trigger._from_js(js_trigger)
-			triggers.append(trigger)
-
+		var callback := JavaScriptBridge.create_callback(func(args): 
+			triggers.append(GP.Triggers.Trigger.new()._from_js(args[0])))
+		js_object["triggers"].forEach(callback)
+		
 		return self
 
 class PlayerScheduler:
@@ -311,8 +324,9 @@ class PlayerScheduler:
 	func _from_js(js_object: JavaScriptObject) -> PlayerScheduler:
 		scheduler_id = js_object["schedulerId"]
 		days_claimed = []
-		for day in js_object["daysClaimed"]:
-			days_claimed.append(day)
+		var callback := JavaScriptBridge.create_callback(func(args):
+			days_claimed.append(args[0]))
+		js_object["daysClaimed"].forEach(callback)
 		stats = PlayerStats.new()
 		stats._from_js(js_object["stats"])
 		return self
