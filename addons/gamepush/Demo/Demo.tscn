@@ -49,7 +49,7 @@ vertical_alignment = 1
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-columns = 6
+columns = 8
 
 [node name="Achievements" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -114,7 +114,6 @@ text = "Experiments"
 
 [node name="Files" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
-disabled = true
 text = "Files"
 
 [node name="Fullscreen" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]

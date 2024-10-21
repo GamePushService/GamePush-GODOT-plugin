@@ -132,4 +132,4 @@ func _on_logger_pressed():
 
 
 func _on_files_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Files.tscn")

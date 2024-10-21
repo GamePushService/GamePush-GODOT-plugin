@@ -4,16 +4,16 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var files:JavaScriptObject
 
-signal uploaded
-signal error_upload
+signal uploaded(arg)
+signal error_upload(err)
 signal loaded_content
-signal error_load_content 
+signal error_load_content(err) 
 signal choosed
-signal error_choose
+signal error_choose(err)
 signal fetched
-signal error_fetch
+signal error_fetch(err)
 signal fetched_more
-signal error_fetch_more
+signal error_fetch_more(err)
 
 var _callback_upload = JavaScriptBridge.create_callback(_upload)
 var _callback_error_upload = JavaScriptBridge.create_callback(_error_upload)
@@ -46,7 +46,7 @@ func _ready():
 		files.on("error:fetchMore", _callback_error_fetch_more)
 
 
-func upload(tags=null):
+func upload(tags:Array=[]):
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		var _tags := JavaScriptBridge.create_object("Array")
@@ -57,7 +57,7 @@ func upload(tags=null):
 	else:
 		push_warning("Not Web")
 	
-func upload_url(url:String, tags=null):
+func upload_url(url:String, tags:Array=[]) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		var _tags := JavaScriptBridge.create_object("Array")
@@ -69,7 +69,7 @@ func upload_url(url:String, tags=null):
 	else:
 		push_warning("Not Web")
 	
-func upload_content(file_name:String, content:String="", tags=null):
+func upload_content(file_name:String, content:String="", tags:Array=[]) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["file_name"] = file_name
@@ -78,27 +78,41 @@ func upload_content(file_name:String, content:String="", tags=null):
 	else:
 		push_warning("Not Web")
 	
-func load_сontent(url:String):
+signal __load_сontent(a:Variant)
+
+func load_сontent(url:String) -> String:
 	if OS.get_name() == "Web":
-		return await files.loadContent(url)
+		var callback := JavaScriptBridge.create_callback(func(args): __load_сontent.emit(args[0]))
+		files.loadContent(url).then(callback)
+		var result = await _load_content
+		return result
 	else:
 		push_warning("Not Web")
+		return ""
 
-func choose_file(type_file=null):
+
+signal __choose_file(a)
+
+func choose_file(type_file:String="") -> Array:
 	if OS.get_name() == "Web":
 		var result:Array
-		var _result
+		var callback := JavaScriptBridge.create_callback(func(args): __choose_file.emit(args[0]))
 		if type_file:
-			_result = await files.chooseFile(type_file)
+			files.chooseFile(type_file)
 		else:
-			_result = await files.chooseFile()
+			files.chooseFile()
+		var _result = await __choose_file
 		result.append(File.new()._from_js(_result[0]))
 		result.append(_result[1])
 		return result
 	else:
 		push_warning("Not Web")
+		return []
 
-func fetch(player_id=null, tags=null, limit=null, offset=null):
+
+signal __fetch(a)
+
+func fetch(player_id=null, tags=null, limit=null, offset=null) -> Array:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		var _tags := JavaScriptBridge.create_object("Array")
@@ -109,19 +123,24 @@ func fetch(player_id=null, tags=null, limit=null, offset=null):
 		conf["limit"] = limit
 		conf["offset"] = offset
 		var result:Array
-		var _result
-		_result = await files.fetch(conf)
-		var arr_file:Array
-		for i in _result[0]:
-			#Need test
-			arr_file.append(File.new()._from_js(i))
+		var callback := JavaScriptBridge.create_callback(func(args): __fetch.emit(args[0]))
+		files.fetch(conf).then(callback)
+		var _result = await __fetch
+		var arr_file:Array =[]
+		callback = JavaScriptBridge.create_callback(func(args):
+			arr_file.append(File.new()._from_js(args[0])))
+		_result.items.forEach(callback)
 		result.append(arr_file)
-		result.append(_result[1])
+		result.append(_result.canLoadMore)
 		return result
 	else:
 		push_warning("Not Web")
+		return []
 
-func fetch_more(player_id=null, tags=null, limit=null, offset=null):
+
+signal __fetch_more(a)
+
+func fetch_more(player_id=null, tags=null, limit=null, offset=null) -> Array:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		var _tags := JavaScriptBridge.create_object("Array")
@@ -132,17 +151,20 @@ func fetch_more(player_id=null, tags=null, limit=null, offset=null):
 		conf["limit"] = limit
 		conf["offset"] = offset
 		var result:Array
-		var _result
-		_result = await files.fetchMore(conf)
-		var arr_file:Array
-		for i in _result[0]:
-			#Need test
-			arr_file.append(File.new()._from_js(i))
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_more.emit(args[0]))
+		files.fetchMore(conf).then(callback)
+		var _result = await __fetch_more
+		var arr_file:Array =[]
+		callback = JavaScriptBridge.create_callback(func(args):
+			arr_file.append(File.new()._from_js(args[0])))
+		_result.items.forEach(callback)
 		result.append(arr_file)
-		result.append(_result[1])
+		result.append(_result.canLoadMore)
 		return result
 	else:
 		push_warning("Not Web")
+		return []
 		
 		
 func _upload(args):
@@ -154,22 +176,22 @@ func _choose(args): choosed.emit(args[0]) # ?
 func _error_choose(args): error_choose.emit(args[0]) #String
 func _fetch(args):
 	var result
-	var arr_file:Array
-	for i in args[0][0]:
-		#Need test
-		arr_file.append(File.new()._from_js(i))
+	var arr_file:Array =[]
+	var callback = JavaScriptBridge.create_callback(func(args):
+		arr_file.append(File.new()._from_js(args[0])))
+	args[0].items.forEach(callback)
 	result.append(arr_file)
-	result.append(args[0][1])
+	result.append(args[0].canLoadMore)
 	fetched.emit(result)
 func _error_fetch(args): error_fetch.emit(args[0]) #String
 func _fetch_more(args):
 	var result
-	var arr_file:Array
-	for i in args[0][0]:
-		#Need test
-		arr_file.append(File.new()._from_js(i))
+	var arr_file:Array =[]
+	var callback = JavaScriptBridge.create_callback(func(args):
+		arr_file.append(File.new()._from_js(args[0])))
+	args[0].items.forEach(callback)
 	result.append(arr_file)
-	result.append(args[0][1])
+	result.append(args[0].canLoadMore)
 	fetched_more.emit(result)
 func _error_fetch_more(args): error_fetch_more.emit(args[0]) #String
 
