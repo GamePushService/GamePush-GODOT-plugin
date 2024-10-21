@@ -5,15 +5,17 @@ var gp:JavaScriptObject
 var rewards:JavaScriptObject
 
 signal reward_given(reward:Reward, player_reward:PlayerReward)
+signal _reward_given(arg:JavaScriptObject)
 signal reward_error(err:String)
 signal reward_accept_error(err:String)
 signal reward_accepted(reward:Reward, player_reward:PlayerReward)
+signal _reward_accepted(arg:JavaScriptObject)
 
 
-var callback_reward_given := JavaScriptBridge.create_callback(_on_reward_given)
-var callback_reward_error := JavaScriptBridge.create_callback(_on_reward_error)
-var callback_reward_accepted := JavaScriptBridge.create_callback(_on_reward_accepted)
-var callback_reward_accept_error := JavaScriptBridge.create_callback(_on_reward_accept_error)
+var _callback_reward_given := JavaScriptBridge.create_callback(_on_reward_given)
+var _callback_reward_error := JavaScriptBridge.create_callback(_on_reward_error)
+var _callback_reward_accepted := JavaScriptBridge.create_callback(_on_reward_accepted)
+var _callback_reward_accept_error := JavaScriptBridge.create_callback(_on_reward_accept_error)
 
 
 func _ready():
@@ -23,10 +25,11 @@ func _ready():
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		rewards = gp.rewards
-		rewards.on("give", callback_reward_given)
-		rewards.on("error:give", callback_reward_error)
-		rewards.on("error:accept", callback_reward_accept_error)
-		rewards.on("accept", callback_reward_accepted)
+		rewards.on("give", _callback_reward_given)
+		rewards.on("error:give", _callback_reward_error)
+		rewards.on("error:accept", _callback_reward_accepted)
+		rewards.on("accept", _callback_reward_accept_error)
+
 
 func give(id:Variant = null, tag:Variant = null, lazy:bool = false) -> Array:
 	if OS.get_name() == "Web":
@@ -37,13 +40,15 @@ func give(id:Variant = null, tag:Variant = null, lazy:bool = false) -> Array:
 			conf["tag"] = tag
 		if lazy:
 			conf["lazy"] = lazy
-		var _result = await rewards.give(conf)
+		var callback := JavaScriptBridge.create_callback(func(res): _reward_given.emit(res[0]))
+		rewards.give(conf).then(callback)
+		var _result = await _reward_given
 		var result:Array
 		var reward = Reward.new()
-		reward._from_js(result[0])
+		reward._from_js(_result.reward)
 		result.append(reward)
 		var player_reward = PlayerReward.new()
-		player_reward._from_js(result[1])
+		player_reward._from_js(_result.playerReward)
 		result.append(player_reward)
 		return result
 	push_warning("Not Web")
@@ -57,43 +62,51 @@ func accept(id:Variant = null, tag:Variant = null) -> Array:
 			conf["id"] = id
 		elif tag:
 			conf["tag"] = tag
-		var _result = await rewards.accept(conf)
+		var callback := JavaScriptBridge.create_callback(func(res): _reward_accepted.emit(res[0]))
+		rewards.accept(conf).then(callback)
+		var _result = await _reward_accepted
 		var result:Array
 		var reward = Reward.new()
-		reward._from_js(result[0])
+		reward._from_js(_result.reward)
 		result.append(reward)
 		var player_reward = PlayerReward.new()
-		player_reward._from_js(result[1])
+		player_reward._from_js(_result.playerReward)
 		result.append(player_reward)
 		return result
 	push_warning("Not Web")
 	return []
 
+
 func list() -> Array:
 	if OS.get_name() == "Web":
 		var result:Array
 		var _result = rewards.list
-		_result.forEach(JavaScriptBridge.create_callback(func (r): result.append(Reward.new()._from_js(r))))
+		_result.forEach(JavaScriptBridge.create_callback(func (args): result.append(Reward.new()._from_js(args[0]))))
+		return result
 	push_warning("Not Web")
 	return []
+
 
 func given_list() -> Array:
 	if OS.get_name() == "Web":
 		var result:Array
 		var _result = rewards.givenList
-		_result.forEach(JavaScriptBridge.create_callback(func (r): result.append(PlayerReward.new()._from_js(r))))
-	push_warning("Not Web")
-	return []
-	
-func get_reward(id_or_tag:Variant) -> Array:
-	if OS.get_name() == "Web":
-		var _result = await rewards.accept(id_or_tag)
-		var result:Array
-		result.append(Reward.new()._from_js(result[0]))
-		result.append(PlayerReward.new()._from_js(result[1]))
+		_result.forEach(JavaScriptBridge.create_callback(func (args): result.append(PlayerReward.new()._from_js(args[0]))))
 		return result
 	push_warning("Not Web")
 	return []
+	
+	
+func get_reward(id_or_tag:Variant) -> Array:
+	if OS.get_name() == "Web":
+		var _result = rewards.getReward(id_or_tag)
+		var result:Array
+		result.append(Reward.new()._from_js(_result.reward))
+		result.append(PlayerReward.new()._from_js(_result.playerReward))
+		return result
+	push_warning("Not Web")
+	return []
+
 
 func has(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
@@ -101,11 +114,13 @@ func has(id_or_tag: Variant) -> bool:
 	push_warning("Not Web")
 	return false
 	
+	
 func has_accepted(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
 		return gp.rewards.hasAccepted(id_or_tag)
 	push_warning("Not Web")
 	return false
+	
 	
 func has_unaccepted(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
@@ -116,8 +131,8 @@ func has_unaccepted(id_or_tag: Variant) -> bool:
 
 # Method to handle the reward given event
 func _on_reward_given(args) -> void:
-	var reward = Reward.new()._from_js(args[0][0])
-	var player_reward = PlayerReward.new()._from_js(args[0][1])
+	var reward = Reward.new()._from_js(args[0].reward)
+	var player_reward = PlayerReward.new()._from_js(args[0].playerReward)
 	reward_given.emit(reward, player_reward)
 	
 func _on_reward_error(args) -> void:
@@ -127,8 +142,8 @@ func _on_reward_accept_error(args) -> void:
 	reward_accept_error.emit(args[0])
 	
 func _on_reward_accepted(args) -> void:
-	var reward = Reward.new()._from_js(args[0][0])
-	var player_reward = PlayerReward.new()._from_js(args[0][1])
+	var reward = Reward.new()._from_js(args[0].reward)
+	var player_reward = PlayerReward.new()._from_js(args[0].playerReward)
 	reward_accepted.emit(reward, player_reward)
 	
 	
@@ -143,7 +158,7 @@ class Reward:
 	var is_auto_accept: bool
 
 	# Function to convert from JS object to GDScript object
-	func _from_js(js_object: Dictionary) -> Reward:
+	func _from_js(js_object: JavaScriptObject) -> Reward:
 		id = js_object["id"]
 		tag = js_object["tag"]
 		name = js_object["name"]
@@ -153,7 +168,8 @@ class Reward:
 		is_auto_accept = js_object["isAutoAccept"]
 		mutations = []
 		var _mutations = js_object["mutations"]
-		_mutations.forEach(JavaScriptBridge.create_callback(func (m): DataMutation.new()._from_js(m)))
+		_mutations.forEach(JavaScriptBridge.create_callback(func (m): 
+			mutations.append(DataMutation.new()._from_js(m))))
 		return self
 		
 	
@@ -180,7 +196,7 @@ class PlayerReward:
 	var count_accepted: int
 
 	# Function to convert from JS object to GDScript object
-	func _from_js(js_object: Dictionary) -> PlayerReward:
+	func _from_js(js_object: JavaScriptObject) -> PlayerReward:
 		reward_id = js_object["rewardId"]
 		count_total = js_object["countTotal"]
 		count_accepted = js_object["countAccepted"]
@@ -203,7 +219,7 @@ class DataMutation:
 	var value: Variant # Supports number, string, or boolean
 
 	# Function to convert from JS object to GDScript object
-	func _from_js(js_object: Dictionary) -> DataMutation:
+	func _from_js(js_object: JavaScriptObject) -> DataMutation:
 		type = js_object["type"]
 		key = js_object["key"]
 		action = js_object["action"]
