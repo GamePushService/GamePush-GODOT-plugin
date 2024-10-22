@@ -56,6 +56,29 @@ signal event_mute(mute: Mute)
 signal unmute_success()
 signal unmute_error(error: String)
 signal event_unmute(unmute: Dictionary)
+signal sent_invite()
+signal sent_invite_error(error: String)
+signal event_invite(invite:Dictionary)
+signal canceled_invite()
+signal cancel_invite_error(error: String)
+signal event_cancel_invite(invite:Dictionary)
+signal accepted_invite()
+signal error_accept_invite(error: String)
+signal rejected_invite()
+signal error_reject_invite(error: String)
+signal event_reject_invite(invite:Dictionary)
+signal fetched_invites(result:Dictionary)
+signal error_fetch_invites(error:String)
+signal fetched_more_invites(result:Dictionary)
+signal error_fetch_more_invites(error:String)
+signal fetched_channel_invites(result:Dictionary)
+signal error_fetch_channel_invites(error:String)
+signal fetched_more_channel_invites(result:Dictionary)
+signal error_fetch_more_channel_invites(error:String)
+signal fetched_sent_invites(result:Dictionary)
+signal error_fetch_sent_invites(error:String)
+signal fetched_more_sent_invites(result:Dictionary)
+signal error_fetch_more_sent_invites(error:String)
 
 # Глобальные переменные для всех коллбэков
 var _callback_event_message := JavaScriptBridge.create_callback(_event_message)
@@ -104,6 +127,30 @@ var _callback_event_mute := JavaScriptBridge.create_callback(_on_event_mute)
 var _callback_unmute := JavaScriptBridge.create_callback(_on_unmute)
 var _callback_error_unmute := JavaScriptBridge.create_callback(_on_error_unmute)
 var _callback_event_unmute := JavaScriptBridge.create_callback(_on_event_unmute)
+var _callback_send_invite := JavaScriptBridge.create_callback(_on_send_invite)
+var _callback_send_invite_error := JavaScriptBridge.create_callback(_on_send_invite_error)
+var _callback_event_invite := JavaScriptBridge.create_callback(_on_event_invite)
+var _callback_cancel_invite := JavaScriptBridge.create_callback(_on_cancel_invite)
+var _callback_cancel_invite_error : = JavaScriptBridge.create_callback(_on_cancel_invite_error)
+var _callback_event_cancel_invite : = JavaScriptBridge.create_callback(_on_event_cancel_invite)
+var _callback_accept_invite : = JavaScriptBridge.create_callback(_on_accept_invite)
+var _callback_error_accept_invite := JavaScriptBridge.create_callback(_on_error_accept_invite)
+var _callback_reject_invite := JavaScriptBridge.create_callback(_on_reject_invite)
+var _callback_error_reject_invite := JavaScriptBridge.create_callback(_on_error_reject_invite)
+var _callback_event_reject_invite := JavaScriptBridge.create_callback(_on_event_reject_invite)
+var _callback_fetch_invites:= JavaScriptBridge.create_callback(_on_fetch_invites)
+var _callback_error_fetch_invites := JavaScriptBridge.create_callback(_on_error_fetch_invites)
+var _callback_fetch_more_invites := JavaScriptBridge.create_callback(_on_fetch_more_invites)
+var _callback_error_fetch_more_invites := JavaScriptBridge.create_callback(_on_error_fetch_more_invites)
+var _callback_fetch_channel_invites := JavaScriptBridge.create_callback(_on_fetch_channel_invites)
+var _callback_error_fetch_channel_invites := JavaScriptBridge.create_callback(_on_error_fetch_channel_invites)
+var _callback_fetch_more_channel_invites := JavaScriptBridge.create_callback(_on_fetch_more_channel_invites)
+var _callback_error_fetch_more_channel_invites := JavaScriptBridge.create_callback(_on_error_fetch_more_channel_invites)
+var _callback_fetch_sent_invites := JavaScriptBridge.create_callback(_on_fetch_sent_invites)
+var _callback_error_fetch_sent_invites := JavaScriptBridge.create_callback(_on_error_fetch_sent_invites)
+var _callback_fetch_more_sent_invites := JavaScriptBridge.create_callback(_on_fetch_more_sent_invites)
+var _callback_error_fetch_more_sent_invites := JavaScriptBridge.create_callback(_on_error_fetch_more_sent_invites)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -160,8 +207,27 @@ func _ready():
 		gp.channels.on("unmute", _callback_unmute)
 		gp.channels.on("error:unmute", _callback_error_unmute)
 		gp.channels.on("event:unmute", _callback_event_unmute)
-
-
+		gp.channels.on("sendInvite", _callback_send_invite)
+		gp.channels.on("error:sendInvite", _callback_send_invite_error)
+		gp.channels.on("event:invite", _callback_event_invite)
+		gp.channels.on("acceptInvite", _callback_accept_invite)
+		gp.channels.on("error:acceptInvite", _callback_error_accept_invite)
+		gp.channels.on("rejectInvite", _callback_reject_invite)
+		gp.channels.on("error:rejectInvite", _callback_error_reject_invite)
+		gp.channels.on("fetchInvites", _callback_fetch_invites)
+		gp.channels.on("error:fetchInvites", _callback_error_fetch_invites)
+		gp.channels.on("fetchMoreInvites", _callback_fetch_more_invites)
+		gp.channels.on("error:fetchMoreInvites", _callback_error_fetch_more_invites)
+		gp.channels.on("fetchChannelInvites", _callback_fetch_channel_invites)
+		gp.channels.on("error:fetchChannelInvites", _callback_error_fetch_channel_invites)
+		gp.channels.on("fetchMoreChannelInvites", _callback_fetch_more_channel_invites)
+		gp.channels.on("error:fetchMoreChannelInvites", _callback_error_fetch_more_channel_invites)
+		gp.channels.on("fetchSentInvites", _callback_fetch_sent_invites)
+		gp.channels.on("error:fetchSentInvites", _callback_error_fetch_sent_invites)
+		gp.channels.on("fetchMoreSentInvites", _callback_fetch_more_sent_invites)
+		gp.channels.on("error:fetchMoreSentInvites", _callback_error_fetch_more_sent_invites)
+		
+		
 func join(channel_id:int) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
@@ -242,7 +308,10 @@ func delete_message(message_id: String) -> void:
 		gp.channels.deleteMessage(conf)
 	else:
 		push_warning("Not running on Web")
-		
+
+
+signal __fetch_messages(a:JavaScriptObject)
+
 func fetch_messages(channel_id: int, tags: Array, limit: int = 100, offset: int = 0) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
@@ -254,10 +323,14 @@ func fetch_messages(channel_id: int, tags: Array, limit: int = 100, offset: int 
 		conf["tags"] = js_tags
 		conf["limit"] = limit
 		conf["offset"] = offset
-		var result = await gp.channels.fetchMessages(conf)
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_messages.emit(args[0]))
+		gp.channels.fetchMessages(conf).then(callback)
+		var result = await __fetch_messages
 		var items := []
-		for i in result.items:
-			items.append(Message.new()._from_js(i))
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
 		var canLoadMore:bool = result.canLoadMore
 		return {"items": items, 
 				"can_load_more": canLoadMore
@@ -268,6 +341,8 @@ func fetch_messages(channel_id: int, tags: Array, limit: int = 100, offset: int 
 				"can_load_more": null
 				}
 		
+
+signal __fetch_personal_messages(a:JavaScriptObject)
 
 func fetch_personal_messages(channel_id: int, tags: Array, limit: int = 100, offset: int = 0) -> Dictionary:
 	if OS.get_name() == "Web":
@@ -280,10 +355,16 @@ func fetch_personal_messages(channel_id: int, tags: Array, limit: int = 100, off
 		conf["tags"] = js_tags
 		conf["limit"] = limit
 		conf["offset"] = offset
-		var result = await gp.channels.fetchPersonalMessages(conf)
+		
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_personal_messages.emit(args[0]))
+		gp.channels.fetchPersonalMessages(conf).then(callback)
+		var result = await __fetch_personal_messages
 		var items := []
-		for i in result.items:
-			items.append(Message.new()._from_js(i))
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
+		
 		var canLoadMore:bool = result.canLoadMore
 		return {"items": items, 
 				"can_load_more": canLoadMore
@@ -294,6 +375,8 @@ func fetch_personal_messages(channel_id: int, tags: Array, limit: int = 100, off
 				"can_load_more": null
 				}
 
+
+signal __fetch_feed_messages(a:JavaScriptObject)
 
 func fetch_feed_messages(channel_id: int, tags: Array, limit: int = 100, offset: int = 0) -> Dictionary:
 	if OS.get_name() == "Web":
@@ -306,10 +389,16 @@ func fetch_feed_messages(channel_id: int, tags: Array, limit: int = 100, offset:
 		conf["tags"] = js_tags
 		conf["limit"] = limit
 		conf["offset"] = offset
-		var result = await gp.channels.fetchFeedMessages(conf)
+		
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_feed_messages.emit(args[0]))
+		gp.channels.fetchFeedMessages(conf).then(callback)
+		var result = await __fetch_feed_messages
 		var items := []
-		for i in result.items:
-			items.append(Message.new()._from_js(i))
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
+		
 		var canLoadMore:bool = result.canLoadMore
 		return {"items": items, 
 				"can_load_more": canLoadMore
@@ -320,6 +409,9 @@ func fetch_feed_messages(channel_id: int, tags: Array, limit: int = 100, offset:
 				"can_load_more": null
 				}
 				
+				
+signal __fetch_more_messages(a:JavaScriptObject)
+
 # Fetch more messages from a channel
 func fetch_more_messages(channel_id: int, tags: Array, limit: int = 100) -> Dictionary:
 	if OS.get_name() == "Web":
@@ -331,16 +423,24 @@ func fetch_more_messages(channel_id: int, tags: Array, limit: int = 100) -> Dict
 			js_tags.push(tag)
 		conf["tags"] = js_tags
 		conf["limit"] = limit
-		var result = await gp.channels.fetchMoreMessages(conf)
+		
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_more_messages.emit(args[0]))
+		gp.channels.fetchMoreMessages(conf).then(callback)
+		var result = await __fetch_more_messages
 		var items := []
-		for i in result.items:
-			items.append(Message.new()._from_js(i))
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
+		
 		var canLoadMore: bool = result.canLoadMore
 		return {"items": items, "can_load_more": canLoadMore}
 	else:
 		push_warning("Not running on Web")
 		return {"items": null, "can_load_more": null}
 
+
+signal __fetch_more_personal_messages(a:JavaScriptObject)
 # Fetch more personal messages from a player
 func fetch_more_personal_messages(player_id: int, tags: Array, limit: int = 100) -> Dictionary:
 	if OS.get_name() == "Web":
@@ -352,15 +452,24 @@ func fetch_more_personal_messages(player_id: int, tags: Array, limit: int = 100)
 			js_tags.push(tag)
 		conf["tags"] = js_tags
 		conf["limit"] = limit
-		var result = await gp.channels.fetchMorePersonalMessages(conf)
+		
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_more_personal_messages.emit(args[0]))
+		gp.channels.fetchMorePersonalMessages(conf).then(callback)
+		var result = await __fetch_more_personal_messages
 		var items := []
-		for i in result.items:
-			items.append(Message.new()._from_js(i))
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
+		
 		var canLoadMore: bool = result.canLoadMore
 		return {"items": items, "can_load_more": canLoadMore}
 	else:
 		push_warning("Not running on Web")
 		return {"items": null, "can_load_more": null}
+
+
+signal __fetch_more_feed_messages(a:JavaScriptObject)
 
 # Fetch more feed messages from a player
 func fetch_more_feed_messages(player_id: int, tags: Array, limit: int = 100) -> Dictionary:
@@ -373,10 +482,16 @@ func fetch_more_feed_messages(player_id: int, tags: Array, limit: int = 100) -> 
 			js_tags.push(tag)
 		conf["tags"] = js_tags
 		conf["limit"] = limit
-		var result = await gp.channels.fetchMoreFeedMessages(conf)
+		
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_more_feed_messages.emit(args[0]))
+		gp.channels.fetchMoreFeedMessages(conf).then(callback)
+		var result = await __fetch_more_feed_messages
 		var items := []
-		for i in result.items:
-			items.append(Message.new()._from_js(i))
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
+		
 		var canLoadMore: bool = result.canLoadMore
 		return {"items": items, "can_load_more": canLoadMore}
 	else:
@@ -522,18 +637,24 @@ func delete_channel(channel_id: int) -> void:
 	else:
 		push_warning("Not running on Web")
 
+signal __fetch_channel(a:JavaScriptObject)
 
 func fetch_channel(channel_id:int) -> Channel:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["channelId"] = channel_id
-		var response = await gp.channels.fetchChannel(conf)
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_channel.emit(args[0]))
+		gp.channels.fetchChannel(conf).then(callback)
+		var response = await __fetch_channel
 		return Channel.new()._from_js(response)
 	else:
 		push_warning("Not running on Web")
 		return Channel.new()
 
-func fetch_channels(ids: Array, tags: Array, search: String = "", only_joined: bool = true, only_owned: bool = true, limit: int = 100, offset: int = 0) -> void:
+signal __fetch_channels(a:JavaScriptObject)
+
+func fetch_channels(ids: Array, tags: Array, search: String = "", only_joined: bool = true, only_owned: bool = true, limit: int = 100, offset: int = 0) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["ids"] = JavaScriptBridge.create_object("Array")
@@ -549,13 +670,29 @@ func fetch_channels(ids: Array, tags: Array, search: String = "", only_joined: b
 		conf["onlyOwned"] = only_owned
 		conf["limit"] = limit
 		conf["offset"] = offset
-
-		await gp.channels.fetchChannels(conf)
+		
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_channels.emit(args[0]))
+		gp.channels.fetchChannels(conf).then(callback)
+		var result = await __fetch_channels
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
 	else:
 		push_warning("Not running on Web")
+		return {"items": null, 
+				"can_load_more": null
+				}
 		
 
-func fetch_more_channels(channel_id: int, tags: Array, limit: int = 100) -> void:
+signal __fetch_more_channels(a:JavaScriptObject)
+
+func fetch_more_channels(channel_id: int, tags: Array, limit: int = 100) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["channelId"] = channel_id
@@ -566,11 +703,25 @@ func fetch_more_channels(channel_id: int, tags: Array, limit: int = 100) -> void
 		conf["tags"] = js_tags
 		
 		conf["limit"] = limit
-		var response = await gp.channels.fetchMoreChannels(conf)
-		return 
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_channels.emit(args[0]))
+		gp.channels.fetchMoreChannels(conf).then(callback)
+		var result = await __fetch_channels
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(Message.new()._from_js(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
 	else:
 		push_warning("Not running on Web")
-		
+		return {"items": null, 
+				"can_load_more": null
+				}
+
+
 func open_chat(channel_id: int = 0, tags: Array = []) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
@@ -694,7 +845,7 @@ func mute(channel_id: int, player_id: int, unmute_at: String) -> void:
 	else:
 		push_warning("Not running on Web")
 
-func unmute_player(channel_id: int, player_id: int) -> void:
+func unmute(channel_id: int, player_id: int) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["channelId"] = channel_id
@@ -704,18 +855,207 @@ func unmute_player(channel_id: int, player_id: int) -> void:
 		push_warning("Not running on Web")
 
 
+func send_invite(channel_id: int, player_id: int):
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["playerId"] = player_id
+		gp.channels.sendInvite(conf)
+	else:
+		push_warning("Not running on Web")
+
+func cancel_invite(channel_id: int, player_id: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["playerId"] = player_id
+		gp.channels.cancelInvite(conf)
+	else:
+		push_warning("Not running on Web")
+
+
+func accept_invite(channel_id: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		gp.channels.acceptInvite(conf)
+	else:
+		push_warning("Not running on Web")
+
+# Function to reject an invite
+func reject_invite(channel_id: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		gp.channels.rejectInvite(conf)
+	else:
+		push_warning("Not running on Web")
+		
+		
+signal __fetch_invites(a:JavaScriptObject)
+
+func fetch_invites(limit: int, offset: int) -> Dictionary:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["limit"] = limit
+		conf["offset"] = offset
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_invites.emit(args[0]))
+		gp.channels.fetchInvites(conf).then(callback)
+		var result = await __fetch_invites
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(GP._js_to_dict(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
+	else:
+		push_warning("Not running on Web")
+		return {"items": null, 
+				"can_load_more": null
+				}
+				
+				
+signal __fetch_more_invites(a:JavaScriptObject)
+
+func fetch_more_invites(limit: int) -> Dictionary:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["limit"] = limit
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_more_invites.emit(args[0]))
+		gp.channels.fetchMoreInvites(conf).then(callback)
+		var result = await __fetch_more_invites
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(GP._js_to_dict(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
+	else:
+		push_warning("Not running on Web")
+		return {"items": null, 
+				"can_load_more": null
+				}
+				
+signal __fetch_channel_invites(a:JavaScriptObject)
+
+func fetch_channel_invites(channel_id: int, limit: int, offset: int) -> Dictionary:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channel_id"] = channel_id
+		conf["limit"] = limit
+		conf["offset"] = offset
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_channel_invites.emit(args[0]))
+		gp.channels.fetchChannelInvites(conf).then(callback)
+		var result = await __fetch_channel_invites
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(GP._js_to_dict(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
+	else:
+		push_warning("Not running on Web")
+		return {"items": null, 
+				"can_load_more": null
+				}
+
+signal __fetch_more_channel_invites(a:JavaScriptObject)
+
+func fetch_more_channel_invites(channel_id: int, limit: int) -> Dictionary:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channel_id"] = channel_id
+		conf["limit"] = limit
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_more_channel_invites.emit(args[0]))
+		gp.channels.fetchMoreChannelInvites(conf).then(callback)
+		var result = await __fetch_more_channel_invites
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(GP._js_to_dict(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
+	else:
+		push_warning("Not running on Web")
+		return {"items": null, 
+				"can_load_more": null
+				}
+				
+				
+signal __fetch_sent_invites(a:JavaScriptObject)
+
+func fetch_sent_invites(limit: int, offset: int) -> Dictionary:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["limit"] = limit
+		conf["offset"] = offset
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_sent_invites.emit(args[0]))
+		gp.channels.fetchSentInvites(conf).then(callback)
+		var result = await __fetch_sent_invites
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(GP._js_to_dict(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
+	else:
+		push_warning("Not running on Web")
+		return {"items": null, 
+				"can_load_more": null
+				}
+				
+				
+signal __fetch_more_sent_invites(a:JavaScriptObject)
+
+func fetch_more_sent_invites(limit: int) -> Dictionary:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["limit"] = limit
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch_more_sent_invites.emit(args[0]))
+		gp.channels.fetchMoreSentInvites(conf).then(callback)
+		var result = await __fetch_more_sent_invites
+		var items := []
+		var callback2 := JavaScriptBridge.create_callback(func(args):
+			items.append(GP._js_to_dict(args[0])))
+		result.items.forEach(callback2)
+		var canLoadMore:bool = result.canLoadMore
+		return {"items": items, 
+				"can_load_more": canLoadMore
+				}
+	else:
+		push_warning("Not running on Web")
+		return {"items": null, 
+				"can_load_more": null
+				}
+				
 func _event_message(args):
 	var message = Message.new()
-	message._from_js(args[0])  # Populate message data from the JS object
+	message._from_js(args[0])  
 	event_message.emit(message)
 	
-# Event handler for the sendMessage event
+	
 func _message_send(args) -> void:
 	var message = Message.new()
-	message._from_js(args[0])  # Populate message data from the JS object
-	message_received.emit(message)  # Emit the signal with the new message
+	message._from_js(args[0])  
+	message_received.emit(message) 
 
-# Callback for successful message send
+
 func _message_sent(args) -> void:
 	var js_message = args[0]
 	var message = Message.new()
@@ -981,6 +1321,87 @@ func _on_event_unmute(args) -> void:
 	event_unmute.emit(mute_info)
 
 
+func _on_send_invite(args) -> void:
+	sent_invite.emit()
+
+
+func _on_send_invite_error(args) -> void:
+	sent_invite_error.emit(args[0])
+
+
+func _on_event_invite(args) -> void:
+	event_invite.emit(GP._js_to_dict(args[0]))
+	
+
+func _on_cancel_invite(args) -> void:
+	canceled_invite.emit()
+
+
+func _on_cancel_invite_error(args) -> void:
+	cancel_invite_error.emit(args[0])
+
+
+func _on_event_cancel_invite(args) -> void:
+	event_cancel_invite.emit(GP._js_to_dict(args[0]))
+
+
+func _on_accept_invite(args) -> void:
+	accepted_invite.emit()
+
+
+func _on_error_accept_invite(args) -> void:
+	error_accept_invite.emit(args[0])
+	
+
+func _on_reject_invite(args) -> void:
+	rejected_invite.emit()
+
+
+func _on_error_reject_invite(args) -> void:
+	error_reject_invite.emit(args[0])
+
+
+func _on_event_reject_invite(args) -> void:
+	event_reject_invite.emit(GP._js_to_dict(args[0]))
+
+func _on_fetch_invites(args) -> void:
+	fetched_invites.emit(GP._js_to_dict(args[0]))
+
+func _on_error_fetch_invites(args) -> void:
+	error_fetch_invites.emit(args[0])
+	
+func _on_fetch_more_invites(args) -> void:
+	fetched_more_invites.emit(GP._js_to_dict(args[0]))
+
+func _on_error_fetch_more_invites(args) -> void:
+	error_fetch_more_invites.emit(args[0])
+
+
+func _on_fetch_channel_invites(args) -> void:
+	fetched_channel_invites.emit(GP._js_to_dict(args[0]))
+
+func _on_error_fetch_channel_invites(args) -> void:
+	error_fetch_channel_invites.emit(args[0])
+	
+func _on_fetch_more_channel_invites(args) -> void:
+	fetched_more_channel_invites.emit(GP._js_to_dict(args[0]))
+
+func _on_error_fetch_more_channel_invites(args) -> void:
+	error_fetch_more_channel_invites.emit(args[0])
+	
+func _on_fetch_sent_invites(args) -> void:
+	fetched_sent_invites.emit(GP._js_to_dict(args[0]))
+
+func _on_error_fetch_sent_invites(args) -> void:
+	error_fetch_sent_invites.emit(args[0])
+	
+func _on_fetch_more_sent_invites(args) -> void:
+	fetched_more_sent_invites.emit(GP._js_to_dict(args[0]))
+
+func _on_error_fetch_more_sent_invites(args) -> void:
+	error_fetch_more_sent_invites.emit(args[0])
+	
+	
 # Message class to encapsulate message data
 class Message:
 	var id: String
