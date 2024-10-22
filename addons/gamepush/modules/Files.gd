@@ -102,8 +102,8 @@ func choose_file(type_file:String="") -> Array:
 		else:
 			files.chooseFile()
 		var _result = await __choose_file
-		result.append(File.new()._from_js(_result[0]))
-		result.append(_result[1])
+		result.append(File.new()._from_js(_result.file))
+		result.append(_result.tempUrl)
 		return result
 	else:
 		push_warning("Not Web")
