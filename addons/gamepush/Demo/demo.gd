@@ -50,7 +50,7 @@ func _on_game_pressed():
 
 
 func _on_games_collections_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/GamesCollections.tscn")
 
 
 func _on_images_pressed():

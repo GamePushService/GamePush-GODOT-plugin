@@ -27,27 +27,30 @@ func _ready():
 		games_collections.on("error:fetch", callback_error_fetch)
 		
 		
-func open(tag=null, id=null, share_params=null):
+func open(tag:String="", id:int=0, share_params:Dictionary={}) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		var _share_params := JavaScriptBridge.create_object("Object")
-		conf['tag'] = tag
-		conf['id'] = id
-		if share_params and share_params is Dictionary:
+		if tag:
+			conf['tag'] = tag
+		if id:
+			conf['id'] = id
+		if share_params:
 			for key in share_params:
-				var value = share_params[key]
-				_share_params[key] = value
-			conf['shareParams'] = share_params
-		gp.open(conf)
+				_share_params[key] = share_params[key]
+			conf['shareParams'] = _share_params
+		games_collections.open(conf)
 	else:
 		push_warning("Not Web")
 		
-func fetch(tag=null, id=null):
+func fetch(tag:String="", id:int=0) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		conf['tag'] = tag
-		conf['id'] = id
-		return await games_collections.fetch(conf)
+		if tag:
+			conf['tag'] = tag
+		if id:
+			conf['id'] = id
+		games_collections.fetch(conf)
 	else:
 		push_warning("Not Web")
 
@@ -86,8 +89,8 @@ class Collection:
 		games = Array()
 		js_object["games"].forEach(callback_f_e)
 		
-	func _f_e(cValue, index, arr):
-		games.append(Game.new()._from_js(cValue))
+	func _f_e(args):
+		games.append(Game.new()._from_js(args[0]))
 		
 
 class Game:
