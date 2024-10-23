@@ -263,7 +263,7 @@ text = "crop"
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.71
-columns = 4
+columns = 3
 
 [node name="upload" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
@@ -278,16 +278,11 @@ size_flags_vertical = 3
 text = "upload_url"
 
 [node name="upload_content" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "upload_content"
-
-[node name="load_сontent" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "load_сontent"
 
 [node name="choose_file" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
@@ -317,7 +312,6 @@ text = "resize"
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/upload" to="." method="_on_upload_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/upload_url" to="." method="_on_upload_url_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/upload_content" to="." method="_on_upload_content_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/load_сontent" to="." method="_on_load_сontent_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/choose_file" to="." method="_on_choose_file_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/fetch" to="." method="_on_fetch_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/fetch_more" to="." method="_on_fetch_more_pressed"]

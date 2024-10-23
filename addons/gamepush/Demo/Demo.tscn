@@ -152,13 +152,6 @@ size_flags_vertical = 3
 disabled = true
 text = "Leaderboard"
 
-[node name="LeaderboardScoped" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-disabled = true
-text = "Leaderboard Scoped"
-
 [node name="Logger" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Logger"
@@ -265,7 +258,6 @@ text = "Variables"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Images" to="." method="_on_images_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Language" to="." method="_on_language_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Leaderboard" to="." method="_on_leaderboard_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/LeaderboardScoped" to="." method="_on_leaderboard_scoped_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Logger" to="." method="_on_logger_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Payments" to="." method="_on_payments_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Platform" to="." method="_on_platform_pressed"]

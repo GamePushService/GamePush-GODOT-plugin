@@ -65,10 +65,6 @@ func _on_leaderboard_pressed():
 	pass # Replace with function body.
 
 
-func _on_leaderboard_scoped_pressed():
-	pass # Replace with function body.
-
-
 func _on_payments_pressed():
 	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Payments.tscn")
 

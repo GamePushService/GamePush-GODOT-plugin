@@ -12,12 +12,12 @@ extends Node
 @onready var Events := preload("res://addons/gamepush/modules/Events.gd").new()
 @onready var Experiments := preload("res://addons/gamepush/modules/Experiments.gd").new()
 @onready var Fullscreen := preload("res://addons/gamepush/modules/Fullscreen.gd").new()
+@onready var Files := preload("res://addons/gamepush/modules/Files.gd").new()
 @onready var Game := preload("res://addons/gamepush/modules/Game.gd").new()
 @onready var GamesCollections := preload("res://addons/gamepush/modules/GameCollections.gd").new()
 @onready var Images := preload("res://addons/gamepush/modules/Images.gd").new()
 @onready var Language := preload("res://addons/gamepush/modules/Language.gd").new()
 @onready var Leaderboard := preload("res://addons/gamepush/modules/Leaderboard.gd").new()
-@onready var LeaderboardScoped := preload("res://addons/gamepush/modules/LeaderboardScoped.gd").new()
 @onready var Logger := preload("res://addons/gamepush/modules/Logger.gd").new()
 @onready var Payments := preload("res://addons/gamepush/modules/Payments.gd").new()
 @onready var Platform := preload("res://addons/gamepush/modules/Platform.gd").new()
@@ -35,17 +35,21 @@ extends Node
 
 var gp:JavaScriptObject
 
-signal inited()
+signal inited(sucsess:bool)
+var is_inited := false
 
 func _ready():
+	var is_init := false
 	if !OS.get_name() == "Web":
-		inited.emit()
+		inited.emit(is_init)
+		is_inited = true
 		push_warning("Not running on Web")
 		return
 	var project_id := str(ProjectSettings.get_setting("game_push/config/project_id"))
 	var public_token := ProjectSettings.get_setting("game_push/config/token")
 	var clbk := JavaScriptBridge.create_callback(func(args):
-		gp = args[0])
+		gp = args[0]
+		is_init = true)
 	var win := JavaScriptBridge.get_interface("window")
 	win.setGpInitCallback(clbk)
 	var lib_url := "https://gamepush.com/sdk/game-score.js?projectId=%s&publicToken=%s&callback=onGPInit" % [project_id, public_token]
@@ -66,12 +70,12 @@ func _ready():
 	add_child(Events)
 	add_child(Experiments)
 	add_child(Fullscreen)
+	add_child(Files)
 	add_child(Game)
 	add_child(GamesCollections)
 	add_child(Images)
 	add_child(Language)
 	add_child(Leaderboard)
-	add_child(LeaderboardScoped)
 	add_child(Logger)
 	add_child(Payments)
 	add_child(Platform)
@@ -99,7 +103,8 @@ func _ready():
 	else:
 		_on_timer_timeout()
 		
-	inited.emit()
+	inited.emit(is_init)
+	is_inited = true
 
 
 func _on_timer_timeout():
