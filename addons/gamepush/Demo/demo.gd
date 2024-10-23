@@ -21,9 +21,8 @@ func _on_avatar_generator_pressed():
 	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/AvatarGenerator.tscn")
 
 
-
 func _on_channels_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Channels.tscn")
 
 
 func _on_device_pressed():

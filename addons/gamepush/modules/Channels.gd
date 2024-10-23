@@ -228,10 +228,12 @@ func _ready():
 		gp.channels.on("error:fetchMoreSentInvites", _callback_error_fetch_more_sent_invites)
 		
 		
-func join(channel_id:int) -> void:
+func join(channel_id:int, password:String="") -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["channelId"] = channel_id
+		if password:
+			conf["password"] = password
 		gp.channels.join(conf)
 	else:
 		push_warning("Not running on Web")
@@ -499,131 +501,19 @@ func fetch_more_feed_messages(player_id: int, tags: Array, limit: int = 100) -> 
 		return {"items": null, "can_load_more": null}
 
 
-func create_channel(template: String, tags: Array, capacity: int, name: String, description: String, private: bool, visible: bool, password: String, owner_acl: Dictionary, member_acl: Dictionary, guest_acl: Dictionary) -> void:
+func create_channel(channel:Channel) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		conf["template"] = template
-		# Convert GDScript Array to JavaScript Array for tags
-		var js_tags := JavaScriptBridge.create_object("Array")
-		for tag in tags:
-			js_tags.push(tag)
-		conf["tags"] = js_tags
-		conf["capacity"] = capacity
-		conf["name"] = name
-		conf["description"] = description
-		conf["private"] = private
-		conf["visible"] = visible
-		conf["password"] = password
-		# Handle ownerAcl
-		var js_owner_acl := JavaScriptBridge.create_object("Object")
-		js_owner_acl["canViewMessages"] = owner_acl.get("canViewMessages", false)
-		js_owner_acl["canAddMessage"] = owner_acl.get("canAddMessage", false)
-		js_owner_acl["canEditMessage"] = owner_acl.get("canEditMessage", false)
-		js_owner_acl["canDeleteMessage"] = owner_acl.get("canDeleteMessage", false)
-		js_owner_acl["canViewMembers"] = owner_acl.get("canViewMembers", false)
-		js_owner_acl["canInvitePlayer"] = owner_acl.get("canInvitePlayer", false)
-		js_owner_acl["canKickPlayer"] = owner_acl.get("canKickPlayer", false)
-		js_owner_acl["canAcceptJoinRequest"] = owner_acl.get("canAcceptJoinRequest", false)
-		js_owner_acl["canMutePlayer"] = owner_acl.get("canMutePlayer", false)
-		conf["ownerAcl"] = js_owner_acl
-
-		# Handle memberAcl
-		var js_member_acl := JavaScriptBridge.create_object("Object")
-		js_member_acl["canViewMessages"] = member_acl.get("canViewMessages", false)
-		js_member_acl["canAddMessage"] = member_acl.get("canAddMessage", false)
-		js_member_acl["canEditMessage"] = member_acl.get("canEditMessage", false)
-		js_member_acl["canDeleteMessage"] = member_acl.get("canDeleteMessage", false)
-		js_member_acl["canViewMembers"] = member_acl.get("canViewMembers", false)
-		js_member_acl["canInvitePlayer"] = member_acl.get("canInvitePlayer", false)
-		js_member_acl["canKickPlayer"] = member_acl.get("canKickPlayer", false)
-		js_member_acl["canAcceptJoinRequest"] = member_acl.get("canAcceptJoinRequest", false)
-		js_member_acl["canMutePlayer"] = member_acl.get("canMutePlayer", false)
-		conf["memberAcl"] = js_member_acl
-
-		# Handle guestAcl
-		var js_guest_acl := JavaScriptBridge.create_object("Object")
-		js_guest_acl["canViewMessages"] = guest_acl.get("canViewMessages", false)
-		js_guest_acl["canAddMessage"] = guest_acl.get("canAddMessage", false)
-		js_guest_acl["canEditMessage"] = guest_acl.get("canEditMessage", false)
-		js_guest_acl["canDeleteMessage"] = guest_acl.get("canDeleteMessage", false)
-		js_guest_acl["canViewMembers"] = guest_acl.get("canViewMembers", false)
-		js_guest_acl["canInvitePlayer"] = guest_acl.get("canInvitePlayer", false)
-		js_guest_acl["canKickPlayer"] = guest_acl.get("canKickPlayer", false)
-		js_guest_acl["canAcceptJoinRequest"] = guest_acl.get("canAcceptJoinRequest", false)
-		js_guest_acl["canMutePlayer"] = guest_acl.get("canMutePlayer", false)
-		conf["guestAcl"] = js_guest_acl
-
+		conf = channel._to_js()
 		gp.channels.createChannel(conf)
 	else:
 		push_warning("Not running on Web")
 
 
-func update_channel(channel_id: int, tags = null, capacity = null, name = null,
- description = null, private = null, visible = null, password = null,
- owner_acl = null, member_acl = null, guest_acl = null	) -> void:
+func update_channel(channel:Channel) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		conf["channelId"] = channel_id
-		# Convert GDScript Array to JavaScript Array for tags
-		if tags != null:
-			var js_tags := JavaScriptBridge.create_object("Array")
-			for tag in tags:
-				js_tags.push(tag)
-			conf["tags"] = js_tags
-		if capacity != null:
-			conf["capacity"] = capacity
-		if name != null:
-			conf["name"] = name
-		if description != null:
-			conf["description"] = description
-		if private != null:
-			conf["private"] = private
-		if visible != null:
-			conf["visible"] = visible
-		if password != null:
-			conf["password"] = password
-		# Handle ownerAcl
-		if owner_acl != null:
-			var js_owner_acl := JavaScriptBridge.create_object("Object")
-			js_owner_acl["canViewMessages"] = owner_acl.get("canViewMessages")
-			js_owner_acl["canAddMessage"] = owner_acl.get("canAddMessage")
-			js_owner_acl["canEditMessage"] = owner_acl.get("canEditMessage")
-			js_owner_acl["canDeleteMessage"] = owner_acl.get("canDeleteMessage")
-			js_owner_acl["canViewMembers"] = owner_acl.get("canViewMembers")
-			js_owner_acl["canInvitePlayer"] = owner_acl.get("canInvitePlayer")
-			js_owner_acl["canKickPlayer"] = owner_acl.get("canKickPlayer")
-			js_owner_acl["canAcceptJoinRequest"] = owner_acl.get("canAcceptJoinRequest")
-			js_owner_acl["canMutePlayer"] = owner_acl.get("canMutePlayer")
-			conf["ownerAcl"] = js_owner_acl
-
-		# Handle memberAcl
-		if member_acl != null:
-			var js_member_acl := JavaScriptBridge.create_object("Object")
-			js_member_acl["canViewMessages"] = member_acl.get("canViewMessages")
-			js_member_acl["canAddMessage"] = member_acl.get("canAddMessage")
-			js_member_acl["canEditMessage"] = member_acl.get("canEditMessage")
-			js_member_acl["canDeleteMessage"] = member_acl.get("canDeleteMessage")
-			js_member_acl["canViewMembers"] = member_acl.get("canViewMembers")
-			js_member_acl["canInvitePlayer"] = member_acl.get("canInvitePlayer")
-			js_member_acl["canKickPlayer"] = member_acl.get("canKickPlayer")
-			js_member_acl["canAcceptJoinRequest"] = member_acl.get("canAcceptJoinRequest")
-			js_member_acl["canMutePlayer"] = member_acl.get("canMutePlayer")
-			conf["memberAcl"] = js_member_acl
-
-		# Handle guestAcl
-		if guest_acl != null:
-			var js_guest_acl := JavaScriptBridge.create_object("Object")
-			js_guest_acl["canViewMessages"] = guest_acl.get("canViewMessages")
-			js_guest_acl["canAddMessage"] = guest_acl.get("canAddMessage")
-			js_guest_acl["canEditMessage"] = guest_acl.get("canEditMessage")
-			js_guest_acl["canDeleteMessage"] = guest_acl.get("canDeleteMessage")
-			js_guest_acl["canViewMembers"] = guest_acl.get("canViewMembers")
-			js_guest_acl["canInvitePlayer"] = guest_acl.get("canInvitePlayer")
-			js_guest_acl["canKickPlayer"] = guest_acl.get("canKickPlayer")
-			js_guest_acl["canAcceptJoinRequest"] = guest_acl.get("canAcceptJoinRequest")
-			js_guest_acl["canMutePlayer"] = guest_acl.get("canMutePlayer")
-			conf["guestAcl"] = js_guest_acl
-
+		conf = channel._to_js()
 		gp.channels.updateChannel(conf)
 	else:
 		push_warning("Not running on Web")
@@ -794,7 +684,7 @@ func cancel_join(channel_id:int) -> void:
 		push_warning("Not running on Web")
 		
 # Function to kick a player from a channel
-func kick_player(channel_id: int, player_id: int) -> void:
+func kick(channel_id: int, player_id: int) -> void:
 	if OS.get_name() == "Web":
 		# Create a JavaScript object to hold parameters
 		var params := JavaScriptBridge.create_object("Object")
@@ -841,7 +731,7 @@ func mute(channel_id: int, player_id: int, unmute_at: String) -> void:
 		conf["playerId"] = player_id
 		conf["unmuteAt"] = unmute_at
 		
-		var response = await gp.channels.mute(conf)
+		gp.channels.mute(conf)
 	else:
 		push_warning("Not running on Web")
 
@@ -1043,6 +933,67 @@ func fetch_more_sent_invites(limit: int) -> Dictionary:
 		return {"items": null, 
 				"can_load_more": null
 				}
+				
+				
+func accept_join_request(channel_id: int, player_id: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["playerId"] = player_id
+		gp.channels.acceptJoinRequest(conf)
+	else:
+		push_warning("Not on the web platform.")
+
+# Reject a join request
+func reject_join_request(channel_id: int, player_id: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["playerId"] = player_id
+		gp.channels.rejectJoinRequest(conf)
+	else:
+		push_warning("Not on the web platform.")
+
+# Fetch join requests
+func fetch_join_requests(channel_id: int, limit: int, offset: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["limit"] = limit
+		conf["offset"] = offset
+		gp.channels.fetchJoinRequests(conf)
+	else:
+		push_warning("Not on the web platform.")
+
+# Fetch more join requests
+func fetch_more_join_requests(channel_id: int, limit: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["channelId"] = channel_id
+		conf["limit"] = limit
+		gp.channels.fetchMoreJoinRequests(conf)
+	else:
+		push_warning("Not on the web platform.")
+
+# Fetch sent join requests
+func fetch_sent_join_requests(limit: int, offset: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["offset"] = offset
+		conf["limit"] = limit
+		gp.channels.fetchSentJoinRequests(conf)
+	else:
+		push_warning("Not on the web platform.")
+
+# Fetch more sent join requests
+func fetch_more_sent_join_requests(limit: int) -> void:
+	if OS.get_name() == "Web":
+		var conf = JavaScriptBridge.create_object("Object")
+		conf["limit"] = limit
+		gp.channels.fetchMoreSentJoinRequests(conf)
+	else:
+		push_warning("Not on the web platform.")
+		
 				
 func _event_message(args):
 	var message = Message.new()
