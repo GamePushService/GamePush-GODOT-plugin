@@ -39,7 +39,6 @@ https://docs.gamepush.com/ru/docs/get-start/
 | [Images](#images)                             |
 | [Language](#language)                         |
 | [Leaderboard](#leaderboard)                   |
-| [LeaderboardScoped](#leaderboardscoped)       |
 | [Logger](#logger)                             |
 | [Payments](#payments)                         |
 | [Platform](#platform)                         |
