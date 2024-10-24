@@ -214,6 +214,210 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### Channels
 
+#### Signals
+
+| **Signal**                           | **Emitted Parameters**                       |
+|--------------------------------------|----------------------------------------------|
+| `event_message`                      | `message: Message`                           |
+| `message_received`                   | `message: Message`                           |
+| `message_sent`                       | `message: Message`                           |
+| `message_error`                      | `error: String`                              |
+| `message_edited`                     | `message: Message`                           |
+| `error_edit_message`                 | `error: String`                              |
+| `event_edit_message`                 | `message: Message`                           |
+| `message_deleted`                    | `message: Message`                           |
+| `error_delete_message`               | `error: String`                              |
+| `event_delete_message`               | `message: Message`                           |
+| `messages_fetched`                   | `result: Dictionary`                         |
+| `error_fetch_messages`               | `error: String`                              |
+| `fetched_more_messages`              | `result: Dictionary`                         |
+| `error_fetch_more_messages`          | `error: String`                              |
+| `channel_created`                    | `channel: Channel`                           |
+| `error_create_channel`               | `error: String`                              |
+| `channel_updated`                    | `channel: Channel`                           |
+| `error_update_channel`               | `error: String`                              |
+| `event_channel_updated`              | `channel: Channel`                           |
+| `channel_deleted`                    | `channel: Channel`                           |
+| `error_delete_channel`               | `error: String`                              |
+| `event_channel_deleted`              | `channel: Channel`                           |
+| `channel_fetched`                    | `channel: Channel`                           |
+| `fetch_channel_error`                | `error: String`                              |
+| `channels_fetched`                   | `channels: Array`, `can_load_more: bool`     |
+| `fetch_channels_error`               | `error: String`                              |
+| `more_channels_fetched`              | `channels: Array`, `can_load_more: bool`     |
+| `fetch_more_channels_error`          | `error: String`                              |
+| `chat_opened`                        | (None)                                       |
+| `chat_closed`                        | (None)                                       |
+| `chat_error`                         | `error: String`                              |
+| `joined`                             | (None)                                       |
+| `error_join`                         | `error: String`                              |
+| `event_joined`                       | `member: Dictionary`                         |
+| `join_request_received`              | `join_request: Dictionary`                   |
+| `cancel_joined`                      | (None)                                       |
+| `cancel_join_error`                  | `error: String`                              |
+| `event_cancel_join`                  | `join_request: Dictionary`                   |
+| `leave_successful`                   | (None)                                       |
+| `leave_error`                        | `error: String`                              |
+| `leave_event`                        | `member: Dictionary`                         |
+| `kick_successful`                    | (None)                                       |
+| `kick_error`                         | `error: String`                              |
+| `members_fetched`                    | `members: Array`, `can_load_more: bool`      |
+| `fetch_members_error`                | `error: String`                              |
+| `fetch_more_members_success`         | `members: Array`, `can_load_more: bool`      |
+| `fetch_more_members_error`           | `error: String`                              |
+| `mute_success`                       | (None)                                       |
+| `mute_error`                         | `error: String`                              |
+| `event_mute`                         | `mute: Mute`                                 |
+| `unmute_success`                     | (None)                                       |
+| `unmute_error`                       | `error: String`                              |
+| `event_unmute`                       | `unmute: Dictionary`                         |
+| `sent_invite`                        | (None)                                       |
+| `sent_invite_error`                  | `error: String`                              |
+| `event_invite`                       | `invite: Dictionary`                         |
+| `canceled_invite`                    | (None)                                       |
+| `cancel_invite_error`                | `error: String`                              |
+| `event_cancel_invite`                | `invite: Dictionary`                         |
+| `accepted_invite`                    | (None)                                       |
+| `error_accept_invite`                | `error: String`                              |
+| `rejected_invite`                    | (None)                                       |
+| `error_reject_invite`                | `error: String`                              |
+| `event_reject_invite`                | `invite: Dictionary`                         |
+| `fetched_invites`                    | `result: Dictionary`                         |
+| `error_fetch_invites`                | `error: String`                              |
+| `fetched_more_invites`               | `result: Dictionary`                         |
+| `error_fetch_more_invites`           | `error: String`                              |
+| `fetched_channel_invites`            | `result: Dictionary`                         |
+| `error_fetch_channel_invites`        | `error: String`                              |
+| `fetched_more_channel_invites`       | `result: Dictionary`                         |
+| `error_fetch_more_channel_invites`   | `error: String`                              |
+| `fetched_sent_invites`               | `result: Dictionary`                         |
+| `error_fetch_sent_invites`           | `error: String`                              |
+| `fetched_more_sent_invites`          | `result: Dictionary`                         |
+| `error_fetch_more_sent_invites`      | `error: String`                              |
+
+#### Methods
+
+| **Method**               | **Arguments**           | **Return Type**      |
+|----------------------|----------|-------------------------|
+| `join`                          | `channel_id: int`, `password: String = ""`                                                                                                                  | `void`                                           |
+| `leave`                         | `channel_id: int`                                                                                                                                           | `void`                                           |
+| `send_message`                  | `channel_id: int`, `text: String`                                                                                                                            | `void`                                           |
+| `send_personal_message`         | `player_id: int`, `text: String`, `tags: Array = []`                                                                                                         | `void`                                           |
+| `send_feed_message`             | `player_id: int`, `text: String`, `tags: Array = []`                                                                                                         | `void`                                           |
+| `edit_message`                  | `message_id: String`, `text: String`                                                                                                                         | `void`                                           |
+| `delete_message`                | `message_id: String`                                                                                                                                        | `void`                                           |
+| `fetch_messages`                | `channel_id: int`, `tags: Array`, `limit: int = 100`, `offset: int = 0`                                                                                      | `Dictionary` (contains `items`, `can_load_more`) |
+| `fetch_personal_messages`       | `channel_id: int`, `tags: Array`, `limit: int = 100`, `offset: int = 0`                                                                                      | `Dictionary` (contains `items`, `can_load_more`) |
+| `fetch_feed_messages`           | `channel_id: int`, `tags: Array`, `limit: int = 100`, `offset: int = 0`                                                                                      | `Dictionary` (contains `items`, `can_load_more`) |
+| `fetch_more_messages`           | `channel_id: int`, `tags: Array`, `limit: int = 100`                                                                                                         | `Dictionary` (contains `items`, `can_load_more`) |
+| `fetch_more_personal_messages`  | `player_id: int`, `tags: Array`, `limit: int = 100`                                                                                                          | `Dictionary` (contains `items`, `can_load_more`) |
+| `fetch_more_feed_messages`      | `player_id: int`, `tags: Array`, `limit: int = 100`                                                                                                          | `Dictionary` (contains `items`, `can_load_more`) |
+| `create_channel(channel: Channel)` | `channel: Channel`                                                                                                                 | `void` |
+| `update_channel(channel: Channel)` | `channel: Channel`                                                                                                                 | `void` |
+| `delete_channel(channel_id: int)`  | `channel_id: int`                                                                                                                  | `void` |
+| `fetch_channel(channel_id: int)`   | `channel_id: int`                                                                                                                  | `Channel` |
+| `fetch_channels(ids: Array, tags: Array, search: String = "", only_joined: bool = true, only_owned: bool = true, limit: int = 100, offset: int = 0)` | `ids: Array`, `tags: Array`, `search: String`, `only_joined: bool`, `only_owned: bool`, `limit: int`, `offset: int` | `Dictionary` |
+| `fetch_more_channels(channel_id: int, tags: Array, limit: int = 100)` | `channel_id: int`, `tags: Array`, `limit: int`                                                                                     | `Dictionary` |
+| `open_chat(channel_id: int = 0, tags: Array = [])` | `channel_id: int`, `tags: Array`                                                                                                       | `void`          |
+| `is_main_chat_enabled()`                      | N/A                                                                                                                                  | `bool`          |
+| `main_chat_id()`                              | N/A                                                                                                                                  | `int`           |
+| `open_personal_chat(player_id: int, tags: Array)` | `player_id: int`, `tags: Array`                                                                                                       | `void`          |
+| `open_feed(player_id: int, tags: Array)`      | `player_id: int`, `tags: Array`                                                                                                       | `void`          |
+| `cancel_join(channel_id: int)`                | `channel_id: int`                                                                                                                     | `void`          |
+| `kick(channel_id: int, player_id: int)`       | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
+| `fetch_members(channel_id: int, search: String = "", only_online: bool = true, limit: int = 100, offset: int = 0)` | `channel_id: int`, `search: String`, `only_online: bool`, `limit: int`, `offset: int`                                                  | `void`          |
+| `fetch_more_members(channel_id: int, search: String = "", only_online: bool = true, limit: int = 100)` | `channel_id: int`, `search: String`, `only_online: bool`, `limit: int`                                                                 | `void`          |
+| `mute(channel_id: int, player_id: int, unmute_at: String)` | `channel_id: int`, `player_id: int`, `unmute_at: String`                                                                               | `void`          |
+| `unmute(channel_id: int, player_id: int)`     | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
+| `send_invite(channel_id: int, player_id: int)`     | `channel_id: int`, `player_id: int`                                                                                                   | `void`          |
+| `cancel_invite(channel_id: int, player_id: int)`   | `channel_id: int`, `player_id: int`                                                                                                   | `void`          |
+| `accept_invite(channel_id: int)`                    | `channel_id: int`                                                                                                                     | `void`          |
+| `reject_invite(channel_id: int)`                    | `channel_id: int`                                                                                                                     | `void`          |
+| `fetch_invites(limit: int, offset: int)`           | `limit: int`, `offset: int`                                                                                                          | `Dictionary`    |
+| `fetch_more_invites(limit: int)`                    | `limit: int`                                                                                                                          | `Dictionary`    |
+| `fetch_channel_invites(channel_id: int, limit: int, offset: int)` | `channel_id: int`, `limit: int`, `offset: int`                                                                                      | `Dictionary`    |
+| `fetch_more_channel_invites(channel_id: int, limit: int)` | `channel_id: int`, `limit: int`                                                                                                      | `Dictionary`    |
+| `fetch_sent_invites(limit: int, offset: int)`      | `limit: int`, `offset: int`                                                                                                          | `Dictionary`    |
+| `fetch_more_sent_invites(limit: int)`               | `limit: int`                                                                                                                          | `Dictionary`    |
+| 
+| `send_invite(channel_id: int, player_id: int)`          | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
+| `cancel_invite(channel_id: int, player_id: int)`        | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
+| `accept_invite(channel_id: int)`                         | `channel_id: int`                                                                                                                       | `void`          |
+| `reject_invite(channel_id: int)`                         | `channel_id: int`                                                                                                                       | `void`          |
+| `fetch_invites(limit: int, offset: int)`                | `limit: int`, `offset: int`                                                                                                            | `Dictionary`    |
+| `fetch_more_invites(limit: int)`                         | `limit: int`                                                                                                                            | `Dictionary`    |
+| `fetch_channel_invites(channel_id: int, limit: int, offset: int)` | `channel_id: int`, `limit: int`, `offset: int`                                                                                         | `Dictionary`    |
+| `fetch_more_channel_invites(channel_id: int, limit: int)` | `channel_id: int`, `limit: int`                                                                                                        | `Dictionary`    |
+| `fetch_sent_invites(limit: int, offset: int)`           | `limit: int`, `offset: int`                                                                                                            | `Dictionary`    |
+| `fetch_more_sent_invites(limit: int)`                    | `limit: int`                                                                                                                            | `Dictionary`    |
+| `accept_join_request(channel_id: int, player_id: int)`  | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
+| `reject_join_request(channel_id: int, player_id: int)`  | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
+| `fetch_join_requests(channel_id: int, limit: int, offset: int)` | `channel_id: int`, `limit: int`, `offset: int`                                                                                         | `void`          |
+| `fetch_more_join_requests(channel_id: int, limit: int)`  | `channel_id: int`, `limit: int`                                                                                                        | `void`          |
+| `fetch_sent_join_requests(limit: int, offset: int)`      | `limit: int`, `offset: int`                                                                                                            | `void`          |
+| `fetch_more_sent_join_requests(limit: int)`               | `limit: int`                                                                                                                            | `void`          |
+
+
+#### Classes
+
+##### Message
+| Property     | Type   |
+|--------------|--------|
+| id           | String |
+| channel_id   | String |
+| author_id    | String |
+| text         | String |
+| tags         | Array  |
+| player       | Player |
+| created_at   | int    |
+
+
+##### Player
+| Property | Type   |
+|----------|--------|
+| id       | String |
+| name     | String |
+| avatar   | String |
+
+##### Channel
+| Property         | Type       |
+|------------------|------------|
+| id               | int        |
+| tags             | Array      |
+| message_tags     | Array      |
+| template_id      | String     |
+| capacity         | int        |
+| owner_id         | int        |
+| name             | String     |
+| description      | String     |
+| private          | bool       |
+| visible          | bool       |
+| permanent        | bool       |
+| has_password     | bool       |
+| is_joined        | bool       |
+| is_request_sent   | bool       |
+| is_invited       | bool       |
+| is_muted         | bool       |
+| password         | String     |
+| members_count    | int        |
+| owner_acl        | Dictionary |
+| member_acl       | Dictionary |
+| guest_acl        | Dictionary |
+
+##### Member 
+| Property  | Type   |
+|-----------|--------|
+| id        | int    |
+| is_online | bool   |
+| state     | Player |
+| mute      | Mute   |
+
+##### Mute
+| Property   | Type   |
+|------------|--------|
+| is_muted   | bool   |
+| unmute_at  | String |
+
 ### Device
 
 #### Signals
@@ -314,6 +518,45 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### Files 
 
+#### Signals
+
+| **Signal**                     | **Emitted Parameters**    |
+|----------------------------|-----------------------|
+| `uploaded`                   | `arg: File`             | 
+| `error_upload`               | `err: String`           | 
+| `loaded_content`             | None                  | 
+| `error_load_content`         | `err: String`           | 
+| `choosed`                    | None                  | 
+| `error_choose`               | `err: String`           | 
+| `fetched`                    | `result: Array`         | 
+| `error_fetch`                | `err: String`           |
+| `fetched_more`               | `result: Array`         | 
+| `error_fetch_more`           | `err: String`           |
+
+#### Methods
+| **Method**                  | **Arguments**                                     | **Return Type** |
+|-------------------------|------------------------------------------------|--------------|
+| `upload`                  | `tags: Array`                                    | `void`         |
+| `upload_url`              | `url: String`, `tags: Array= []`                  | `void`         |
+| `upload_content`          | `file_name: String`, `content: String=""`, `tags: Array= []` | void         |
+| `load_content`            | `url: String`                                    | `String`       |
+| `choose_file`             | `type_file: String=""`                           | `Array`        |
+| `fetch`                   | `player_id: Variant=null`, `tags: Variant=null`, `limit: Variant=null`, `offset: Variant=null` | `Array`        |
+| `fetch_more`              | `player_id: Variant=null`, `tags: Variant=null`, `limit: Variant=null`, `offset: Variant=null` | `Array`        |
+
+#### Classes
+
+##### File
+| **Property**     | **Type**   |
+|--------------|--------|
+| `id`           | `String` |
+| `player_id`    | `int`    |
+| `name`         | `String` |
+| `src`          | `String` |
+| `size`         | `int`    |
+| `tags`         | `Array`  |
+
+
 ### Fullscreen
 
 #### Signals
@@ -355,8 +598,74 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### GamesCollections
 
+#### Signals
+| **Signal**               | **Emitted Parameters** | 
+|----------------------|--------------------|
+| `opened`               | None               | 
+| `closed`               | None               | 
+| `fetched`              | `collection: Collection` | 
+| `error_fetch`          | `error: String`      |
+
+#### Methods
+| **Method**          | **Arguments**                                      | **Return Type** |
+|-----------------|-------------------------------------------------|-------------|
+| `open`            | `tag: String=""`, `id: int=0`, `share_params: Dictionary={}` | `void`        |
+| `fetch`           | `tag: String=""`, `id: int=0`                       | `void`        |
+
+#### Classes
+##### Collection
+| **Parameter**    | **Type**              |
+|--------------|-------------------|
+| `id`           | `int`               | 
+| `tag`          | `String`            |
+| `name`         | `String`            |
+| `description`  | `String`            | 
+| `games`        | `Array[Game]`       | 
+
+##### Game
+
+| **Parameter**    | **Type**              |
+|--------------|-------------------|
+| `id`           | `int`               |
+| `name`         | `String`            | 
+| `description`  | `String`            |
+| `icon`         | `String`            | 
+| `url`          | `String`            | 
+
+
 ### Images
 
+#### Signals
+| **Signal**             | **Emitted Parameters**       |
+|--------------------|--------------------------|
+| `uploaded`            | `GPImage`                  |
+| `error_upload`        | `String`                   |
+| `choosed`             | `Object`                   |
+| `error_choose`        | `String`                   |
+| `fetched`             | `Array`                    |
+| `error_fetch`         | `String`                   |
+| `fetched_more`        | `Array`                    |
+| `error_fetch_more`    | `String`                   |
+#### Methods
+| **Method**             | **Arguments**                    | **Return Type** |
+|--------------------|-------------------------------|-------------|
+| `upload`             | `tags: Array = []`              | `void`        |
+| `upload_url`        | `url: String`, `tags: Array = []` | `void`        |
+| `choose_file`        | `type_file: String = ""`        | `Array`       |
+| `fetch`              | `player_id = null`, `tags = null`, `limit = null`, `offset = null` | `Array`       |
+| `fetch_more`         | `player_id = null`, `tags = null`, `limit = null`, `offset = null` | `Array`       |
+| `resize`             | `url: String`, `width: int`, `height: int`, `crop: bool` | `String`      |
+#### Classes
+##### GPImage
+| **Parameter**   | **Type**        |
+|-------------|-------------|
+| `id`          | `String`      |
+| `player_id`   | `int`         |
+| `name`        | `String`      |
+| `src`         | `String`      |
+| `width`       | `int`         |
+| `height`      | `int`         |
+| `tags`        | `Array[String]` |
 ### Language
 
 #### Methods
@@ -368,7 +677,27 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ### Leaderboard
 
-### LeaderboardScoped
+#### Signals
+
+|**Signal**|	**Emitted Parameters**|
+|----------|--------------------------|
+|`opened`	||
+|`closed`	||
+|`fetched`|	`players: Array[Dictionary]`, `fields: Array[Dictionary]`, `top_players: Array[Dictionary]`, `above_players: Array[Dictionary]`, `belowPlayers: Array[Dictionary]`, `player: Dictionary`|
+| `fetched_scoped` | `players: Array[Dictionary]`, `fields: Array[Dictionary]`, `top_players: Array[Dictionary]`, `above_players: Array[Dictionary]`,` belowPlayers: Array[Dictionary]`, `player: Dictionary`
+||`fetched_player_rating` |	`player: Dictionary`,` fields: Array[Dictionary]`, `above_players: Array[Dictionary]`, `belowPlayers: Array[Dictionary]`|
+|`fetched_player_rating_scoped` |	`player: Dictionary`, `fields: Array[Dictionary]`, `above_players: Array[Dictionary]`, `belowPlayers: Array[Dictionary]`|
+
+#### Methods
+| **Method**                        | **Arguments**                                                                                                    | **Type Return**  |
+|------------------------------|--------------------------------------------------------------------------------------------------------------|-------------------|
+| `open`                        | `order_by: Array[String] = []`, `order: String = ""`, `limit: int = 0`, `include_fields: Array[String] = []`, `display_fields: Array[String] = []`,` with_me: String = ''`, `show_nearest: int = 0` | `void`              |
+| `fetch`                       | `order_by: Array[String] = []`, `order: String = ""`, `limit: int = 0`, `include_fields: Array[String] = []`, `display_fields: Array[String] = []`, `with_me: String = ""`, `show_nearest: int = 0` | `void`              |
+| `fetch_player_rating`        | `order_by: Array[String] = []`, `order: String = ""`, `include_fields: Array[String] = []`, `show_nearest: int = 0` | `void`              |
+| `open_scoped`                | `variant: String`, `id: int = 0`, `tag: String = ""`, `order: String = ""`, l`imit: int = 0`, `include_fields: Array[String] = []`, `display_fields: Array[String] = []`,` with_me: String = ''`, `show_nearest: int = 0` | `void`              |
+| `publish_record`             | `variant: String`, `record: Dictionary`, `id: int = 0`, `tag: String = ""`,` override = null `                       | `void`              |
+| `fetch_scoped`               | `variant: String`, `id: int = 0`, `tag: String = ""`, `order: String = ""`, `limit: int = 0`, `include_fields: Array[String] = []`, `with_me: String = ''`, `show_nearest: int = 0` | `void`              |
+| `fetch_player_rating_scoped`  | `variant: String`, `id: int = 0`, `tag: String = ""`, `order_by: Array[String] = []`, `order: String = ""`, `include_fields: Array[String] = []`, `show_nearest: int = 0` | `void`              |
 
 ### Logger
 
@@ -462,7 +791,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 ### Player
 
 #### Signals
-| Signal                 | Emitted Parameters                                     |
+| **Signal**                 | **Emitted Parameters**                                     |
 |------------------------|-------------------------------------------------------|
 | `synced`               | `success_status: bool`                                |
 | `loaded`               | `success_status: bool`                                |
@@ -520,7 +849,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ##### Field
 
-| Variable              | Type                     |
+| **Variable**              | **Type**                     |
 |-----------------------|--------------------------|
 | `name`                | `String`                 |
 | `key`                 | `String`                 |
@@ -534,14 +863,14 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ##### FieldVariant
 
-| Variable              | Type                     |
+| **Variable**              | **Type**                     |
 |-----------------------|--------------------------|
 | `name`                | `String`                 |
 | `value`               | `Variant`                |  # String, int или bool
 
 ##### FieldLimits
 
-| Variable              | Type                     |
+| **Variable**              | **Type**                     |
 |-----------------------|--------------------------|
 | `min`                 | `float`                  |
 | `max`                 | `float`                  |
@@ -549,16 +878,160 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 ##### IntervalIncrement
 
-| Variable              | Type                     |
+| **Variable**              | **Type**                     |
 |-----------------------|--------------------------|
 | `interval`            | `float`                  |
 | `increment`           | `float`                  |
 
 ### Players
+#### Methods
+
+
+|**Method**|	**Arguments**|	**Return Type**|
+|------|--------------|-----------|
+|`fetch`|	`ids: Array`|	`Dictionary`|
 
 ### Rewards
+#### Signals
+| **Signal**             | **Emitted Parameters**            |
+|--------------------|-------------------------------|
+| `reward_given`       | `reward: Reward`, `player_reward: PlayerReward` |
+| `reward_error`       | `err: String`                   |
+| `reward_accepted`    | `reward: Reward`, `player_reward: PlayerReward` |
+| `reward_accept_error` | `err: String`                   |
+
+#### Methods
+| **Method**      | **Arguments**                         | **Return Type** |
+|-------------|------------------------------------|-------------|
+| `give`        | `id: Variant = null`, `tag: Variant = null`, `lazy: bool = false` | `Array`       |
+| `accept`      | `id: Variant = null`, `tag: Variant = null` | `Array`       |
+| `list`        |                                    | `Array`       |
+| `given_list`  |                                    | `Array`       |
+| `get_reward`  | `id_or_tag: Variant`                | `Array`       |
+| `has`         | `id_or_tag: Variant`                | `bool`        |
+| `has_accepted` | `id_or_tag: Variant`                | `bool`        |
+| `has_unaccepted` | `id_or_tag: Variant`             | `bool`        |
+
+#### Classes
+
+##### Reward
+| **Parameter**       | **Type**          |
+|------------------|---------------|
+| `id`               | `int`           |
+| `tag`              | `String`        |
+| `name`             | `String`        |
+| `description`      | `String`        |
+| `icon`             | `String`        |
+| `icon_small`       | `String`        |
+| `mutations`        | `Array`         |
+| `is_auto_accept`    | `bool`         |
+
+##### PlayerReward
+
+| **Parameter**       | **Type**          |
+|------------------|---------------|
+| `reward_id`       | `int`           |
+| `count_total`     | `int`           |
+| `count_accepted`   | `int`           |
+
+##### DataMutation
+
+| **Parameter**       | **Type**          |
+|------------------|---------------|
+| `type`            | `String`        |
+| `key`             | `String`        |
+| `action`          | `String`        |
+| `value`           | `Variant`       |
 
 ### Schedulers
+#### Signals
+
+| **Signal**                             | **Emitted Parameters**                    |
+|------------------------------------|----------------------------------------|
+| `error_register`                     | `error_message: String`                  |
+| `signal_claim_day`                   | `scheduler_day_info: SchedulerDayInfo`   |
+| `error_claim_day`                    | `error_message: String`                  |
+| `signal_register`                     | `scheduler_info: SchedulerInfo`          |
+| `signal_claim_day_additional`        | `scheduler_day_info: SchedulerDayInfo`   |
+| `error_claim_day_additional`         | `error_message: String`                  |
+| `signal_claim_all_day`               | `scheduler_day_info: SchedulerDayInfo`   |
+| `error_claim_all_day`                | `error_message: String`                  |
+| `signal_claim_all_days`              | `scheduler_info: SchedulerInfo`          |
+| `error_claim_all_days`               | `error_message: String`                  |
+| `signal_join`                        | `scheduler: Scheduler`, `player_scheduler: PlayerScheduler` |
+| `error_join`                         | `error_message: String`                  |
+
+#### Methods
+
+| **Method**                       | **Arguments**                                | **Return Type**          |
+|------------------------------|-------------------------------------------|----------------------|
+| `register`                     | `id_or_tag: Variant `                       | `SchedulerInfo`        |
+| `claim_day`                    | `id_or_tag: Variant`, `day: int`             | `SchedulerDayInfo`     |
+| `claim_day_additional`         | `id_or_tag: Variant`, `day: int`, `trigger_id_or_tag: Variant` | `SchedulerDayInfo`     |
+| `claim_all_day`                | `id_or_tag: Variant`, `day: int`             | `SchedulerDayInfo`     |
+| `claim_all_days`               | `id_or_tag: Variant`                        | `SchedulerInfo`        |
+| `list`                         |                                           | `Array`                |
+| `active_list`                  |                                           | `Array`                |
+| `get_scheduler`                | `id_or_tag: Variant`                        | `SchedulerInfo`        |
+| `get_scheduler_day`            | `id_or_tag: Variant`, `day: int`             | `SchedulerDayInfo`     |
+| `get_scheduler_current_day`     | `id_or_tag: Variant`                        | `SchedulerDayInfo`     |
+| `is_registered`                | `id_or_tag: Variant`                        | `bool`                 |
+| `is_today_reward_claimed`      | `id_or_tag: Variant`                        | `bool`                 |
+| `can_claim_day`                | `id_or_tag: Variant`, `day: int`             | `bool`                 |
+| `can_claim_day_additional`     | `id_or_tag: Variant`, `day: int`, `trigger_id_or_tag: Variant` | `bool`                 |
+| `can_claim_all_day`            | `id_or_tag: Variant`, `day: int`             | `bool`                 |
+
+##### Scheduler
+
+| **Parameter**       | **Type**       |
+|------------------|------------|
+| `id`               | `int`        |
+| `tag`              | `String`     |
+| `type`             | `String`     |
+| `days`             | `int`        |
+| `is_repeat`        | `bool`       |
+| `is_auto_register` | `bool`       |
+| `triggers`         | `Array`      |
+
+##### PlayerScheduler
+
+| **Parameter**       | **Type**       |
+|------------------|------------|
+| `scheduler_id`     | `int`        |
+| `days_claimed`     | `Array[int]` |
+| `stats`            | `PlayerStats` |
+
+##### PlayerStats
+
+| **Parameter**       | **Type**       |
+|------------------|------------|
+| `active_days`      | `int`        |
+| `active_days_consecutive` | `int`  |
+
+##### SchedulerInfo
+
+| **Parameter**       | **Type**              |
+|------------------|------------------|
+| `scheduler`        | `Scheduler`         |
+| `stats`            | `PlayerStats`       |
+| `days_claimed`     | `Array[int]`       |
+| `is_registered`     | `bool`             |
+| `current_day`      | `int`              |
+
+##### SchedulerDayInfo
+
+| **Parameter**         | **Type**              |
+|--------------------|------------------|
+| `scheduler`          | `Scheduler`         |
+| `day`                | `int`              |
+| `is_day_reached`     | `bool`             |
+| `is_day_complete`    | `bool`             |
+| `is_day_claimed`     | `bool`             |
+| `is_all_day_claimed` | `bool`             |
+| `can_claim_day`      | `bool`             |
+| `can_claim_all_day`  | `bool`             |
+| `bonuses`            | `Array`            |
+| `triggers`           | `Array`            |
 
 ### Segments
 
@@ -587,13 +1060,158 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 
 ### Socials
+#### Signals
+
+| **Signal**                | **Emitted Parameters** |
+|-----------------------|--------------------|
+| `shared`                | `success: bool`      |
+| `posted`                | `success: bool`      |
+| `invited`               | `success: bool`      |
+| `joined_community`      | `success: bool`      |
+
+#### Methods
+
+| **Method**                         | **Arguments**                        | **Return Type** |
+|--------------------------------|-----------------------------------|-------------|
+| `is_supports_share`              |                                   | `bool`        |
+| `is_supports_native_share`       |                                   | `bool`        |
+| `share`                          | `text: String = ""`, `url: String = ""`, `image: String = ""` | `void`        |
+| `is_supports_native_posts`       |                                   | `bool`        |
+| `post`                           | `text: String = ""`, `url: String = ""`, `image: String = "" `| `void`        |
+| `is_supports_native_invite`      |                                   | `bool`        |
+| `invite`                         | `text: String = ""`                 | `void`        |
+| `can_join_community`             |                                   | `bool`        |
+| `is_supports_native_community_join` |                                 | `bool`        |
+| `join_community`                 |                                   | `void`        |
+| `make_share_url`                 | `from_id: String`, `gift: String`    | `String`      |
+| `get_share_param`                | `param: String `                    | `String`      |
 
 ### System
+#### Methods
+
+| **Method**             | **Arguments** | **Return Type** |
+|--------------------|------------|-------------|
+| `is_dev`             | None           | `bool`        |
+| `is_allowed_origin`   | None           | `bool`        |
 
 ### Triggers
+#### Signals
+
+| **Signal**          | `Emitted Parameters` |
+|-----------------|--------------------|
+| `activated`       | `trigger: Trigger`    |
+| `claimed`         | `trigger: Trigger`    |
+| `error_claim`     | `err: String`         |
+
+#### Methods
+
+| **Method**                | **Arguments**               | **Return Type**    |
+|-----------------------|-------------------------|----------------|
+| `claim`                 | `id: String = ""`, `tag: String = ""` | `Dictionary`    |
+| `list`                  |                         | `Array`          |
+| `activated_list`         |                         | `Array`          |
+| `get_trigger`           | `trigger_id: String`       | `Dictionary`     |
+| `is_trigger_activated`  | `id_or_tag: String`        | `bool`           |
+| `is_claimed`            | `id_or_tag: String`        | `bool`           |
+
+#### Classes
+
+##### Trigger
+
+| **Property Name**  | **Type**           |
+|----------------|----------------|
+| `id`             | `String`         |
+| `tag`            | `String`         |
+| `description`    | `String`         |
+| `is_auto_claim`  | `bool`           |
+| `conditions`     | `Array`          |
+| `bonuses`        | `Array`          |
+
+##### Bonus
+
+| **Property Name**  | **Type**           |
+|----------------|----------------|
+| `type`           | `String`         |
+| `id`             | `int`            |
+
+##### Condition
+
+| **Property Name**  | **Type**           |
+|----------------|----------------|
+| `type`           | `String`         |
+| `key`            | `String`         |
+| `operator`       | `String`         |
+| `value`          | `Variant`        |
 
 ### Variables
+#### Signals
+
+| **Signal**                         | **Emitted Parameters**             |
+|---------------------------------|--------------------------------|
+| `fetched`                        | None                               |
+| `fetched_error`                  | `error: String`                  |
+| `platform_variables_fetched`      | `variables: Dictionary`          |
+| `platform_variables_error`        | `error: String`                  |
+
+#### Methods
+
+| **Method**                         | **Arguments**                          | **Return Type** |
+|---------------------------------|------------------------------------|-------------|
+| `fetch`                          |  None                                  | `void`        |
+| `get_variable`                   | `variable_name: String`              | `Variant`     |
+| `has_variable`                   | `variable_name: String`              | `bool`        |
+| `type`                           | `variable_name: String`             | `String`      |
+| `is_platform_variables_available`|   None                                 | `bool`        |
+| `fetch_platform_variables`       | `client_params: Dictionary = {}`     | `Dictionary`  |
 
 ### Uniques
+#### Signals
+
+| **Signal**         | **Emitted Parameters**    |
+|----------------|-----------------------|
+| `registered`     | `unique_value: UniqueValue` |
+| `register_error` | `error: String`          |
+| `checked`        | `unique_value: UniqueValue` |
+| `check_error`    | `error: String`          |
+| `deleted`        | `unique_value: UniqueValue` |
+| `delete_error`   | `error: String`         |
+
+#### Methods
+
+| **Method**         | **Arguments**                          | **Return Type** |
+|----------------|------------------------------------|-------------|
+| `register`       | `tag: String`, `value: String`         | `bool`        |
+| `get_value`      | `tag: String`                        | `String`      |
+| `list`           |                                    | `Array`       |
+| `check`          | `tag: String`, `value: String`         | `bool`        |
+| `delete_unique`  | `tag: String`                        | `void`        |
+
+#### Classes
+##### UniqueValue
+
+| **Property Name**  | **Type**   |
+|----------------|--------|
+| `tag`            | `String` |
+| `value`          | `String` |
 
 ### Storage
+
+#### Signals
+
+| **Signal**              | **Emitted Parameters**          |
+|----------------------|-----------------------------|
+| `set_success`          | `key: String`, `value: Variant` |
+| `get_success`          | `value: Variant`              |
+| `set_global_success`   | `key: String`, `value: Variant` |
+| `get_global_success`   | `value: Variant`              |
+
+#### Methods
+
+| **Method**              | **Arguments**                          | **Return Type** |
+|---------------------|------------------------------------|-------------|
+| `set_storage`         | `storage_type: String`               | `void`        |
+| `set_value`           | `key: String`, `value: Variant`        | `void`        |
+| `get_value`           | `key: String`                        | `String`      |
+| `set_global_value`    | `key: String`, `value: Variant`        | `void`        |
+| `get_global_value`    | `key: String`                        | `String`      |
+
