@@ -149,7 +149,6 @@ text = "Language"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-disabled = true
 text = "Leaderboard"
 
 [node name="Logger" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
