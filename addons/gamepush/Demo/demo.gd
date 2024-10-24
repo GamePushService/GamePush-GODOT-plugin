@@ -102,7 +102,7 @@ func _on_socials_pressed():
 
 
 func _on_storage_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Storage.tscn")
 
 
 func _on_system_pressed():
