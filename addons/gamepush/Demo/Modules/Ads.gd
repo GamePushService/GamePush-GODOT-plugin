@@ -1,5 +1,6 @@
 extends Control
 
+
 func _ready():
 	GP.Ads.start.connect(_on_signal_start)
 	GP.Ads.close.connect(_on_signal_close)

@@ -48,7 +48,7 @@ func _ready():
 		ads.on('preloader:start', _callback_preloader_start)
 		ads.on('preloader:close', _callback_preloader_close)
 		ads.on('rewarded:start', _callback_preloader_start)
-		ads.on('rewarded:close', _callback_preloader_close)
+		ads.on('rewarded:close', _callback_rewarded_close)
 		ads.on('rewarded:reward', _callback_rewarded_reward)
 		ads.on('sticky:start', _callback_sticky_start)
 		ads.on('sticky:close', _callback_close)
@@ -143,7 +143,7 @@ func show_preloader() -> void:
 		return
 	push_warning("Not Web")
 		
-func show_rewarded_video(show_countdown_overlay=false) -> void:
+func show_rewarded_video(show_countdown_overlay:bool=false) -> void:
 	if OS.get_name() == "Web":
 		if show_countdown_overlay:
 			var conf := JavaScriptBridge.create_object("Object")

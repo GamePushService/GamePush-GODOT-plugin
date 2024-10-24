@@ -68,11 +68,11 @@ theme_override_font_sizes/font_size = 32
 text = "PLAYERS"
 
 [node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 1
 offset_left = 185.0
 offset_top = 21.0
@@ -81,6 +81,7 @@ offset_bottom = 44.0
 text = "ID: 455715383"
 
 [node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 1
 offset_left = 185.0
 offset_top = 67.0
@@ -89,6 +90,7 @@ offset_bottom = 90.0
 text = "NAME:"
 
 [node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 0
 offset_left = 22.0
 offset_top = 13.0
@@ -97,40 +99,40 @@ offset_bottom = 53.0
 scale = Vector2(2.99168, 2.908)
 expand_mode = 3
 
-[node name="Header#KeyInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+[node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 0
 offset_left = 647.0
 offset_top = 59.0
 offset_right = 834.0
 offset_bottom = 90.0
-placeholder_text = "Key..."
+placeholder_text = "Id"
 
-[node name="Header#ValueInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+[node name="id2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 0
 offset_left = 647.0
-offset_top = 16.0
+offset_top = 102.0
 offset_right = 834.0
-offset_bottom = 47.0
-placeholder_text = "Value..."
+offset_bottom = 133.0
+placeholder_text = "Id"
+
+[node name="id3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 15.0
+offset_right = 834.0
+offset_bottom = 46.0
+placeholder_text = "Id"
 
 [node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.71
-columns = 2
 
-[node name="ButtonGrid#GetIDButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+[node name="fetch" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Get ID"
-
-[node name="ButtonGrid#GetScoreButton" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Get Score"
+text = "fetch"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetIDButton" to="." method="_on_button_grid_get_id_button_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/ButtonGrid#GetScoreButton" to="." method="_on_button_grid_get_score_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/fetch" to="." method="_on_fetch_pressed"]

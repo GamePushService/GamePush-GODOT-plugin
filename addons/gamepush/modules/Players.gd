@@ -13,6 +13,7 @@ func _ready():
 			await get_tree().create_timer(0.1).timeout
 		players = gp.players
 
+signal __fetch(a:JavaScriptObject)
 
 # Fetch players by their IDs
 func fetch(ids: Array) -> Dictionary:
@@ -22,9 +23,10 @@ func fetch(ids: Array) -> Dictionary:
 		for id in ids:
 			_ids.push(id)
 		conf["ids"] = _ids
-		var _result = await players.fetch(conf)
-		#_result.forEach()
-		#TODO
-		
+		var callback := JavaScriptBridge.create_callback(func(args):
+			__fetch.emit(args[0]))
+		players.fetch(conf).then(callback)
+		var _result = await __fetch
+		return GP._js_to_dict(_result)
 	push_warning("Not Web")
 	return {}

@@ -35,7 +35,7 @@ extends Node
 
 var gp:JavaScriptObject
 
-signal inited(sucsess:bool)
+signal inited(success:bool)
 var is_inited := false
 
 func _ready():
@@ -100,11 +100,12 @@ func _ready():
 		add_child(timer)
 		timer.timeout.connect(_on_timer_timeout)
 		timer.start(ready_delay)
-	else:
+	elif ready_delay == 0.0:
 		_on_timer_timeout()
-		
+	
+	inited.connect(func(is_init): is_inited = true)
 	inited.emit(is_init)
-	is_inited = true
+	
 
 
 func _on_timer_timeout():

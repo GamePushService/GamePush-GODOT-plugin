@@ -4,16 +4,16 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var files:JavaScriptObject
 
-signal uploaded(arg)
-signal error_upload(err)
+signal uploaded(arg:File)
+signal error_upload(err:String)
 signal loaded_content
-signal error_load_content(err) 
+signal error_load_content(err:String) 
 signal choosed
-signal error_choose(err)
-signal fetched
-signal error_fetch(err)
-signal fetched_more
-signal error_fetch_more(err)
+signal error_choose(err:String)
+signal fetched(result:Array)
+signal error_fetch(err:String)
+signal fetched_more(result:Array)
+signal error_fetch_more(err:String)
 
 var _callback_upload = JavaScriptBridge.create_callback(_upload)
 var _callback_error_upload = JavaScriptBridge.create_callback(_error_upload)
