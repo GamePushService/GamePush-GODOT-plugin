@@ -298,11 +298,11 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method**               | **Arguments**           | **Return Type**      |
 |----------------------|----------|-------------------------|
-| `join`                          | `channel_id: int`, `password: String = ""`                                                                                                                  | `void`                                           |
-| `leave`                         | `channel_id: int`                                                                                                                                           | `void`                                           |
-| `send_message`                  | `channel_id: int`, `text: String`                                                                                                                            | `void`                                           |
-| `send_personal_message`         | `player_id: int`, `text: String`, `tags: Array = []`                                                                                                         | `void`                                           |
-| `send_feed_message`             | `player_id: int`, `text: String`, `tags: Array = []`                                                                                                         | `void`                                           |
+| `join`        | `channel_id: int`, `password: String = ""`            | `void`                                           |
+| `leave`                         | `channel_id: int`                   | `void`                                           |
+| `send_message`                  | `channel_id: int`, `text: String`   | `void`                                           |
+| `send_personal_message`         | `player_id: int`, `text: String`, `tags: Array = []` | `void`                                           |
+| `send_feed_message`             | `player_id: int`, `text: String`, `tags: Array = []` | `void`                                           |
 | `edit_message`                  | `message_id: String`, `text: String`                                                                                                                         | `void`                                           |
 | `delete_message`                | `message_id: String`                                                                                                                                        | `void`                                           |
 | `fetch_messages`                | `channel_id: int`, `tags: Array`, `limit: int = 100`, `offset: int = 0`                                                                                      | `Dictionary` (contains `items`, `can_load_more`) |
@@ -338,7 +338,6 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `fetch_more_channel_invites(channel_id: int, limit: int)` | `channel_id: int`, `limit: int`                                                                                                      | `Dictionary`    |
 | `fetch_sent_invites(limit: int, offset: int)`      | `limit: int`, `offset: int`                                                                                                          | `Dictionary`    |
 | `fetch_more_sent_invites(limit: int)`               | `limit: int`                                                                                                                          | `Dictionary`    |
-| 
 | `send_invite(channel_id: int, player_id: int)`          | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
 | `cancel_invite(channel_id: int, player_id: int)`        | `channel_id: int`, `player_id: int`                                                                                                    | `void`          |
 | `accept_invite(channel_id: int)`                         | `channel_id: int`                                                                                                                       | `void`          |

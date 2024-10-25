@@ -13,7 +13,7 @@ config_version=5
 config/name="GamePush-GODOT-Plugin"
 run/main_scene="res://addons/gamepush/Demo/Loading.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
