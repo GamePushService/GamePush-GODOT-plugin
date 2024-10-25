@@ -1,8 +1,6 @@
 extends Control
 
 
-@onready var id_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/id"
-@onready var tag_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/tag"
 @onready var id_or_tag_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/id_or_tag"
 
 
@@ -18,7 +16,7 @@ func _on_main_menu_button_pressed():
 
 
 func _on_join_pressed():
-	GP.Events.join(id_node.text, tag_node.text)
+	GP.Events.join(id_or_tag_node.text)
 
 
 func _on_list_pressed():

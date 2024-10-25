@@ -76,8 +76,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method**          | **Arguments**                 | **Return Type**   |
 |---------------------|-------------------------------|-------------------|
-| `unlock`            | `id: int`, `tag: String`      | `void`            |
-| `set_progress`      | `progress: int`, `id: int`, `tag: String` | `void`    |
+| `unlock`            | `id_or_tag: Variant`      | `void`            |
+| `set_progress`      | `progress: int`, `id_or_tag: Variant` | `void`    |
 | `has`               | `id_or_tag: Variant`          | `bool`            |
 | `get_progress`      | `id_or_tag: Variant`          | `int`             |
 | `open`              | None                          | `void`            |
@@ -464,12 +464,12 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method Name**     | **Arguments**                                         | **Return Type**  |
 |---------------------|-------------------------------------------------------|------------------|
-| `join`              | `id: int = 0`, `tag: String = ""`                     | `void`           |
+| `join`              | `id_or_tag: Variant`                                  | `void`           |
 | `list`              | None                                                  | `Array`          |
 | `active_list`       | None                                                  | `Array`          |
-| `get_event`         | `id_or_tag: String`                                   | `Event`          |
-| `has`               | `id_or_tag: String`                                   | `bool`           |
-| `is_joined`         | `id_or_tag: String`                                   | `bool`           |
+| `get_event`         | `id_or_tag: Variant`                                   | `Event`          |
+| `has`               | `id_or_tag: Variant`                                   | `bool`           |
+| `is_joined`         | `id_or_tag: Variant`                                   | `bool`           |
 
 #### Classes
 
@@ -902,8 +902,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 #### Methods
 | **Method**      | **Arguments**                         | **Return Type** |
 |-------------|------------------------------------|-------------|
-| `give`        | `id: Variant = null`, `tag: Variant = null`, `lazy: bool = false` | `Array`       |
-| `accept`      | `id: Variant = null`, `tag: Variant = null` | `Array`       |
+| `give`        | `id_or_tag: Variant` , `lazy: bool = false` | `Array`       |
+| `accept`      | `id_or_tag: Variant`               | `Array`       |
 | `list`        |                                    | `Array`       |
 | `given_list`  |                                    | `Array`       |
 | `get_reward`  | `id_or_tag: Variant`                | `Array`       |
@@ -1106,12 +1106,12 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method**                | **Arguments**               | **Return Type**    |
 |-----------------------|-------------------------|----------------|
-| `claim`                 | `id: String = ""`, `tag: String = ""` | `Dictionary`    |
+| `claim`                 | `id_or_tag: Variant`  | `Dictionary`    |
 | `list`                  |                         | `Array`          |
 | `activated_list`         |                         | `Array`          |
 | `get_trigger`           | `trigger_id: String`       | `Dictionary`     |
-| `is_trigger_activated`  | `id_or_tag: String`        | `bool`           |
-| `is_claimed`            | `id_or_tag: String`        | `bool`           |
+| `is_trigger_activated`  | `id_or_tag: Variant`        | `bool`           |
+| `is_claimed`            | `id_or_tag: Variant`        | `bool`           |
 
 #### Classes
 

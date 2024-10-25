@@ -39,15 +39,15 @@ func _ready():
 		achievements.on("error:fetch", _callback_error_fetched)
 
 
-func unlock(id=null, tag=null) -> void:
+func unlock(id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id:
-			conf["id"] = id
+		if id_or_tag is int:
+			conf["id"] = id_or_tag
 			achievements.unlock(conf)
 			return
-		if tag:
-			conf["tag"] = tag
+		else:
+			conf["tag"] = id_or_tag
 			achievements.unlock(conf)
 			return
 		push_error("No id or tag")
@@ -55,16 +55,16 @@ func unlock(id=null, tag=null) -> void:
 	push_warning("Not Web")
 	
 
-func set_progress(progress:int, id=null, tag=null) -> void:
+func set_progress(progress:int, id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["progress"] = progress
-		if id:
-			conf["id"] = id
+		if id_or_tag is int:
+			conf["id"] = id_or_tag
 			achievements.setProgress(conf)
 			return
-		if tag:
-			conf["tag"] = tag
+		else:
+			conf["tag"] = id_or_tag
 			achievements.setProgress(conf)
 			return
 		push_error("No id or tag")

@@ -99,36 +99,6 @@ offset_bottom = 53.0
 scale = Vector2(2.99168, 2.908)
 expand_mode = 3
 
-[node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -93.0
-offset_top = -58.0
-offset_right = 94.0
-offset_bottom = -27.0
-grow_horizontal = 2
-grow_vertical = 2
-placeholder_text = "Id..."
-
-[node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -90.0
-offset_top = 22.0
-offset_right = 97.0
-offset_bottom = 53.0
-grow_horizontal = 2
-grow_vertical = 2
-placeholder_text = "Tag..."
-
 [node name="id_trigger" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 1
 anchors_preset = 8

@@ -19,7 +19,7 @@ func _on_give_pressed():
 
 
 func _on_accept_pressed():
-	GP.Logger.info(await GP.Rewards.give(id_or_tag_node.text))
+	GP.Logger.info(await GP.Rewards.accept(id_or_tag_node.text))
 
 
 func _on_list_pressed():

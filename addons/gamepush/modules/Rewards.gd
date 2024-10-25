@@ -31,13 +31,13 @@ func _ready():
 		rewards.on("accept", _callback_reward_accept_error)
 
 
-func give(id:Variant = null, tag:Variant = null, lazy:bool = false) -> Array:
+func give(id_or_tag:Variant, lazy:bool = false) -> Array:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id:
-			conf["id"] = id
-		elif tag:
-			conf["tag"] = tag
+		if id_or_tag is int:
+			conf["id"] = id_or_tag
+		else:
+			conf["tag"] = id_or_tag
 		if lazy:
 			conf["lazy"] = lazy
 		var callback := JavaScriptBridge.create_callback(func(res): _reward_given.emit(res[0]))
@@ -55,13 +55,13 @@ func give(id:Variant = null, tag:Variant = null, lazy:bool = false) -> Array:
 	return []
 
 
-func accept(id:Variant = null, tag:Variant = null) -> Array:
+func accept(id_or_tag:Variant) -> Array:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id:
-			conf["id"] = id
-		elif tag:
-			conf["tag"] = tag
+		if id_or_tag is int:
+			conf["id"] = id_or_tag
+		else:
+			conf["tag"] = id_or_tag
 		var callback := JavaScriptBridge.create_callback(func(res): _reward_accepted.emit(res[0]))
 		rewards.accept(conf).then(callback)
 		var _result = await _reward_accepted

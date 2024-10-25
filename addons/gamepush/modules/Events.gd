@@ -21,15 +21,15 @@ func _ready():
 		events.on("error:join", _callback_error_join)
 		
 		
-func join(id:int =0, tag:String="") -> void:
+func join(id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id:
-			conf["id"] = id
+		if id_or_tag is int:
+			conf["id"] = id_or_tag
 			events.join(conf)
 			return
-		if tag:
-			conf["tag"] = tag
+		else:
+			conf["tag"] = id_or_tag
 			events.join(conf)
 			return
 		push_error("No id or tag")
@@ -56,7 +56,7 @@ func active_list() -> Array:
 		push_warning("Not running on Web")
 	return result
 	
-func get_event(id_or_tag:String) -> Event:
+func get_event(id_or_tag:Variant) -> Event:
 	var result := Event.new()
 	if OS.get_name() == "Web":
 		var _res = events.getEvent(id_or_tag)
@@ -65,14 +65,14 @@ func get_event(id_or_tag:String) -> Event:
 	push_warning("Not running on Web")
 	return result
 	
-func has(id_or_tag:String) -> bool:
+func has(id_or_tag:Variant) -> bool:
 	if OS.get_name() == "Web":
 		return events.has(id_or_tag)
 	push_warning("Not running on Web")
 	return false
 
 
-func is_joined(id_or_tag:String) -> bool:
+func is_joined(id_or_tag:Variant) -> bool:
 	if OS.get_name() == "Web":
 		return events.isJoined(id_or_tag)
 	push_warning("Not running on Web")

@@ -30,16 +30,13 @@ func _ready():
 		gp.triggers.on("claim", _callback_claim)
 		gp.triggers.on("error:claim", _callback_error_claim)
 
-func claim(id: String="", tag: String="") -> Dictionary:
+func claim(id_or_tag: Variant) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id:
-			conf["id"] = id
-		elif tag:
-			conf["tag"] = tag
+		if id_or_tag is int:
+			conf["id"] = id_or_tag
 		else:
-			push_warning("No id or tag")
-			return {"trigger": null, "isActivated": false, "isClaimed": false}
+			conf["tag"] = id_or_tag
 		gp.triggers.claim(conf).then(_callback_claimed)
 		var response = await _inner_claimed
 		return response
@@ -87,13 +84,13 @@ func get_trigger(trigger_id: String) -> Dictionary:
 		push_warning("Not running on Web")
 	return trigger_info
 
-func is_trigger_activated(id_or_tag: String) -> bool:
+func is_trigger_activated(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
 		return gp.triggers.isActivated(id_or_tag)
 	push_warning("Not running on Web")
 	return false
 
-func is_claimed(id_or_tag: String) -> bool:
+func is_claimed(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
 		return gp.triggers.isClaimed(id_or_tag)
 	push_warning("Not running on Web")

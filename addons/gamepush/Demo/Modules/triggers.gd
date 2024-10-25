@@ -1,7 +1,5 @@
 extends Control
 
-@onready var id_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/id"
-@onready var tag_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/tag"
 @onready var id_or_tag_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/id_or_tag"
 @onready var id_trigger := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/id_trigger"
 
@@ -27,7 +25,7 @@ func _on_main_menu_button_pressed():
 
 
 func _on_claim_pressed():
-	GP.Logger.info(await GP.Triggers.claim(id_node.text, tag_node.text))
+	GP.Logger.info(await GP.Triggers.claim(id_or_tag_node.text))
 
 
 func _on_list_pressed():
