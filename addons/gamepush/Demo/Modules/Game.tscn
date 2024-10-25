@@ -1,0 +1,165 @@
+[gd_scene load_steps=3 format=3 uid="uid://b76yyejjmd11p"]
+
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/game.gd" id="1_ue50m"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_vw70w"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ue50m")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Main Menu"
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Head" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+theme_override_styles/panel = ExtResource("2_vw70w")
+
+[node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -11.5
+offset_right = 29.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "GAME
+"
+
+[node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+offset_left = 185.0
+offset_top = 21.0
+offset_right = 293.0
+offset_bottom = 44.0
+text = "ID: 455715383"
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+offset_left = 185.0
+offset_top = 67.0
+offset_right = 293.0
+offset_bottom = 90.0
+text = "NAME:"
+
+[node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 13.0
+offset_right = 62.0
+offset_bottom = 53.0
+scale = Vector2(2.99168, 2.908)
+expand_mode = 3
+
+[node name="Header#KeyInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 59.0
+offset_right = 834.0
+offset_bottom = 90.0
+placeholder_text = "Key..."
+
+[node name="Header#ValueInput" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 16.0
+offset_right = 834.0
+offset_bottom = 47.0
+placeholder_text = "Value..."
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="is_paused" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_paused"
+
+[node name="pause" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "pause"
+
+[node name="resume" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "resume"
+
+[node name="game_start" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "game_start"
+
+[node name="gameplay_start" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "gameplay_start"
+
+[node name="gameplay_stop" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "gameplay_stop"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/is_paused" to="." method="_on_is_paused_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/game_start" to="." method="_on_game_start_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/gameplay_start" to="." method="_on_gameplay_start_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/gameplay_stop" to="." method="_on_gameplay_stop_pressed"]

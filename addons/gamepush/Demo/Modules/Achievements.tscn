@@ -1,0 +1,203 @@
+[gd_scene load_steps=3 format=3 uid="uid://yappmgi52nb7"]
+
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/achievements.gd" id="1_m6x68"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_qposd"]
+
+[node name="Achievements" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m6x68")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Main Menu"
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Head" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+theme_override_styles/panel = ExtResource("2_qposd")
+
+[node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -11.5
+offset_right = 29.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Achievements"
+
+[node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -93.5
+offset_top = -15.5
+offset_right = 93.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Id..."
+
+[node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -93.0
+offset_top = -49.0
+offset_right = 94.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+placeholder_text = "Tag.."
+
+[node name="progress" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -301.0
+offset_top = -49.0
+offset_right = -114.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+placeholder_text = "Progress..."
+
+[node name="id_or_tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 130.0
+offset_top = -49.0
+offset_right = 317.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+placeholder_text = "Id_or_tag..."
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="open" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "open
+"
+
+[node name="fetch" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch"
+
+[node name="unlock" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "unlock"
+
+[node name="set_progress" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "set_progress"
+
+[node name="get_progress" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "get_progress"
+
+[node name="has" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "has"
+
+[node name="list" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "list"
+
+[node name="player_achievements_list" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "player_achievements_list"
+
+[node name="groups_list" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "groups_list"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/open" to="." method="_on_open_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/fetch" to="." method="_on_fetch_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/unlock" to="." method="_on_unlock_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/set_progress" to="." method="_on_set_progress_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/get_progress" to="." method="_on_get_progress_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/has" to="." method="_on_has_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/list" to="." method="_on_list_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/player_achievements_list" to="." method="_on_player_achievements_list_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/groups_list" to="." method="_on_groups_list_pressed"]

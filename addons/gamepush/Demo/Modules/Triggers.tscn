@@ -1,0 +1,210 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfuwl4uxi7m2r"]
+
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/triggers.gd" id="1_u68q3"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_gw3cn"]
+
+[node name="Triggers" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u68q3")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Main Menu"
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Head" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+theme_override_styles/panel = ExtResource("2_gw3cn")
+
+[node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -11.5
+offset_right = 29.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Triggers"
+
+[node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
+layout_mode = 1
+offset_left = 185.0
+offset_top = 21.0
+offset_right = 293.0
+offset_bottom = 44.0
+text = "ID: 455715383"
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
+layout_mode = 1
+offset_left = 185.0
+offset_top = 67.0
+offset_right = 293.0
+offset_bottom = 90.0
+text = "NAME:"
+
+[node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
+layout_mode = 0
+offset_left = 22.0
+offset_top = 13.0
+offset_right = 62.0
+offset_bottom = 53.0
+scale = Vector2(2.99168, 2.908)
+expand_mode = 3
+
+[node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -58.0
+offset_right = 94.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Id..."
+
+[node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.0
+offset_top = 22.0
+offset_right = 97.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Tag..."
+
+[node name="id_trigger" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -407.0
+offset_top = 18.0
+offset_right = -220.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "Id_trigger..."
+
+[node name="id_or_tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 200.0
+offset_top = 29.0
+offset_right = 387.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "id_or_tag..."
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="claim" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "claim"
+
+[node name="list" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "list"
+
+[node name="activated_list" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "activated_list"
+
+[node name="get_trigger" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "get_trigger"
+
+[node name="is_trigger_activated" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_trigger_activated"
+
+[node name="is_claimed" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_claimed"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/claim" to="." method="_on_claim_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/list" to="." method="_on_list_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/activated_list" to="." method="_on_activated_list_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/get_trigger" to="." method="_on_get_trigger_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/is_trigger_activated" to="." method="_on_is_trigger_activated_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/is_claimed" to="." method="_on_is_claimed_pressed"]

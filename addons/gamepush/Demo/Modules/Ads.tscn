@@ -1,0 +1,246 @@
+[gd_scene load_steps=3 format=3 uid="uid://blekk2vveioqu"]
+
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/ads.gd" id="1_n7pjb"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_l263x"]
+
+[node name="Ads" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n7pjb")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Main Menu"
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Head" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+theme_override_styles/panel = ExtResource("2_l263x")
+
+[node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -11.5
+offset_right = 29.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "ADS
+"
+
+[node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
+layout_mode = 1
+offset_left = 185.0
+offset_top = 21.0
+offset_right = 293.0
+offset_bottom = 44.0
+text = "ID: 455715383"
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
+layout_mode = 1
+offset_left = 185.0
+offset_top = 67.0
+offset_right = 293.0
+offset_bottom = 90.0
+text = "NAME:"
+
+[node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
+layout_mode = 0
+offset_left = 22.0
+offset_top = 13.0
+offset_right = 62.0
+offset_bottom = 53.0
+scale = Vector2(2.99168, 2.908)
+expand_mode = 3
+
+[node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 59.0
+offset_right = 834.0
+offset_bottom = 90.0
+placeholder_text = "Id..."
+
+[node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 16.0
+offset_right = 834.0
+offset_bottom = 47.0
+placeholder_text = "Tag..."
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.25
+columns = 3
+
+[node name="is_adblock_enabled" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_adblock_enabled"
+
+[node name="is_sticky_available" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_sticky_available"
+
+[node name="is_fullscreen_available" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_fullscreen_available"
+
+[node name="is_rewarded_available" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_rewarded_available"
+
+[node name="show_fullscreen" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "show_fullscreen"
+
+[node name="show_rewarded_video" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "show_rewarded_video"
+
+[node name="show_preloader" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "show_preloader"
+
+[node name="is_sticky_playing" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_sticky_playing"
+
+[node name="is_fullscreen_playing" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_fullscreen_playing"
+
+[node name="is_rewarded_playing" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_rewarded_playing"
+
+[node name="is_preloader_playing" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_preloader_playing"
+
+[node name="is_countdown_overlay_enabled" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_countdown_overlay_enabled"
+
+[node name="is_rewarded_failed_overlay_enabled" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_rewarded_failed_overlay_enabled"
+
+[node name="can_show_fullscreen_before_game_play" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "can_show_fullscreen_before_game_play"
+
+[node name="show_sticky" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "show_sticky"
+
+[node name="refresh_sticky" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "refresh_sticky"
+
+[node name="close_sticky" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "close_sticky"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_adblock_enabled" to="." method="_on_is_adblock_enabled_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_sticky_available" to="." method="_on_is_sticky_available_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_fullscreen_available" to="." method="_on_is_fullscreen_available_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_rewarded_available" to="." method="_on_is_rewarded_available_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/show_fullscreen" to="." method="_on_show_fullscreen_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/show_rewarded_video" to="." method="_on_show_rewarded_video_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/show_preloader" to="." method="_on_show_preloader_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_sticky_playing" to="." method="_on_is_sticky_playing_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_fullscreen_playing" to="." method="_on_is_fullscreen_playing_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_rewarded_playing" to="." method="_on_is_rewarded_playing_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_preloader_playing" to="." method="_on_is_preloader_playing_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_countdown_overlay_enabled" to="." method="_on_is_countdown_overlay_enabled_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_rewarded_failed_overlay_enabled" to="." method="_on_is_rewarded_failed_overlay_enabled_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/can_show_fullscreen_before_game_play" to="." method="_on_can_show_fullscreen_before_game_play_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/show_sticky" to="." method="_on_show_sticky_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/refresh_sticky" to="." method="_on_refresh_sticky_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/close_sticky" to="." method="_on_close_sticky_pressed"]

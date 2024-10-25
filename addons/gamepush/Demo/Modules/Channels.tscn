@@ -1,0 +1,605 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpwmghg4cjew2"]
+
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/channels.gd" id="1_c3q82"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_8rmjs"]
+
+[node name="Channels" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c3q82")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MainMenuButton" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Main Menu"
+
+[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Head" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("2_8rmjs")
+
+[node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -11.5
+offset_right = 29.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Channels"
+
+[node name="Header" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 7
+
+[node name="channel_id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "channel_id..."
+
+[node name="text" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "text..."
+
+[node name="tag1" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "tag..."
+
+[node name="tag2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "tag..."
+
+[node name="tag3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "tag..."
+
+[node name="message_id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "message_id..."
+
+[node name="limit" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "limit..."
+
+[node name="offset" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "offset..."
+
+[node name="player_id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "player_id..."
+
+[node name="template" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "template..."
+
+[node name="capacity" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "capacity..."
+
+[node name="name" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "name..."
+
+[node name="description" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "description..."
+
+[node name="search" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "search..."
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.74
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="Possibilities of Channels" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels"]
+layout_mode = 2
+text = "Possibilities of Channels
+"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="join" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "join"
+
+[node name="leave" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "leave"
+
+[node name="send_message" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "send_message"
+
+[node name="Channel Management" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management"]
+layout_mode = 2
+text = "Channel Management
+"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="create_channel" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "create_channel"
+
+[node name="update_channel" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "update_channel"
+
+[node name="delete_channel" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "delete_channel"
+
+[node name="fetch_channel" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_channel"
+
+[node name="fetch_channels" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_channels"
+
+[node name="fetch_more_channels" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_channels"
+
+[node name="Ready-made chats" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats"]
+layout_mode = 2
+text = "Ready-made chats
+"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="open_chat" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "open_chat"
+
+[node name="is_main_chat_enabled" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_main_chat_enabled"
+
+[node name="main_chat_id" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "main_chat_id"
+
+[node name="open_personal_chat" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "open_personal_chat"
+
+[node name="open_feed" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "open_feed"
+
+[node name="Members" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members"]
+layout_mode = 2
+text = "Members
+"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="cancel_Join" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "cancel_Join"
+
+[node name="kick" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "kick"
+
+[node name="fetch_members" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_members"
+
+[node name="fetch_more_members" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_members"
+
+[node name="mute" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "mute"
+
+[node name="unmute" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "mute"
+
+[node name="Messages" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages"]
+layout_mode = 2
+text = "Messages"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 2
+
+[node name="send_personal_message2" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "send_personal_message"
+
+[node name="send_feed_message" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "send_feed_message"
+
+[node name="edit_message" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "edit_message"
+
+[node name="delete_message" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "delete_message"
+
+[node name="fetch_messages" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_messages"
+
+[node name="fetch_personal_messages" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_personal_messages"
+
+[node name="fetch_feed_messages" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_feed_messages"
+
+[node name="fetch_more_messages" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_messages"
+
+[node name="fetch_more_personal_messages" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_personal_messages"
+
+[node name="fetch_more_feed_messages" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_feed_messages"
+
+[node name="Invitations" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations"]
+layout_mode = 2
+text = "Invitations"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 2
+
+[node name="send_invite" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "send_invite"
+
+[node name="cancel_invite" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "cancel_invite"
+
+[node name="accept_invite" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "accept_invite"
+
+[node name="reject_invite" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "reject_invite"
+
+[node name="fetch_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_invites"
+
+[node name="fetch_more_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_invites"
+
+[node name="fetch_channel_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_channel_invites"
+
+[node name="fetch_more_channel_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_messages"
+
+[node name="fetch_sent_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_sent_invites"
+
+[node name="fetch_more_sent_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_sent_invites"
+
+[node name="Requests" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests"]
+layout_mode = 2
+text = "Requests"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="accept_join_request" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "accept_join_request"
+
+[node name="reject_join_request" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "reject_join_request"
+
+[node name="fetch_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_join_requests"
+
+[node name="fetch_more_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_join_requests"
+
+[node name="fetch_sent_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_sent_join_requests"
+
+[node name="fetch_more_sent_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_sent_join_requests"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels/ButtonGrid/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels/ButtonGrid/leave" to="." method="_on_leave_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels/ButtonGrid/send_message" to="." method="_on_send_message_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid/create_channel" to="." method="_on_create_channel_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid/update_channel" to="." method="_on_update_channel_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid/delete_channel" to="." method="_on_delete_channel_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid/fetch_channel" to="." method="_on_fetch_channel_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid/fetch_channels" to="." method="_on_fetch_channels_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Channel Management/ButtonGrid/fetch_more_channels" to="." method="_on_fetch_more_channels_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid/open_chat" to="." method="_on_open_chat_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid/is_main_chat_enabled" to="." method="_on_is_main_chat_enabled_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid/main_chat_id" to="." method="_on_main_chat_id_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid/open_personal_chat" to="." method="_on_open_personal_chat_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Ready-made chats/ButtonGrid/open_feed" to="." method="_on_open_feed_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/cancel_Join" to="." method="_on_cancel_join_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/kick" to="." method="_on_kick_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/fetch_members" to="." method="_on_fetch_members_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/fetch_more_members" to="." method="_on_fetch_more_members_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/mute" to="." method="_on_mute_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/unmute" to="." method="_on_unmute_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/send_personal_message2" to="." method="_on_send_personal_message_2_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/send_feed_message" to="." method="_on_send_feed_message_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/edit_message" to="." method="_on_edit_message_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/delete_message" to="." method="_on_delete_message_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/fetch_messages" to="." method="_on_fetch_messages_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/fetch_personal_messages" to="." method="_on_fetch_personal_messages_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/fetch_feed_messages" to="." method="_on_fetch_feed_messages_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/fetch_more_messages" to="." method="_on_fetch_more_messages_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/fetch_more_personal_messages" to="." method="_on_fetch_more_personal_messages_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/fetch_more_feed_messages" to="." method="_on_fetch_more_feed_messages_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/send_invite" to="." method="_on_send_invite_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/cancel_invite" to="." method="_on_cancel_invite_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/accept_invite" to="." method="_on_accept_invite_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/reject_invite" to="." method="_on_reject_invite_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_invites" to="." method="_on_fetch_invites_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_more_invites" to="." method="_on_fetch_more_invites_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_channel_invites" to="." method="_on_fetch_channel_invites_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_more_channel_invites" to="." method="_on_fetch_more_channel_invites_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_sent_invites" to="." method="_on_fetch_sent_invites_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_more_sent_invites" to="." method="_on_fetch_more_sent_invites_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/accept_join_request" to="." method="_on_accept_join_request_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/reject_join_request" to="." method="_on_reject_join_request_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_join_requests" to="." method="_on_fetch_join_requests_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_more_join_requests" to="." method="_on_fetch_more_join_requests_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_sent_join_requests" to="." method="_on_fetch_sent_join_requests_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_more_sent_join_requests" to="." method="_on_fetch_more_sent_join_requests_pressed"]
