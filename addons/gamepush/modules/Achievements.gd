@@ -31,7 +31,7 @@ func _ready():
 		achievements = gp.achievements
 		achievements.on("unlock", _callback_unlock)
 		achievements.on("error:unlock", _callback_error_unlock)
-		achievements.on("progress", _callback_unlock)
+		achievements.on("progress", _callback_progress)
 		achievements.on("error:progress", _callback_error_unlock)
 		achievements.on("open", _callback_opened)
 		achievements.on("close", _callback_closed)
@@ -153,7 +153,7 @@ func _fetched(args):
 	var _callback_player_achievements:= JavaScriptBridge.create_callback(func(args):
 		player_achievements.append(PlayerAchievement.new()._from_js(args[0])))
 	achive.playerAchievements.forEach(_callback_player_achievements)
-	fetched.emit(achievements, achievements_groups, player_achievements)
+	fetched.emit(achievements, player_achievements, achievements_groups)
 	
 func _error_fetched(args): error_fetch.emit(args[0])
 
@@ -185,8 +185,10 @@ class Achievement:
 		rare = js_object["rare"]
 		max_progress = js_object["maxProgress"]
 		progress_step = js_object["progressStep"]
-		is_locked_visible = js_object["isLockedVisible"]
-		is_locked_description_visible = js_object["isLockedDescriptionVisible"]
+		if js_object["isLockedVisible"]:
+			is_locked_visible = js_object["isLockedVisible"]
+		if js_object["isLockedDescriptionVisible"]:
+			is_locked_description_visible = js_object["isLockedDescriptionVisible"]
 		return self
 
 	func _to_js() -> JavaScriptObject:
