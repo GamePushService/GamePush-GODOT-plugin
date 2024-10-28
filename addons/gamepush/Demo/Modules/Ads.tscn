@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://blekk2vveioqu"]
 
-[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/ads.gd" id="1_n7pjb"]
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/Ads.gd" id="1_rr1mp"]
 [ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_l263x"]
 
 [node name="Ads" type="Control"]
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_n7pjb")
+script = ExtResource("1_rr1mp")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -70,53 +70,23 @@ text = "ADS
 "
 
 [node name="Header" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
+[node name="show_countdown_overlay" type="CheckBox" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 1
-offset_left = 185.0
-offset_top = 21.0
-offset_right = 293.0
-offset_bottom = 44.0
-text = "ID: 455715383"
-
-[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
-layout_mode = 1
-offset_left = 185.0
-offset_top = 67.0
-offset_right = 293.0
-offset_bottom = 90.0
-text = "NAME:"
-
-[node name="Avatar" type="TextureRect" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
-layout_mode = 0
-offset_left = 22.0
-offset_top = 13.0
-offset_right = 62.0
-offset_bottom = 53.0
-scale = Vector2(2.99168, 2.908)
-expand_mode = 3
-
-[node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-layout_mode = 0
-offset_left = 647.0
-offset_top = 59.0
-offset_right = 834.0
-offset_bottom = 90.0
-placeholder_text = "Id..."
-
-[node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-layout_mode = 0
-offset_left = 647.0
-offset_top = 16.0
-offset_right = 834.0
-offset_bottom = 47.0
-placeholder_text = "Tag..."
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "show_countdown_overlay"
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
@@ -147,6 +117,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "is_rewarded_available"
+
+[node name="is_preloader_available" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_preloader_available"
 
 [node name="show_fullscreen" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -231,6 +207,7 @@ text = "close_sticky"
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_sticky_available" to="." method="_on_is_sticky_available_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_fullscreen_available" to="." method="_on_is_fullscreen_available_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_rewarded_available" to="." method="_on_is_rewarded_available_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/is_preloader_available" to="." method="_on_is_preloader_available_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/show_fullscreen" to="." method="_on_show_fullscreen_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/show_rewarded_video" to="." method="_on_show_rewarded_video_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/show_preloader" to="." method="_on_show_preloader_pressed"]
