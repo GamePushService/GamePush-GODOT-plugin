@@ -17,8 +17,8 @@ var _callback_claimed := JavaScriptBridge.create_callback(func(args):
 	_inner_claimed.emit(response))
 
 var _callback_claim := JavaScriptBridge.create_callback(_claimed)
-var _callback_activate := JavaScriptBridge.create_callback(_claimed)
-var _callback_error_claim := JavaScriptBridge.create_callback(_claimed)
+var _callback_activate := JavaScriptBridge.create_callback(_activated)
+var _callback_error_claim := JavaScriptBridge.create_callback(_error_claim)
 
 func _ready():
 	if OS.get_name() == "Web":
@@ -33,7 +33,7 @@ func _ready():
 func claim(id_or_tag: Variant) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id_or_tag is int:
+		if _is_valid_id(id_or_tag):
 			conf["id"] = id_or_tag
 		else:
 			conf["tag"] = id_or_tag
@@ -67,7 +67,7 @@ func activated_list() -> Array:
 		activated_list.forEach(callback)
 	else:
 		push_warning("Not running on Web")
-	return activated_triggers	
+	return activated_triggers
 	
 	
 func get_trigger(trigger_id: String) -> Dictionary:
@@ -107,7 +107,20 @@ func _claimed(args) -> void:
 func _error_claim(args) -> void:
 	error_claim.emit(args[0])  # Emit the error signal with the error code
 
+
+func _is_valid_id(id:Variant):
+	if id is int or id is float or id is String:
+		var id_int := int(id)
+		var list_id := []
+		for a in list():
+			list_id.append(a.id)
+		if id_int in list_id:
+			return true
+	return false
+	
 class Trigger:
+	extends GP.GPObject
+	
 	var id: String
 	var tag: String
 	var description: String
@@ -165,6 +178,8 @@ class Trigger:
 		return self
 
 class Bonus:
+	extends GP.GPObject
+	
 	var type: String
 	var id: int
 	# Method to convert the bonus to a JSON object
@@ -181,6 +196,8 @@ class Bonus:
 		return self
 
 class Condition:
+	extends GP.GPObject
+	
 	var type: String
 	var key: String
 	var operator: String

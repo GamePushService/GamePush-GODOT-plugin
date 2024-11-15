@@ -8,9 +8,9 @@ extends Control
 
 func _ready():
 	GP.Storage.set_success.connect(func(k, v): GP.Logger.info("set_success", k, v))
-	GP.Storage.get_success.connect(func(v): GP.Logger.info("get_success", v))
+	GP.Storage.get_success.connect(func(k, v): GP.Logger.info("get_success", k, v))
 	GP.Storage.set_global_success.connect(func(k, v): GP.Logger.info("set_global_success", k, v))
-	GP.Storage.get_global_success.connect(func(v): GP.Logger.info("get_global_success", v))
+	GP.Storage.get_global_success.connect(func(k, v): GP.Logger.info("get_global_success", k, v))
 
 
 func _on_main_menu_button_pressed():
@@ -18,7 +18,11 @@ func _on_main_menu_button_pressed():
 
 
 func _on_set_storage_pressed():
-	GP.Storage.set_storage(storage_type_node.text)
+	if storage_type_node.text in ["local", "platform"]:
+		GP.Storage.set_storage(storage_type_node.text)
+		GP.Logger.info("set storage:", storage_type_node.text)
+		return
+	GP.Logger.error("Bad storage type")
 
 
 func _on_set_value_pressed():
