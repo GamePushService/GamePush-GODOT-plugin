@@ -251,6 +251,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "is_supports_native_community_join"
 
+[node name="is_supports_share_params" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "is_supports_share_params"
+
 [node name="join_community" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -279,6 +285,7 @@ text = "get_share_param"
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/invite" to="." method="_on_invite_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/can_join_community" to="." method="_on_can_join_community_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/is_supports_native_community_join" to="." method="_on_is_supports_native_community_join_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/is_supports_share_params" to="." method="_on_is_supports_share_params_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/join_community" to="." method="_on_join_community_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/make_share_url" to="." method="_on_make_share_url_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/get_share_param" to="." method="_on_get_share_param_pressed"]

@@ -11,22 +11,25 @@ func _ready():
 		while not gp:
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
-		analytics = gp.analytics
-		
+			analytics = gp.analytics
+
 func hit(url:String) -> void:
 	if OS.get_name() == "Web":
 		analytics.hit(url)
 	else:
 		push_warning("Not running on Web")
-		
+
 
 func goal(name:String, value=null) -> void:
 	# Check if the platform is Web
 	if OS.get_name() == "Web":
-		if value:
+		if value != null:
+			if value is String and value.is_valid_int():
+				value = int(value)
 			analytics.goal(name, value)
 			return
 		analytics.goal(name)
 	else:
 		push_warning("Not running on Web")
-		
+
+			

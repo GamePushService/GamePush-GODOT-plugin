@@ -1081,7 +1081,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `can_join_community`             |                                   | `bool`        |
 | `is_supports_native_community_join` |                                 | `bool`        |
 | `join_community`                 |                                   | `void`        |
-| `make_share_url`                 | `from_id: String`, `gift: String`    | `String`      |
+| `make_share_url`                 | `param: Dictionary`    | `String`      |
 | `get_share_param`                | `param: String `                    | `String`      |
 
 ### System
@@ -1199,9 +1199,9 @@ https://docs.gamepush.com/ru/docs/get-start/
 | **Signal**              | **Emitted Parameters**          |
 |----------------------|-----------------------------|
 | `set_success`          | `key: String`, `value: Variant` |
-| `get_success`          | `value: Variant`              |
+| `get_success`          | `key: String`, `value: Variant`   |
 | `set_global_success`   | `key: String`, `value: Variant` |
-| `get_global_success`   | `value: Variant`              |
+| `get_global_success`   | `key: String`, `value: Variant`    |
 
 #### Methods
 
