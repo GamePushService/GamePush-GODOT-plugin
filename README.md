@@ -42,7 +42,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | [Logger](#logger)                             |
 | [Payments](#payments)                         |
 | [Platform](#platform)                         |
-| [Player](#player-1)                             |
+| [Player](#player-1)                           |
 | [Players](#players)                           |
 | [Rewards](#rewards)                           |
 | [Schedulers](#schedulers)                     |
@@ -1146,7 +1146,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Signal**                         | **Emitted Parameters**             |
 |---------------------------------|--------------------------------|
-| `fetched`                        | None                               |
+| `fetched`                        | `Variables: Array`            |
 | `fetched_error`                  | `error: String`                  |
 | `platform_variables_fetched`      | `variables: Dictionary`          |
 | `platform_variables_error`        | `error: String`                  |
