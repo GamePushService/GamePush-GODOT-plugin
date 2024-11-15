@@ -27,14 +27,14 @@ func _ready():
 		rewards = gp.rewards
 		rewards.on("give", _callback_reward_given)
 		rewards.on("error:give", _callback_reward_error)
-		rewards.on("error:accept", _callback_reward_accepted)
-		rewards.on("accept", _callback_reward_accept_error)
+		rewards.on("error:accept", _callback_reward_accept_error)
+		rewards.on("accept", _callback_reward_accepted)
 
 
 func give(id_or_tag:Variant, lazy:bool = false) -> Array:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id_or_tag is int:
+		if _is_valid_id(id_or_tag):
 			conf["id"] = id_or_tag
 		else:
 			conf["tag"] = id_or_tag
@@ -58,7 +58,7 @@ func give(id_or_tag:Variant, lazy:bool = false) -> Array:
 func accept(id_or_tag:Variant) -> Array:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id_or_tag is int:
+		if _is_valid_id(id_or_tag):
 			conf["id"] = id_or_tag
 		else:
 			conf["tag"] = id_or_tag
@@ -146,8 +146,19 @@ func _on_reward_accepted(args) -> void:
 	var player_reward = PlayerReward.new()._from_js(args[0].playerReward)
 	reward_accepted.emit(reward, player_reward)
 	
+func _is_valid_id(id:Variant):
+	if id is int or id is float or id is String:
+		var id_int := int(id)
+		var list_id := []
+		for a in list():
+			list_id.append(a.id)
+		if id_int in list_id:
+			return true
+	return false
 	
 class Reward:
+	extends GP.GPObject
+	
 	var id: int
 	var tag: String
 	var name: String
@@ -169,7 +180,7 @@ class Reward:
 		mutations = []
 		var _mutations = js_object["mutations"]
 		_mutations.forEach(JavaScriptBridge.create_callback(func (m): 
-			mutations.append(DataMutation.new()._from_js(m))))
+			mutations.append(DataMutation.new()._from_js(m[0]))))
 		return self
 		
 	
@@ -191,6 +202,8 @@ class Reward:
 
 
 class PlayerReward:
+	extends GP.GPObject
+	
 	var reward_id: int
 	var count_total: int
 	var count_accepted: int
@@ -213,7 +226,9 @@ class PlayerReward:
 
 
 class DataMutation:
-	var type: String #TODO need test
+	extends GP.GPObject
+	
+	var type: String 
 	var key: String
 	var action: String
 	var value: Variant # Supports number, string, or boolean
