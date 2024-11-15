@@ -72,15 +72,6 @@ text = "Leaderboard
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
-layout_mode = 1
-offset_left = 185.0
-offset_top = 21.0
-offset_right = 293.0
-offset_bottom = 44.0
-text = "ID: 455715383"
-
 [node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 visible = false
 layout_mode = 1
@@ -90,29 +81,161 @@ offset_right = 293.0
 offset_bottom = 90.0
 text = "NAME:"
 
-[node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
-layout_mode = 0
-offset_left = 647.0
-offset_top = 59.0
-offset_right = 834.0
-offset_bottom = 90.0
-placeholder_text = "Tag..."
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Has_input" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
-layout_mode = 0
-offset_left = 647.0
-offset_top = 16.0
-offset_right = 834.0
-offset_bottom = 47.0
-placeholder_text = "Has..."
+[node name="order_by" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IDLabel" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/order_by"]
+layout_mode = 2
+text = "Order by:"
+
+[node name="orderby1" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/order_by"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="orderby2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/order_by"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="orderby3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/order_by"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="order" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+placeholder_text = "order..."
+
+[node name="limit" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+placeholder_text = "limit..."
+
+[node name="with_me" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+placeholder_text = "with_me..."
+
+[node name="show_nearest" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+placeholder_text = "show_nearest..."
+
+[node name="include_fields" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IDLabel2" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/include_fields"]
+layout_mode = 2
+text = "include_fields:"
+
+[node name="include_fields1" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/include_fields"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="include_fields2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/include_fields"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="include_fields3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/include_fields"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="display_fields" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IDLabel3" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/display_fields"]
+layout_mode = 2
+text = "display_fields:"
+
+[node name="display_fields1" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/display_fields"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="display_fields2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/display_fields"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="display_fields3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/display_fields"]
+layout_mode = 2
+placeholder_text = "..."
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="variant" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+placeholder_text = "variant..."
+
+[node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+placeholder_text = "id..."
+
+[node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+placeholder_text = "tag..."
+
+[node name="override" type="CheckBox" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "override"
+
+[node name="record" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer"]
+layout_mode = 2
+
+[node name="IDLabel4" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record"]
+layout_mode = 2
+text = "Records:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record"]
+layout_mode = 2
+
+[node name="keys" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="key1" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer/keys"]
+layout_mode = 2
+placeholder_text = "key..."
+
+[node name="key2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer/keys"]
+layout_mode = 2
+placeholder_text = "key..."
+
+[node name="key3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer/keys"]
+layout_mode = 2
+placeholder_text = "key..."
+
+[node name="valuse" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="value1" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer/valuse"]
+layout_mode = 2
+placeholder_text = "value..."
+
+[node name="value2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer/valuse"]
+layout_mode = 2
+placeholder_text = "value..."
+
+[node name="value3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer/valuse"]
+layout_mode = 2
+placeholder_text = "value..."
 
 [node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.71
-columns = 3
+columns = 4
 
 [node name="open" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2

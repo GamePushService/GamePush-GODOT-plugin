@@ -36,33 +36,33 @@ func log(arg1="", arg2="", arg3="", arg4="") -> void:
 		
 		
 func info_array(args:Array) -> void:
-	var res:= String(args[0])
-	args.pop_front()
+	var res:= ""
 	for a in args:
+		res += str(a)
 		res += " "
-		res += str(a) 
+	res.strip_edges()
 	if OS.get_name() == "Web":
 		gp.logger.info(res)
 	else:
 		print("INFO:", res)
 
 func warn_array(args:Array) -> void:
-	var res:= str(args[0])
-	args.pop_front()
+	var res:= ""
 	for a in args:
+		res += str(a)
 		res += " "
-		res += str(a) 
+	res.strip_edges()
 	if OS.get_name() == "Web":
 		gp.logger.warn(res)
 	else:
 		push_warning(res)
 		
 func error_array(args:Array) -> void:
-	var res:= str(args[0])
-	args.pop_front()
+	var res:= ""
 	for a in args:
+		res += str(a)
 		res += " "
-		res += str(a) 
+	res.strip_edges()
 	if OS.get_name() == "Web":
 		gp.logger.error(res)
 	else:

@@ -681,21 +681,21 @@ https://docs.gamepush.com/ru/docs/get-start/
 |----------|--------------------------|
 |`opened`	||
 |`closed`	||
-|`fetched`|	`players: Array[Dictionary]`, `fields: Array[Dictionary]`, `top_players: Array[Dictionary]`, `above_players: Array[Dictionary]`, `belowPlayers: Array[Dictionary]`, `player: Dictionary`|
-| `fetched_scoped` | `players: Array[Dictionary]`, `fields: Array[Dictionary]`, `top_players: Array[Dictionary]`, `above_players: Array[Dictionary]`,` belowPlayers: Array[Dictionary]`, `player: Dictionary`
-||`fetched_player_rating` |	`player: Dictionary`,` fields: Array[Dictionary]`, `above_players: Array[Dictionary]`, `belowPlayers: Array[Dictionary]`|
-|`fetched_player_rating_scoped` |	`player: Dictionary`, `fields: Array[Dictionary]`, `above_players: Array[Dictionary]`, `belowPlayers: Array[Dictionary]`|
+|`fetched`|	`result:Dictionary`|
+| `fetched_scoped` | `result:Dictionary` |
+|`fetched_player_rating` |	`result:Dictionary`|
+|`fetched_player_rating_scoped` |	`result:Dictionary`|
 
 #### Methods
 | **Method**                        | **Arguments**                                                                                                    | **Type Return**  |
 |------------------------------|--------------------------------------------------------------------------------------------------------------|-------------------|
-| `open`                        | `order_by: Array[String] = []`, `order: String = ""`, `limit: int = 0`, `include_fields: Array[String] = []`, `display_fields: Array[String] = []`,` with_me: String = ''`, `show_nearest: int = 0` | `void`              |
-| `fetch`                       | `order_by: Array[String] = []`, `order: String = ""`, `limit: int = 0`, `include_fields: Array[String] = []`, `display_fields: Array[String] = []`, `with_me: String = ""`, `show_nearest: int = 0` | `void`              |
-| `fetch_player_rating`        | `order_by: Array[String] = []`, `order: String = ""`, `include_fields: Array[String] = []`, `show_nearest: int = 0` | `void`              |
-| `open_scoped`                | `variant: String`, `id: int = 0`, `tag: String = ""`, `order: String = ""`, l`imit: int = 0`, `include_fields: Array[String] = []`, `display_fields: Array[String] = []`,` with_me: String = ''`, `show_nearest: int = 0` | `void`              |
+| `open`                        | `order_by: Array = []`, `order: String = ""`, `limit: int = 0`, `include_fields: Array = []`, `display_fields: Array = []`,` with_me: String = ''`, `show_nearest: int = 0` | `void`              |
+| `fetch`                       | `order_by: Array = []`, `order: String = ""`, `limit: int = 0`, `include_fields: Array = []`, `display_fields: Array = []`, `with_me: String = ""`, `show_nearest: int = 0` | `void`              |
+| `fetch_player_rating`        | `order_by: Array = []`, `order: String = ""`, `include_fields: Array = []`, `show_nearest: int = 0` | `void`              |
+| `open_scoped`                | `variant: String`, `id: int = 0`, `tag: String = ""`, `order: String = ""`, l`imit: int = 0`, `include_fields: Array = []`, `display_fields: Array = []`,` with_me: String = ''`, `show_nearest: int = 0` | `void`              |
 | `publish_record`             | `variant: String`, `record: Dictionary`, `id: int = 0`, `tag: String = ""`,` override = null `                       | `void`              |
-| `fetch_scoped`               | `variant: String`, `id: int = 0`, `tag: String = ""`, `order: String = ""`, `limit: int = 0`, `include_fields: Array[String] = []`, `with_me: String = ''`, `show_nearest: int = 0` | `void`              |
-| `fetch_player_rating_scoped`  | `variant: String`, `id: int = 0`, `tag: String = ""`, `order_by: Array[String] = []`, `order: String = ""`, `include_fields: Array[String] = []`, `show_nearest: int = 0` | `void`              |
+| `fetch_scoped`               | `variant: String`, `id: int = 0`, `tag: String = ""`, `order: String = ""`, `limit: int = 0`, `include_fields: Array = []`, `with_me: String = ''`, `show_nearest: int = 0` | `void`              |
+| `fetch_player_rating_scoped`  | `variant: String`, `id: int = 0`, `tag: String = ""`, `order_by: Array = []`, `order: String = ""`, `include_fields: Array = []`, `show_nearest: int = 0` | `void`              |
 
 ### Logger
 
