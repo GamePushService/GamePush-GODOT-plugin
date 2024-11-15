@@ -116,3 +116,13 @@ func _js_to_dict(js_object:JavaScriptObject) -> Variant:
 	var window := JavaScriptBridge.get_interface("window")
 	var strn = window.JSON.stringify(js_object)
 	return JSON.parse_string(strn)
+	
+	
+class GPObject:
+	
+	func to_dict() -> Dictionary:
+		var result = {}
+		for property_info in get_property_list():
+			var property_name = property_info.name
+			result[property_name] = self.get(property_name)
+		return result

@@ -42,7 +42,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | [Logger](#logger)                             |
 | [Payments](#payments)                         |
 | [Platform](#platform)                         |
-| [Player](#player)                             |
+| [Player](#player-1)                             |
 | [Players](#players)                           |
 | [Rewards](#rewards)                           |
 | [Schedulers](#schedulers)                     |
@@ -805,10 +805,10 @@ https://docs.gamepush.com/ru/docs/get-start/
 #### Methods
 
 | **Method Name**         | **Arguments**                                      | **Return Type**        |
-|-------------------------|---------------------------------------------------|------------------------|
+|-------------------------|----------------------------------------------------|------------------------|
 | `get_id`                | None                                               | `Variant`              |
 | `get_score`             | None                                               | `Variant`              |
-| `get_player_name`              | None                                               | `String`               |
+| `get_player_name`       | None                                               | `String`               |
 | `get_avatar`            | None                                               | `String`               |
 | `is_stub`               | None                                               | `bool`                 |
 | `is_logged_in`          | None                                               | `bool`                 |
@@ -826,13 +826,13 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `add_value`             | `key: String`, `value: Variant`                    | `void`                 |
 | `toggle`                | `key: String`                                      | `void`                 |
 | `has`                   | `key: String`                                      | `bool`                 |
-| `to_json`               | None                                               | `Dictionary`           |
-| `from_json`             | `data: Dictionary`                                 | `void`                 |
+| `to_dict`               | None                                               | `Dictionary`           |
+| `from_dict`             | `data: Dictionary`                                 | `void`                 |
 | `reset`                 | None                                               | `void`                 |
 | `remove`                | None                                               | `void`                 |
-| `get_min_value`         | `key: String`                                      | `int`                  |
+| `get_min_value`         | `key: String`                                      | `Variant`              |
 | `set_min_value`         | `key: String`, `value: Variant`                    | `void`                 |
-| `get_max_value`         | `key: String`                                      | `int`                  |
+| `get_max_value`         | `key: String`                                      | `Variant`                  |
 | `set_max_value`         | `key: String`, `value: Variant`                    | `void`                 |
 | `get_active_days`       | None                                               | `int`                  |
 | `get_active_days_consecutive`| None                                          | `int`                  |
