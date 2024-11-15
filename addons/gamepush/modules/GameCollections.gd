@@ -6,7 +6,7 @@ var games_collections:JavaScriptObject
 
 signal opened
 signal closed
-signal fetched(collection:Collection)
+signal fetched(rsdult:Dictionary)
 signal error_fetch(error:String)
 
 var callback_open := JavaScriptBridge.create_callback(_open)
@@ -56,18 +56,20 @@ func fetch(tag:String="", id:int=0) -> void:
 
 func _open(args): opened.emit()
 func _close(args): closed.emit()
-func _fetch(args): fetched.emit(Collection.new()._from_js(args[0]))
+func _fetch(args): fetched.emit(GP._js_to_dict(args[0]))
 func _error_fetch(args): error_fetch.emit(args[0])
 
 
 class Collection:
+	extends GP.GPObject
+	
 	var id:int
 	var tag:String
 	var name:String
 	var description:String
-	var games: Array[Game]
+	var games: Array
 	
-	var callback_f_e := JavaScriptBridge.create_callback(_f_e)
+	
 	
 	func _to_js():
 		var js_object := JavaScriptBridge.create_object("Object")
@@ -81,19 +83,23 @@ class Collection:
 		js_object["games"] = _games
 		return js_object
 		
-	func _from_js(js_object):
+	func _from_js(js_object) -> Collection:
+		var callback_f_e := JavaScriptBridge.create_callback(_f_e)
 		id = js_object["id"]
 		tag =js_object["tag"]
 		name = js_object["name"]
 		description = js_object["description"]
 		games = Array()
 		js_object["games"].forEach(callback_f_e)
+		return self
 		
 	func _f_e(args):
 		games.append(Game.new()._from_js(args[0]))
 		
 
 class Game:
+	extends GP.GPObject
+	
 	var id:int
 	var name:String
 	var description:String

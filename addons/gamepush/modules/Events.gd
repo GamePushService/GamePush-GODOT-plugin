@@ -24,7 +24,7 @@ func _ready():
 func join(id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id_or_tag is int:
+		if _is_valid_id(id_or_tag):
 			conf["id"] = id_or_tag
 			events.join(conf)
 			return
@@ -59,6 +59,8 @@ func active_list() -> Array:
 func get_event(id_or_tag:Variant) -> Event:
 	var result := Event.new()
 	if OS.get_name() == "Web":
+		if id_or_tag is String and id_or_tag.is_valid_int():
+			id_or_tag = int(id_or_tag)
 		var _res = events.getEvent(id_or_tag)
 		result._from_js(_res.event)
 		return result
@@ -67,6 +69,8 @@ func get_event(id_or_tag:Variant) -> Event:
 	
 func has(id_or_tag:Variant) -> bool:
 	if OS.get_name() == "Web":
+		if id_or_tag is String and id_or_tag.is_valid_int():
+			id_or_tag = int(id_or_tag)
 		return events.has(id_or_tag)
 	push_warning("Not running on Web")
 	return false
@@ -74,6 +78,8 @@ func has(id_or_tag:Variant) -> bool:
 
 func is_joined(id_or_tag:Variant) -> bool:
 	if OS.get_name() == "Web":
+		if id_or_tag is String and id_or_tag.is_valid_int():
+			id_or_tag = int(id_or_tag)
 		return events.isJoined(id_or_tag)
 	push_warning("Not running on Web")
 	return false
@@ -84,12 +90,25 @@ func _join(args):
 	var event = Event.new()._from_js(js_object.event)
 	var player_event = PlayerEvent.new()._from_js(js_object.playerEvent)
 	joined.emit(event, player_event)
-	
+
+
 func _error_join(args):
 	error_join.emit(args[0])
 
 
+func _is_valid_id(id:Variant):
+	if id is int or id is float or id is String:
+		var id_int := int(id)
+		var list_id := []
+		for a in list():
+			list_id.append(a.id)
+		if id_int in list_id:
+			return true
+	return false
+
 class Event:
+	extends GP.GPObject
+	
 	var id: int
 	var tag: String
 	var name: String
@@ -141,6 +160,8 @@ class Event:
 		return js_object
 		
 class PlayerEvent:
+	extends GP.GPObject
+	
 	var event_id: int
 	var stats: PlayerStats
 
@@ -157,6 +178,8 @@ class PlayerEvent:
 
 		
 class PlayerStats:
+	extends GP.GPObject
+	
 	var active_days: int
 	var active_days_consecutive: int
 

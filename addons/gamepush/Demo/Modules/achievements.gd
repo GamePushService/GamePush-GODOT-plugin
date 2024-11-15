@@ -13,19 +13,19 @@ func _ready():
 		GP.Logger.info("fetch")
 		var res := []
 		for ac in a:
-			res.append(ac.id)
+			res.append(ac.to_dict())
 		GP.Logger.info(res)
 		res = []
 		for ac in b:
-			res.append(ac.achievement_id)
+			res.append(ac.to_dict())
 		GP.Logger.info(res)
 		res = []
 		for ac in c:
-			res.append(ac.id)
+			res.append(ac.to_dict())
 		GP.Logger.info(res)
 		)
-	GP.Achievements.unlocked.connect(func(a): GP.Logger.info("unlock", a.id))
-	GP.Achievements.progress.connect(func(a): GP.Logger.info("progress", a))
+	GP.Achievements.unlocked.connect(func(a): GP.Logger.info("unlock", a.to_dict()))
+	GP.Achievements.progress.connect(func(a): GP.Logger.info("progress", a.to_dict()))
 	GP.Achievements.error_unlock.connect(func(a): GP.Logger.info("error", a))
 	GP.Achievements.error_progress.connect(func(a): GP.Logger.info("error", a))
 	GP.Achievements.error_fetch.connect(func(a): GP.Logger.info("error", a))
@@ -63,7 +63,7 @@ func _on_list_pressed():
 	var list = GP.Achievements.list()
 	var result := []
 	for a in list:
-		result.append(a.id)
+		result.append(a.to_dict())
 	GP.Logger.info(result)
 
 
@@ -71,7 +71,7 @@ func _on_player_achievements_list_pressed():
 	var list = GP.Achievements.player_achievements_list()
 	var result := []
 	for a in list:
-		result.append(a.achievement_id)
+		result.append(a.to_dict())
 	GP.Logger.info(result)
 
 
@@ -79,5 +79,5 @@ func _on_groups_list_pressed():
 	var list = GP.Achievements.groups_list()
 	var result := []
 	for a in list:
-		result.append(a.id)
+		result.append(a.to_dict())
 	GP.Logger.info(result)

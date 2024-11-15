@@ -42,7 +42,7 @@ func _ready():
 func unlock(id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id_or_tag is int:
+		if _is_valid_id(id_or_tag):
 			conf["id"] = id_or_tag
 			achievements.unlock(conf)
 			return
@@ -59,7 +59,7 @@ func set_progress(progress:int, id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["progress"] = progress
-		if id_or_tag is int:
+		if _is_valid_id(id_or_tag):
 			conf["id"] = id_or_tag
 			achievements.setProgress(conf)
 			return
@@ -158,7 +158,19 @@ func _fetched(args):
 func _error_fetched(args): error_fetch.emit(args[0])
 
 
+func _is_valid_id(id:Variant):
+	if id is int or id is float or id is String:
+		var id_int := int(id)
+		var list_id := []
+		for a in list():
+			list_id.append(a.id)
+		if id_int in list_id:
+			return true
+	return false
+
 class Achievement:
+	extends GP.GPObject
+	
 	var id: int
 	var tag: String
 	var name: String
@@ -207,8 +219,17 @@ class Achievement:
 		js_object["isLockedVisible"] = is_locked_visible
 		js_object["isLockedDescriptionVisible"] = is_locked_description_visible
 		return js_object
+		
+	func to_dict() -> Dictionary:
+		var result = {}
+		for property_info in get_property_list():
+			var property_name = property_info.name
+			result[property_name] = self.get(property_name)
+		return result
 
 class AchievementsGroup:
+	extends GP.GPObject
+	
 	var id: int
 	var tag: String
 	var name: String
@@ -239,6 +260,8 @@ class AchievementsGroup:
 		return js_object
 
 class PlayerAchievement:
+	extends GP.GPObject
+	
 	var achievement_id: int
 	var created_at: String
 	var progress: int

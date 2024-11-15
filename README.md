@@ -520,22 +520,22 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Signal**                     | **Emitted Parameters**    |
 |----------------------------|-----------------------|
-| `uploaded`                   | `arg: File`             | 
-| `error_upload`               | `err: String`           | 
+| `uploaded`                   | `file: File`             | 
+| `error_upload`               | `err:Dictionary`           | 
 | `loaded_content`             | None                  | 
-| `error_load_content`         | `err: String`           | 
-| `choosed`                    | None                  | 
-| `error_choose`               | `err: String`           | 
+| `error_load_content`         | `err:Dictionary`           | 
+| `choosed`                    | `file:File, temp_url:String`              | 
+| `error_choose`               | `err:Dictionary`           | 
 | `fetched`                    | `result: Array`         | 
-| `error_fetch`                | `err: String`           |
+| `error_fetch`                | `err:Dictionary`           |
 | `fetched_more`               | `result: Array`         | 
-| `error_fetch_more`           | `err: String`           |
+| `error_fetch_more`           | `err:Dictionary`           |
 
 #### Methods
 | **Method**                  | **Arguments**                                     | **Return Type** |
 |-------------------------|------------------------------------------------|--------------|
 | `upload`                  | `tags: Array`                                    | `void`         |
-| `upload_url`              | `url: String`, `tags: Array= []`                  | `void`         |
+| `upload_url`              | `file_name:String, url:String, tags:Array=[]`                  | `void`         |
 | `upload_content`          | `file_name: String`, `content: String=""`, `tags: Array= []` | void         |
 | `load_content`            | `url: String`                                    | `String`       |
 | `choose_file`             | `type_file: String=""`                           | `Array`        |
@@ -601,7 +601,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 |----------------------|--------------------|
 | `opened`               | None               | 
 | `closed`               | None               | 
-| `fetched`              | `collection: Collection` | 
+| `fetched`              | `rsdult:Dictionary` | 
 | `error_fetch`          | `error: String`      |
 
 #### Methods
@@ -618,7 +618,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `tag`          | `String`            |
 | `name`         | `String`            |
 | `description`  | `String`            | 
-| `games`        | `Array[Game]`       | 
+| `games`        | `Array`             | 
 
 ##### Game
 
