@@ -17,6 +17,20 @@ signal error_claim_all_days(error_message: String)
 signal signal_join(scheduler: Scheduler, player_scheduler: PlayerScheduler)
 signal error_join(error_message: String)
 
+
+var callback_error_register := JavaScriptBridge.create_callback(_on_error_register)
+var callback_on_claim_day_additional := JavaScriptBridge.create_callback(_on_claim_day_additional)
+var callback_on_claim_day := JavaScriptBridge.create_callback(_on_claim_day)
+var callback_on_error_claim_day := JavaScriptBridge.create_callback(_on_error_claim_day)
+var callback_on_register := JavaScriptBridge.create_callback(_on_register)
+var callback_on_error_claim_day_additional := JavaScriptBridge.create_callback(_on_error_claim_day_additional)
+var callback_on_claim_all_day := JavaScriptBridge.create_callback(_on_claim_all_day)
+var callback_on_error_claim_all_day := JavaScriptBridge.create_callback(_on_error_claim_all_day)
+var callback_on_claim_all_days := JavaScriptBridge.create_callback(_on_claim_all_days)
+var callback_on_error_claim_all_days := JavaScriptBridge.create_callback(_on_error_claim_all_days)
+var callback_on_join := JavaScriptBridge.create_callback(_on_join)
+var callback_on_error_join := JavaScriptBridge.create_callback(_on_error_join)
+
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
@@ -24,18 +38,18 @@ func _ready():
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		schedulers = gp.schedulers
-		schedulers.on("error:register", JavaScriptBridge.create_callback(_on_error_register))
-		schedulers.on("claimDay", JavaScriptBridge.create_callback(_on_claim_day))
-		schedulers.on("error:claimDay", JavaScriptBridge.create_callback(_on_error_claim_day))
-		schedulers.on("register", JavaScriptBridge.create_callback(_on_register))
-		schedulers.on("claimDayAdditional", JavaScriptBridge.create_callback(_on_claim_day_additional))
-		schedulers.on("error:claimDayAdditional", JavaScriptBridge.create_callback(_on_error_claim_day_additional))
-		schedulers.on("claimAllDay", JavaScriptBridge.create_callback(_on_claim_all_day))
-		schedulers.on("error:claimAllDay", JavaScriptBridge.create_callback(_on_error_claim_all_day))
-		schedulers.on("claimAllDays", JavaScriptBridge.create_callback(_on_claim_all_days))
-		schedulers.on("error:claimAllDays", JavaScriptBridge.create_callback(_on_error_claim_all_days))
-		schedulers.on("join", JavaScriptBridge.create_callback(_on_join))
-		schedulers.on("error:join", JavaScriptBridge.create_callback(_on_error_join))
+		schedulers.on("error:register", callback_error_register)
+		schedulers.on("claimDay", callback_on_claim_day)
+		schedulers.on("error:claimDay", callback_on_error_claim_day)
+		schedulers.on("register", callback_on_register)
+		schedulers.on("claimDayAdditional", callback_on_claim_day_additional)
+		schedulers.on("error:claimDayAdditional", callback_on_error_claim_day_additional)
+		schedulers.on("claimAllDay", callback_on_claim_all_day)
+		schedulers.on("error:claimAllDay", callback_on_error_claim_all_day)
+		schedulers.on("claimAllDays", callback_on_claim_all_days)
+		schedulers.on("error:claimAllDays", callback_on_error_claim_all_days)
+		schedulers.on("join", callback_on_join)
+		schedulers.on("error:join", callback_on_error_join)
 
 
 signal _register(a:JavaScriptObject)
@@ -43,8 +57,8 @@ signal _register(a:JavaScriptObject)
 func register(id_or_tag: Variant) -> SchedulerInfo:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if typeof(id_or_tag) == TYPE_INT:
-			conf["id"] = id_or_tag
+		if typeof(id_or_tag) == TYPE_INT or (id_or_tag is String and id_or_tag.is_valid_int()):
+			conf["id"] = int(id_or_tag)
 		elif typeof(id_or_tag) == TYPE_STRING:
 			conf["tag"] = id_or_tag
 		var callback := JavaScriptBridge.create_callback(func(args): _register.emit(args[0]))
@@ -53,7 +67,7 @@ func register(id_or_tag: Variant) -> SchedulerInfo:
 		var result = SchedulerInfo.new()
 		result._from_js(_result)
 		return result
-	push_warning("Not Web")
+	push_warning("Not running on Web")
 	return SchedulerInfo.new()
 
 signal _claim_day(a:JavaScriptObject)
@@ -113,7 +127,7 @@ func claim_all_days(id_or_tag: Variant) -> SchedulerInfo:
 func list() -> Array:
 	var scheduler_list: Array = []
 	schedulers.list.forEach(JavaScriptBridge.create_callback(func(s):
-		scheduler_list.append(Scheduler.new()._from_js(s))
+		scheduler_list.append(Scheduler.new()._from_js(s[0]))
 	))
 	return scheduler_list
 
@@ -121,7 +135,7 @@ func list() -> Array:
 func active_list() -> Array:
 	var player_scheduler_list: Array = []
 	schedulers.activeList.forEach(JavaScriptBridge.create_callback(func(ps):
-		player_scheduler_list.append(PlayerScheduler.new()._from_js(ps))
+		player_scheduler_list.append(PlayerScheduler.new()._from_js(ps[0]))
 	))
 	return player_scheduler_list
 
@@ -263,6 +277,8 @@ func _on_error_join(args) -> void:
 
 
 class Scheduler:
+	extends GP.GPObject
+	
 	var id: int
 	var tag: String
 	var type: String
@@ -305,6 +321,8 @@ class Scheduler:
 		return self
 
 class PlayerScheduler:
+	extends GP.GPObject
+	
 	var scheduler_id: int
 	var days_claimed: Array[int]
 	var stats: PlayerStats
@@ -333,6 +351,8 @@ class PlayerScheduler:
 
 
 class PlayerStats:
+	extends GP.GPObject
+	
 	var active_days: int
 	var active_days_consecutive: int
 
@@ -350,7 +370,9 @@ class PlayerStats:
 		return self
 
 class SchedulerInfo:
-	var scheduler: Scheduler
+	extends GP.GPObject
+	
+	#var scheduler: Scheduler
 	var stats: PlayerStats
 	var days_claimed: Array[int]
 	var is_registered: bool
@@ -359,7 +381,7 @@ class SchedulerInfo:
 	# Method to convert SchedulerInformation to a JavaScript object
 	func _to_js() -> JavaScriptObject:
 		var js_object := JavaScriptBridge.create_object("Object")
-		js_object["scheduler"] = scheduler._to_js()
+		#js_object["scheduler"] = scheduler._to_js()
 		js_object["stats"] = stats._to_js()
 		js_object["daysClaimed"] = JavaScriptBridge.create_object("Array")
 		for day in days_claimed:
@@ -370,7 +392,7 @@ class SchedulerInfo:
 
 	# Method to initialize SchedulerInformation from a JavaScript object
 	func _from_js(js_object: JavaScriptObject) -> SchedulerInfo:
-		scheduler = Scheduler.new()._from_js(js_object["scheduler"])
+		#scheduler = Scheduler.new()._from_js(js_object["scheduler"])
 		stats = PlayerStats.new()._from_js(js_object["stats"])
 		days_claimed = []
 		js_object["daysClaimed"].forEach(JavaScriptBridge.create_callback(_parse_days_claimed))
@@ -379,10 +401,12 @@ class SchedulerInfo:
 		return self
 
 	# Helper method to parse days claimed
-	func _parse_days_claimed(day_value, index, arr):
-		days_claimed.append(day_value)
+	func _parse_days_claimed(args):
+		days_claimed.append(args[0])
 
 class SchedulerDayInfo:
+	extends GP.GPObject
+	
 	var scheduler: Scheduler
 	var day: int
 	var is_day_reached: bool
@@ -430,9 +454,9 @@ class SchedulerDayInfo:
 		return self
 
 	# Helper method to parse bonuses
-	func _parse_bonuses(bonus_value, index, arr):
-		bonuses.append(GP.Triggers.Bonus.new()._from_js(bonus_value))
+	func _parse_bonuses(args):
+		bonuses.append(GP.Triggers.Bonus.new()._from_js(args[0]))
 
 	# Helper method to parse triggers
-	func _parse_triggers(trigger_value, index, arr):
-		triggers.append(GP.Triggers.Trigger.new()._from_js(trigger_value))
+	func _parse_triggers(args):
+		triggers.append(GP.Triggers.Trigger.new()._from_js(args[0]))

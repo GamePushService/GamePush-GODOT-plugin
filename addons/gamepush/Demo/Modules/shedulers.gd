@@ -4,7 +4,7 @@ extends Control
 @onready var day_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/day"
 @onready var trigger_id_or_tag_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/trigger_id_or_tag"
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	GP.Schedulers.signal_claim_day.connect(func(scheduler_day_info): GP.Logger.info("signal_claim_day"))
 	GP.Schedulers.signal_register.connect(func(scheduler_info): GP.Logger.info("signal_register"))
@@ -26,44 +26,54 @@ func _on_main_menu_button_pressed():
 
 
 func _on_register_pressed():
-	GP.Logger.info(await GP.Schedulers.register(id_or_tag_node.text))
+	var res = await GP.Schedulers.register(id_or_tag_node.text)
+	GP.Logger.info(res.to_dict())
 
 
 func _on_claim_day_pressed():
-	GP.Logger.info(await GP.Schedulers.claim_day(id_or_tag_node.text, int(day_node.text)))
-
+	var res = await GP.Schedulers.claim_day(id_or_tag_node.text, int(day_node.text))
+	GP.Logger.info(res.to_dict())
+	
 
 func _on_claim_day_additional_pressed():
-	GP.Logger.info(await GP.Schedulers.claim_day_additional(id_or_tag_node.text, int(day_node.text), trigger_id_or_tag_node.text))
-
+	var res = await GP.Schedulers.claim_day_additional(id_or_tag_node.text, int(day_node.text), trigger_id_or_tag_node.text)
+	GP.Logger.info(res.to_dict())
+	
 
 func _on_claim_all_day_pressed():
-	GP.Logger.info(await GP.Schedulers.claim_all_day(id_or_tag_node.text, int(day_node.text)))
-
+	var res = await GP.Schedulers.claim_all_day(id_or_tag_node.text, int(day_node.text))
+	GP.Logger.info(res.to_dict())
 
 
 func _on_claim_all_days_pressed():
-	GP.Logger.info(await GP.Schedulers.claim_all_days(id_or_tag_node.text))
-
+	var res = await GP.Schedulers.claim_all_days(id_or_tag_node.text)
+	GP.Logger.info(res.to_dict())
+	
 
 func _on_list_pressed():
-	GP.Logger.info(GP.Schedulers.list())
+	var res := []
+	for i in GP.Schedulers.list():
+		res.append(i.to_dict())
+	GP.Logger.info(res)
 
 
 func _on_active_list_pressed():
-	GP.Logger.info(GP.Schedulers.active_list())
+	var res := []
+	for i in GP.Schedulers.active_list():
+		res.append(i.to_dict())
+	GP.Logger.info(res)
 
 
 func _on_get_scheduler_pressed():
-	GP.Logger.info(await GP.Schedulers.get_scheduler(id_or_tag_node.text))
+	GP.Logger.info(GP.Schedulers.get_scheduler(id_or_tag_node.text).to_dict())
 
 
 func _on_get_scheduler_day_pressed():
-	GP.Logger.info(await GP.Schedulers.get_scheduler_day(id_or_tag_node.text, int(day_node.text)))
+	GP.Logger.info(GP.Schedulers.get_scheduler_day(id_or_tag_node.text, int(day_node.text)).to_dict())
 
 
 func _on_get_scheduler_current_day_pressed():
-	GP.Logger.info(await GP.Schedulers.get_scheduler_current_day(id_or_tag_node.text))
+	GP.Logger.info(GP.Schedulers.get_scheduler_current_day(id_or_tag_node.text).to_dict())
 
 
 func _on_is_registered_pressed():
