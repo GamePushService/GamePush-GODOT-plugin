@@ -5,7 +5,26 @@ extends Control
 
 
 func _ready():
-	GP.Payments.fetched_products.connect(func(res): GP.Logger.info(res[0].size(), res[1].size()))
+	GP.Payments.fetched_products.connect(func(res):
+		var id := []
+		for p in res[0]:
+			id.append(p.to_dict())
+		GP.Logger.info(id)
+		id = []
+		for p in res[1]:
+			id.append(p.to_dict())
+		GP.Logger.info(id)
+		GP.Logger.info("fetched_products")
+		)
+	GP.Payments.purchased.connect(func(res): GP.Logger.info("purchased", res[0].to_dict(), res[1].to_dict()))
+	GP.Payments.consumed.connect(func(res): GP.Logger.info("consumed", res[0].to_dict(), res[1].to_dict()))
+	GP.Payments.error_purchase.connect(func(res): GP.Logger.info("error_purchase", res))
+	GP.Payments.error_consume.connect(func(res): GP.Logger.info("error_purchase", res))
+	GP.Payments.error_fetch_products.connect(func(res): GP.Logger.info("error_purchase", res))
+	GP.Payments.subscribed.connect(func(res): GP.Logger.info("subscribed", res[0].to_dict(), res[1].to_dict()))
+	GP.Payments.unsubscribed.connect(func(res): GP.Logger.info("unsubscribed", res[0].to_dict(), res[1].to_dict()))
+	GP.Payments.error_subscribe.connect(func(res): GP.Logger.info("error_subscribe", res))
+	GP.Payments.error_unsubscribe.connect(func(res): GP.Logger.info("error_unsubscribe", res))
 
 func _on_main_menu_button_pressed():
 	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Demo.tscn")
@@ -40,8 +59,14 @@ func _on_unsubscribe_pressed():
 
 
 func _on_get_products_pressed():
-	GP.Logger.info(GP.Payments.get_products().size())
+	var result := []
+	for p in GP.Payments.get_products():
+		result.append(p.to_dict())
+	GP.Logger.info(result)
 
 
 func _on_get_purchases_pressed():
-	GP.Logger.info(GP.Payments.get_purchases().size())
+	var result := []
+	for p in GP.Payments.get_purchases():
+		result.append(p.to_dict())
+	GP.Logger.info(result)

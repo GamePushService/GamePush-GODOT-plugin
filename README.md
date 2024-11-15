@@ -718,6 +718,10 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Signal**         | **Emitted Parameters**                                           |
 |--------------------|------------------------------------------------------------------|
+| `subscribed`        | `result: Array`                                                 |
+| `error_subscribe`        | `error: String`                                                 |
+| `unsubscribed`        | `result: Array`                                                 |
+| `error_unsubscribe`        | `error: String`                                                 |
 | `purchased`        | `result: Array`                                                 |
 | `error_purchase`   | `error: String`                                                 |
 | `consumed`         | `result: Array`                                                 |
@@ -731,8 +735,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 |---------------------------------|---------------------------------------|------------------|
 | `ready`                         | None                                  | `void`           |
 | `is_available`                  | None                                  | `bool`           |
-| `consume`                       | `id :int , tag :String`               | `Array`          |
-| `purchase`                      | `id :int , tag :String`               | `Array`          |
+| `consume`                       | `id :int , tag :String`               | `void`          |
+| `purchase`                      | `id :int , tag :String`               | `void`          |
 | `get_products`                  | None                                  | `Array`          |
 | `get_purchases`                 | None                                  | `Array`          |
 | `fetch_products`                | None                                  | `void`           |
