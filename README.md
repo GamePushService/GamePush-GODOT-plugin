@@ -636,14 +636,14 @@ https://docs.gamepush.com/ru/docs/get-start/
 #### Signals
 | **Signal**             | **Emitted Parameters**       |
 |--------------------|--------------------------|
-| `uploaded`            | `GPImage`                  |
-| `error_upload`        | `String`                   |
-| `choosed`             | `Object`                   |
-| `error_choose`        | `String`                   |
-| `fetched`             | `Array`                    |
-| `error_fetch`         | `String`                   |
-| `fetched_more`        | `Array`                    |
-| `error_fetch_more`    | `String`                   |
+| `uploaded`            | `image:GPImage`                  |
+| `error_upload`        | `error:Dictionary`                   |
+| `choosed`             | `image:GPImage, temp_url:String`                   |
+| `error_choose`        | `error:Dictionary`                   |
+| `fetched`             | `result:Array`                    |
+| `error_fetch`         | `error:Dictionary`                   |
+| `fetched_more`        | `result:Array`                    |
+| `error_fetch_more`    | `error:Dictionary`                   |
 #### Methods
 | **Method**             | **Arguments**                    | **Return Type** |
 |--------------------|-------------------------------|-------------|
@@ -663,7 +663,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `src`         | `String`      |
 | `width`       | `int`         |
 | `height`      | `int`         |
-| `tags`        | `Array[String]` |
+| `tags`        | `Array`       |
 ### Language
 
 #### Methods

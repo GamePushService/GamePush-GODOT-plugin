@@ -16,13 +16,27 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	GP.Images.uploaded.connect(func(arg): GP.Logger.info("uploaded", arg))
+	GP.Images.uploaded.connect(func(arg): GP.Logger.info("uploaded", arg.to_dict()))
 	GP.Images.error_upload.connect(func(arg): GP.Logger.info("error_upload", arg))
-	GP.Images.choosed.connect(func(arg): GP.Logger.info("choosed", arg))
+	GP.Images.choosed.connect(func(file, tempUrl): GP.Logger.info("choosed", file.to_dict(), tempUrl))
 	GP.Images.error_choose.connect(func(arg): GP.Logger.info("error_choose", arg))
-	GP.Images.fetched.connect(func(arg): GP.Logger.info("fetched", arg))
+	GP.Images.fetched.connect(func(arg):
+		GP.Logger.info("fetched")
+		var res := []
+		for image in arg[0]:
+			res.append(image.to_dict())
+		GP.Logger.info(res)
+		GP.Logger.info("can load more:", arg[1])
+		)
 	GP.Images.error_fetch.connect(func(arg): GP.Logger.info("error_fetch", arg))
-	GP.Images.fetched_more.connect(func(arg): GP.Logger.info("fetched_more", arg))
+	GP.Images.fetched_more.connect(func(arg):
+		GP.Logger.info("fetched_more")
+		var res := []
+		for image in arg[0]:
+			res.append(image.to_dict())
+		GP.Logger.info(res)
+		GP.Logger.info("can load more:", arg[1])
+		)
 	GP.Images.error_fetch_more.connect(func(arg): GP.Logger.info("error_fetch_more", arg))
 
 
@@ -40,15 +54,15 @@ func _on_upload_url_pressed():
 
 
 func _on_choose_file_pressed():
-	GP.Logger.info(await GP.Images.choose_file())
+	print(await GP.Images.choose_file())
 
 
 func _on_fetch_pressed():
-	GP.Logger.info(await GP.Images.fetch(player_id_node.text, [tag_node.text, tag2_node.text, tag3_node.text], limit_node.text, offset_node.text))
+	GP.Images.fetch(int(player_id_node.text), [tag_node.text, tag2_node.text, tag3_node.text], int(limit_node.text), int(offset_node.text))
 
 
 func _on_fetch_more_pressed():
-	GP.Logger.info(await GP.Images.fetch_more(player_id_node.text, [tag_node.text, tag2_node.text, tag3_node.text], limit_node.text, offset_node.text))
+	GP.Images.fetch_more(int(player_id_node.text), [tag_node.text, tag2_node.text, tag3_node.text], int(limit_node.text), int(offset_node.text))
 
 
 func _on_resize_pressed():

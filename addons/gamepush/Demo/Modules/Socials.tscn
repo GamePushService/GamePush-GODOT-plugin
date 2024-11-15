@@ -193,7 +193,7 @@ placeholder_text = "Param..."
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.71
-columns = 4
+columns = 3
 
 [node name="is_supports_share" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
 layout_mode = 2
