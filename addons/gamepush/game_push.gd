@@ -52,7 +52,7 @@ func _ready():
 		is_init = true)
 	var win := JavaScriptBridge.get_interface("window")
 	win.setGpInitCallback(clbk)
-	var lib_url := "https://gamepush.com/sdk/game-score.js?projectId=%s&publicToken=%s&callback=onGPInit" % [project_id, public_token]
+	var lib_url := "https://gs.eponesh.com/sdk/gamepush.js?projectId=%s&publicToken=%s&callback=onGPInit" % [project_id, public_token]
 	var js_code = "var script = document.createElement('script'); script.src = '" + lib_url + "'; document.head.appendChild(script);"
 	JavaScriptBridge.eval(js_code, true)
 	while not gp:
