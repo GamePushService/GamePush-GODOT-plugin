@@ -128,3 +128,7 @@ func _on_logger_pressed():
 
 func _on_files_pressed():
 	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/Files.tscn")
+
+
+func _on_channel_management_pressed() -> void:
+	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Modules/ChannelManagement.tscn")

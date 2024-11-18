@@ -49,7 +49,7 @@ vertical_alignment = 1
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-columns = 8
+columns = 9
 
 [node name="Achievements" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -86,6 +86,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Channels"
+
+[node name="ChannelManagement" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Channel Management"
 
 [node name="Device" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -245,6 +251,7 @@ text = "Variables"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/App" to="." method="_on_app_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/AvatarGenerator" to="." method="_on_avatar_generator_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Channels" to="." method="_on_channels_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/ChannelManagement" to="." method="_on_channel_management_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Device" to="." method="_on_device_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Documents" to="." method="_on_documents_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/Events" to="." method="_on_events_pressed"]
