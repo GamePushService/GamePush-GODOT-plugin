@@ -144,16 +144,24 @@ size_flags_vertical = 3
 placeholder_text = "name..."
 
 [node name="description" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "description..."
 
 [node name="search" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "search..."
+
+[node name="password" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "password..."
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 clip_contents = true
@@ -537,13 +545,13 @@ text = "fetch_more_invites"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "fetch_more_channel_invites"
+text = "fetch_channel_invites"
 
 [node name="fetch_more_channel_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "fetch_more_messages"
+text = "fetch_more_channel_invites"
 
 [node name="fetch_sent_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
 layout_mode = 2

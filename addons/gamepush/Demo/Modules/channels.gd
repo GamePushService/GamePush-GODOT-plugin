@@ -25,13 +25,58 @@ func _ready():
 	GP.Channels.message_edited.connect(func(message): GP.Logger.info("message_edited", message.to_dict()))
 	GP.Channels.error_edit_message.connect(func(error): GP.Logger.info("error_edit_message", error))
 	GP.Channels.event_edit_message.connect(func(message): GP.Logger.info("event_edit_message", message.to_dict()))
-	GP.Channels.message_deleted.connect(func(message): GP.Logger.info("message_deleted", message.to_dict()))
+	GP.Channels.message_deleted.connect(func(): GP.Logger.info("message_deleted"))
 	GP.Channels.event_delete_message.connect(func(message): GP.Logger.info("event_delete_message", message.to_dict()))
-	GP.Channels.messages_fetched.connect(func(result): GP.Logger.info("messages_fetched", result))
 	GP.Channels.error_delete_message.connect(func(err): GP.Logger.info("error_delete_message", err))
-	GP.Channels.messages_fetched.connect(func(result): GP.Logger.info("messages_fetched", result))
+	GP.Channels.messages_fetched.connect(func(result):
+		var res := {}
+		res["items"] = []
+		res["can_load_more"] = result["can_load_more"]
+		for i in result["items"]:
+			res["items"].append(i.to_dict())
+		GP.Logger.info("messages_fetched", res)
+		)
+	GP.Channels.personal_messages_fetched.connect(func(result):
+		var res := {}
+		res["items"] = []
+		res["can_load_more"] = result["can_load_more"]
+		for i in result["items"]:
+			res["items"].append(i.to_dict())
+		GP.Logger.info("personal_messages_fetched", res)
+		)
+	GP.Channels.feed_messages_fetched.connect(func(result):
+		var res := {}
+		res["items"] = []
+		res["can_load_more"] = result["can_load_more"]
+		for i in result["items"]:
+			res["items"].append(i.to_dict())
+		GP.Logger.info("feed_messages_fetched", res)
+		)
+	GP.Channels.more_personal_messages_fetched.connect(func(result):
+		var res := {}
+		res["items"] = []
+		res["can_load_more"] = result["can_load_more"]
+		for i in result["items"]:
+			res["items"].append(i.to_dict())
+		GP.Logger.info("more_personal_messages_fetched", res)
+		)
+	GP.Channels.more_feed_messages_fetched.connect(func(result):
+		var res := {}
+		res["items"] = []
+		res["can_load_more"] = result["can_load_more"]
+		for i in result["items"]:
+			res["items"].append(i.to_dict())
+		GP.Logger.info("more_feed_messages_fetched", res)
+		)
 	GP.Channels.error_fetch_messages.connect(func(err): GP.Logger.info("error_fetch_messages", err))
-	GP.Channels.fetched_more_messages.connect(func(result): GP.Logger.info("fetched_more_messages", result))
+	GP.Channels.more_messages_fetched.connect(func(result):
+		var res := {}
+		res["items"] = []
+		res["can_load_more"] = result["can_load_more"]
+		for i in result["items"]:
+			res["items"].append(i.to_dict())
+		GP.Logger.info("fetched_more_messages", res)
+		)
 	GP.Channels.error_fetch_more_messages.connect(func(err): GP.Logger.info("error_fetch_more_messages", err))
 	GP.Channels.channel_created.connect(func(channel): GP.Logger.info("channel_created", channel.to_dict()))
 	GP.Channels.error_create_channel.connect(func(err): GP.Logger.info("error_create_channel", err))
@@ -58,10 +103,10 @@ func _ready():
 	GP.Channels.chat_opened.connect(func(): GP.Logger.info("chat_opened"))
 	GP.Channels.chat_closed.connect(func(): GP.Logger.info("chat_closed"))
 	GP.Channels.chat_error.connect(func(err): GP.Logger.info("chat_error", err))
-	GP.Channels.joined.connect(func(): GP.Logger.info("joined"))
+	GP.Channels.joined.connect(func(success): GP.Logger.info("joined, success:", success))
 	GP.Channels.error_join.connect(func(err): GP.Logger.info("error_join", err))
 	GP.Channels.event_joined.connect(func(member): GP.Logger.info("event_joined", member))
-	GP.Channels.join_request_received.connect(func(join_request): GP.Logger.info("event_joined", join_request))
+	GP.Channels.join_request_received.connect(func(join_request): GP.Logger.info("join_request_received", join_request))
 	GP.Channels.cancel_joined.connect(func(): GP.Logger.info("cancel_joined"))
 	GP.Channels.cancel_join_error.connect(func(err): GP.Logger.info("cancel_join_error", err))
 	GP.Channels.event_cancel_join.connect(func(join_request): GP.Logger.info("event_cancel_join", join_request))
@@ -81,7 +126,7 @@ func _ready():
 	GP.Channels.fetch_more_members_error.connect(func(err): GP.Logger.info("fetch_more_members_error", err))
 	GP.Channels.mute_success.connect(func(): GP.Logger.info("mute_success"))
 	GP.Channels.mute_error.connect(func(err): GP.Logger.info("mute_error", err))
-	GP.Channels.event_mute.connect(func(mute): GP.Logger.info("event_mute", mute.to_dict()))
+	GP.Channels.event_mute.connect(func(mute): GP.Logger.info("event_mute", mute))
 	GP.Channels.unmute_success.connect(func(): GP.Logger.info("unmute_success"))
 	GP.Channels.unmute_error.connect(func(err): GP.Logger.info("unmute_error", err))
 	GP.Channels.event_unmute.connect(func(unmute): GP.Logger.info("event_unmute", unmute))
@@ -108,7 +153,23 @@ func _ready():
 	GP.Channels.error_fetch_sent_invites.connect(func(err): GP.Logger.info("error_fetch_sent_invites", err))
 	GP.Channels.fetched_more_sent_invites.connect(func(result): GP.Logger.info("fetched_more_sent_invites", result))
 	GP.Channels.error_fetch_more_sent_invites.connect(func(err): GP.Logger.info("error_fetch_more_sent_invites", err))
-
+	
+	GP.Channels.join_request_accepted.connect(func(): GP.Logger.info("join_request_accepted"))
+	GP.Channels.error_accept_join_request.connect(func(err): GP.Logger.info("error_accept_join_request", err))
+	GP.Channels.join_request_rejected.connect(func(): GP.Logger.info("join_request_rejected"))
+	GP.Channels.error_reject_join_request.connect(func(err): GP.Logger.info("error_reject_join_request", err))
+	GP.Channels.event_reject_join_request.connect(func(res): GP.Logger.info("event_reject_join_request", res))
+	GP.Channels.fetched_join_requests.connect(func(res): GP.Logger.info("fetched_join_requests", res))
+	GP.Channels.error_fetch_join_requests.connect(func(err): GP.Logger.info("error_fetch_join_requests", err))
+	GP.Channels.fetched_more_join_requests.connect(func(res): GP.Logger.info("fetched_more_join_requests", res))
+	GP.Channels.error_fetch_more_join_requests.connect(func(err): GP.Logger.info("error_fetch_more_join_requests", err))
+	GP.Channels.fetched_sent_join_requests.connect(func(res): GP.Logger.info("fetched_join_sent_requests", res))
+	GP.Channels.error_fetch_sent_join_requests.connect(func(err): GP.Logger.info("error_fetch_join_sent_requests", err))
+	GP.Channels.fetched_more_sent_join_requests.connect(func(res): GP.Logger.info("fetched_more_sent_join_requests", res))
+	GP.Channels.error_fetch_more_sent_join_requests.connect(func(err): GP.Logger.info("error_fetch_more_sent_join_requests", err))
+	
+	
+	
 
 func _on_main_menu_button_pressed():
 	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Demo.tscn")
@@ -116,7 +177,7 @@ func _on_main_menu_button_pressed():
 #region Panel1
 
 func _on_join_pressed():
-	GP.Channels.join(int(channel_id_node.text))
+	GP.Channels.join(int(channel_id_node.text), $MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/password.text)
 
 
 func _on_leave_pressed():
@@ -280,12 +341,12 @@ func _on_fetch_messages_pressed():
 
 
 func _on_fetch_personal_messages_pressed():
-	GP.Channels.fetch_personal_messages(int(channel_id_node.text),
+	GP.Channels.fetch_personal_messages(int(player_id_node.text),
 	[tag1_node.text, tag2_node.text, tag3_node.text], int(limit_node.text))
 
 
 func _on_fetch_feed_messages_pressed():
-	GP.Channels.fetch_feed_messages(int(channel_id_node.text),
+	GP.Channels.fetch_feed_messages(int(player_id_node.text),
 	[tag1_node.text, tag2_node.text, tag3_node.text], int(limit_node.text), int(offset_node.text))
 
 
@@ -295,12 +356,12 @@ func _on_fetch_more_messages_pressed():
 
 
 func _on_fetch_more_personal_messages_pressed():
-	GP.Channels.fetch_more_personal_messages(int(channel_id_node.text),
+	GP.Channels.fetch_more_personal_messages(int(player_id_node.text),
 	[tag1_node.text, tag2_node.text, tag3_node.text], int(limit_node.text))
 
 
 func _on_fetch_more_feed_messages_pressed():
-		GP.Channels.fetch_more_feed_messages(int(channel_id_node.text),
+	GP.Channels.fetch_more_feed_messages(int(player_id_node.text),
 	[tag1_node.text, tag2_node.text, tag3_node.text], int(limit_node.text))
 	
 #endregion

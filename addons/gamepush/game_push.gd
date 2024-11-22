@@ -114,7 +114,7 @@ func _on_timer_timeout():
 	
 func _js_to_dict(js_object:JavaScriptObject) -> Variant:
 	var window := JavaScriptBridge.get_interface("window")
-	var strn = window.JSON.stringify(js_object)
+	var strn = window.JSON.stringify(js_object).to_snake_case()
 	return JSON.parse_string(strn)
 	
 	
