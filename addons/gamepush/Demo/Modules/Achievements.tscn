@@ -71,6 +71,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -86,6 +87,7 @@ grow_vertical = 2
 placeholder_text = "Id..."
 
 [node name="tag" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

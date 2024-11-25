@@ -47,7 +47,7 @@ func _ready():
 		ads.on('fullscreen:close', _callback_fullscreen_close)
 		ads.on('preloader:start', _callback_preloader_start)
 		ads.on('preloader:close', _callback_preloader_close)
-		ads.on('rewarded:start', _callback_preloader_start)
+		ads.on('rewarded:start', _callback_rewarded_start)
 		ads.on('rewarded:close', _callback_rewarded_close)
 		ads.on('rewarded:reward', _callback_rewarded_reward)
 		ads.on('sticky:start', _callback_sticky_start)
@@ -74,6 +74,14 @@ func is_fullscreen_available() -> bool:
 	push_warning("Not Web")
 	return false
 		
+		
+func is_preloader_available() -> bool:
+	if OS.get_name() == "Web":
+		return ads.isPreloaderAvailable
+	push_warning("Not Web")
+	return false
+		
+		
 func is_rewarded_available() -> bool:
 	if OS.get_name() == "Web":
 		return ads.isRewardedAvailable
@@ -86,7 +94,8 @@ func is_sticky_playing() -> bool:
 		return ads.isStickyPlaying
 	push_warning("Not Web")
 	return false
-		
+	
+	
 func is_fullscreen_playing() -> bool:
 	if OS.get_name() == "Web":
 		return ads.isFullscreenPlaying

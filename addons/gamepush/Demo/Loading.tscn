@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://hkg4cpcbukab"]
 
 [ext_resource type="Script" path="res://addons/gamepush/Demo/loading.gd" id="1_utsed"]
-[ext_resource type="Texture2D" uid="uid://uvj5eewn5lb8" path="res://gamepush-full-green-white.svg" id="2_v8a6d"]
+[ext_resource type="Texture2D" uid="uid://uvj5eewn5lb8" path="res://addons/gamepush/gamepush-full-green-white.svg" id="2_v8a6d"]
 
 [node name="Loading" type="Control"]
 layout_mode = 3

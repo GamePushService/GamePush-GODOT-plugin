@@ -1,7 +1,7 @@
 extends Control
 
 func _ready():
-	GP.App.review_requested.connect(func(arg): GP.Logger.info("review_requested", arg["success"], arg["rating"] , arg["error"]))
+	GP.App.review_requested.connect(func(success, rating, error): GP.Logger.info("review_requested", success, rating, error))
 	GP.App.shortcut_added.connect(func(arg): GP.Logger.info(arg))
 
 

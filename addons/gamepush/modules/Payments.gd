@@ -10,6 +10,10 @@ signal consumed(result:Array)
 signal error_consume(error:String)
 signal fetched_products(result:Array)
 signal error_fetch_products(error:String)
+signal subscribed(result:Array)
+signal error_subscribe(error:String)
+signal unsubscribed(result:Array)
+signal error_unsubscribe(error:String)
 
 var _callback_purchase := JavaScriptBridge.create_callback(_purchase)
 var _callback_error_purchase := JavaScriptBridge.create_callback(_error_purchase)
@@ -17,7 +21,10 @@ var _callback_consume := JavaScriptBridge.create_callback(_consume)
 var _callback_error_consume := JavaScriptBridge.create_callback(_error_consume)
 var _callback_fetch_products := JavaScriptBridge.create_callback(_fetch)
 var _callback_error_fetch_products := JavaScriptBridge.create_callback(_error_fetch)
-
+var _callback_subscribe := JavaScriptBridge.create_callback(_subscribe)
+var _callback_error_subscribe := JavaScriptBridge.create_callback(_error_subscribe)
+var _callback_unsubscribe := JavaScriptBridge.create_callback(_unsubscribe)
+var _callback_error_unsubscribe := JavaScriptBridge.create_callback(_error_unsubscribe)
 
 func _ready():
 	if OS.get_name() == "Web":
@@ -32,16 +39,19 @@ func _ready():
 		payments.on("error:purchase", _callback_error_purchase)
 		payments.on('fetchProducts', _callback_fetch_products)
 		payments.on('error:fetchProducts', _callback_error_fetch_products)
-
-
+		payments.on("subscribe", _callback_subscribe)
+		payments.on("error:subscribe", _callback_error_subscribe)
+		payments.on("unsubscribe", _callback_unsubscribe)
+		payments.on("error:unsubscribe", _callback_error_unsubscribe)
+		
+		
 func is_available() -> bool:
 	if OS.get_name() == "Web":
 		return payments.isAvailable
 	push_warning("Not Web")
 	return false
 
-func consume(id=null, tag=null) -> Array:
-	var result:Array
+func consume(id=null, tag=null) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		if id:
@@ -50,17 +60,13 @@ func consume(id=null, tag=null) -> Array:
 			conf["tag"] = tag
 		else:
 			push_error("No id or tag")
-			return result
-		var _result = payments.consume(conf)
-		result.append(Purchase.new()._from_js(_result[0]))
-		result.append(PlayerPurchase.new()._from_js(_result[1]))
+			return
+		payments.consume(conf)
 	else:
 		push_warning("Not Web")
-	return result
 	
 	
-func purchase(id=null, tag=null) -> Array:
-	var result:Array
+func purchase(id=null, tag=null) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		if id:
@@ -69,14 +75,10 @@ func purchase(id=null, tag=null) -> Array:
 			conf["tag"] = tag
 		else:
 			push_error("No id or tag")
-			return result
-		var _result = payments.purchase(conf)
-		result.append(Purchase.new()._from_js(_result[0]))
-		result.append(PlayerPurchase.new()._from_js(_result[1]))
-		return result
+		payments.purchase(conf)
 	else:
 		push_warning("Not Web")
-		return result
+
 	
 #func has():
 	#pass
@@ -85,7 +87,7 @@ func get_products():
 	var result:Array
 	if OS.get_name() == "Web":
 		var _result = payments.products
-		var callback = func(arg): result.append(Purchase.new()._from_js(arg))
+		var callback = func(arg): result.append(Purchase.new()._from_js(arg[0]))
 		_result.forEach(JavaScriptBridge.create_callback(callback))
 		return result
 	push_warning("Not Web")
@@ -95,7 +97,7 @@ func get_purchases():
 	var result:Array
 	if OS.get_name() == "Web":
 		var _result = payments.purchases
-		var callback = func(arg): result.append(PlayerPurchase.new()._from_js(arg))
+		var callback = func(arg): result.append(PlayerPurchase.new()._from_js(arg[0]))
 		_result.forEach(JavaScriptBridge.create_callback(callback))
 		return result
 	push_warning("Not Web")
@@ -151,28 +153,34 @@ func _error_consume(args): error_consume.emit(args[0])
 func _fetch(args):
 	var result:Array
 	var products:Array
-	var callback0 = func(arg): products.append(Purchase.new()._from_js(arg))
+	var callback0 = func(arg): products.append(Purchase.new()._from_js(arg[0]))
 	args[0].products.forEach(JavaScriptBridge.create_callback(callback0))
 	result.append(products)
 	var player_purchases:Array
-	var callback1 = func(arg): player_purchases.append(PlayerPurchase.new()._from_js(arg))
+	var callback1 = func(arg): player_purchases.append(PlayerPurchase.new()._from_js(arg[0]))
 	args[0].playerPurchases.forEach(JavaScriptBridge.create_callback(callback1))
 	result.append(player_purchases)
 	fetched_products.emit(result)
 func _error_fetch(args): error_fetch_products.emit(args[0])
+func _subscribe(args): subscribed.emit([Purchase.new()._from_js(args[0].product), PlayerPurchase.new()._from_js(args[0].purchase)])
+func _error_subscribe(args): error_subscribe.emit(args[0])
+func _unsubscribe(args): unsubscribed.emit([Purchase.new()._from_js(args[0].product), PlayerPurchase.new()._from_js(args[0].purchase)])
+func _error_unsubscribe(args): error_unsubscribe.emit(args[0])
 
 
 class Purchase:
+	extends GP.GPObject
+	
 	var id:int
 	var tag:String
 	var name:String
 	var description:String
 	var icon:String
 	var icon_small:String
-	var price:String
+	var price:int
 	var currency:String
 	var currency_symbol:String
-	var is_subscription:String
+	var is_subscription:bool
 	var period:int
 	var trial_period:int
 
@@ -208,6 +216,8 @@ class Purchase:
 		return self
 
 class PlayerPurchase:
+	extends GP.GPObject
+	
 	var product_id: int
 	var payload: Dictionary
 	var created_at: String

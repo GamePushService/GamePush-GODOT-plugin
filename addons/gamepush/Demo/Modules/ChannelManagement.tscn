@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dpwmghg4cjew2"]
+[gd_scene load_steps=3 format=3 uid="uid://cekpep40hr224"]
 
-[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/channels.gd" id="1_c3q82"]
-[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_8rmjs"]
+[ext_resource type="Script" path="res://addons/gamepush/Demo/Modules/channels.gd" id="1_v6w65"]
+[ext_resource type="StyleBox" uid="uid://b8gk1mmy8e4dt" path="res://addons/gamepush/Demo/GP_Green_box_flat.tres" id="2_fcr2v"]
 
-[node name="Channels" type="Control"]
+[node name="ChannelManagement" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_c3q82")
+script = ExtResource("1_v6w65")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -47,7 +47,7 @@ grow_vertical = 2
 [node name="Head" type="Panel" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_styles/panel = ExtResource("2_8rmjs")
+theme_override_styles/panel = ExtResource("2_fcr2v")
 
 [node name="Header" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Head"]
 layout_mode = 1
@@ -78,6 +78,7 @@ size_flags_vertical = 3
 placeholder_text = "channel_id..."
 
 [node name="text" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -102,22 +103,11 @@ size_flags_vertical = 3
 placeholder_text = "tag..."
 
 [node name="message_id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "message_id..."
-
-[node name="limit" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-placeholder_text = "limit..."
-
-[node name="offset" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-placeholder_text = "offset..."
 
 [node name="player_id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 2
@@ -144,24 +134,74 @@ size_flags_vertical = 3
 placeholder_text = "name..."
 
 [node name="description" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "description..."
-
-[node name="search" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-placeholder_text = "search..."
 
 [node name="password" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "password..."
+
+[node name="owner_id" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "owner_id..."
+
+[node name="private" type="CheckBox" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+text = "private"
+
+[node name="visible" type="CheckBox" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+text = "visible"
+
+[node name="ids" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "id..."
+
+[node name="ids2" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "id..."
+
+[node name="ids3" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "id..."
+
+[node name="search" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "search..."
+
+[node name="limit" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "limit..."
+
+[node name="offset" type="LineEdit" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "offset..."
+
+[node name="onlyJoined" type="CheckBox" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+text = "only_Joined"
+
+[node name="onlyOwned" type="CheckBox" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Header"]
+layout_mode = 2
+text = "only_owned"
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
 clip_contents = true
@@ -170,9 +210,9 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 9.74
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
-columns = 2
 
 [node name="Possibilities of Channels" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -208,7 +248,6 @@ size_flags_vertical = 3
 text = "send_message"
 
 [node name="Channel Management" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -262,6 +301,7 @@ size_flags_vertical = 3
 text = "fetch_more_channels"
 
 [node name="Ready-made chats" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -309,6 +349,7 @@ size_flags_vertical = 3
 text = "open_feed"
 
 [node name="Members" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -361,59 +402,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "unmute"
 
-[node name="Requests" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests"]
-layout_mode = 2
-text = "Requests"
-horizontal_alignment = 1
-
-[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 2.71
-columns = 2
-
-[node name="accept_join_request" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "accept_join_request"
-
-[node name="reject_join_request" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "reject_join_request"
-
-[node name="fetch_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "fetch_join_requests"
-
-[node name="fetch_more_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "fetch_more_join_requests"
-
-[node name="fetch_sent_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "fetch_sent_join_requests"
-
-[node name="fetch_more_sent_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "fetch_more_sent_join_requests"
-
 [node name="Messages" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -490,6 +480,7 @@ size_flags_vertical = 3
 text = "fetch_more_feed_messages"
 
 [node name="Invitations" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -545,13 +536,13 @@ text = "fetch_more_invites"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "fetch_channel_invites"
+text = "fetch_more_channel_invites"
 
 [node name="fetch_more_channel_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "fetch_more_channel_invites"
+text = "fetch_more_messages"
 
 [node name="fetch_sent_invites" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid"]
 layout_mode = 2
@@ -564,6 +555,59 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "fetch_more_sent_invites"
+
+[node name="Requests" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests"]
+layout_mode = 2
+text = "Requests"
+horizontal_alignment = 1
+
+[node name="ButtonGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.71
+columns = 3
+
+[node name="accept_join_request" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "accept_join_request"
+
+[node name="reject_join_request" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "reject_join_request"
+
+[node name="fetch_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_join_requests"
+
+[node name="fetch_more_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_join_requests"
+
+[node name="fetch_sent_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_sent_join_requests"
+
+[node name="fetch_more_sent_join_requests" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "fetch_more_sent_join_requests"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Possibilities of Channels/ButtonGrid/join" to="." method="_on_join_pressed"]
@@ -586,12 +630,6 @@ text = "fetch_more_sent_invites"
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/fetch_more_members" to="." method="_on_fetch_more_members_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/mute" to="." method="_on_mute_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Members/ButtonGrid/unmute" to="." method="_on_unmute_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid/accept_join_request" to="." method="_on_accept_join_request_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid/reject_join_request" to="." method="_on_reject_join_request_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid/fetch_join_requests" to="." method="_on_fetch_join_requests_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid/fetch_more_join_requests" to="." method="_on_fetch_more_join_requests_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid/fetch_sent_join_requests" to="." method="_on_fetch_sent_join_requests_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Requests/ButtonGrid/fetch_more_sent_join_requests" to="." method="_on_fetch_more_sent_join_requests_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/send_personal_message2" to="." method="_on_send_personal_message_2_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/send_feed_message" to="." method="_on_send_feed_message_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Messages/ButtonGrid/edit_message" to="." method="_on_edit_message_pressed"]
@@ -612,3 +650,9 @@ text = "fetch_more_sent_invites"
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_more_channel_invites" to="." method="_on_fetch_more_channel_invites_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_sent_invites" to="." method="_on_fetch_sent_invites_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/GridContainer/Invitations/ButtonGrid/fetch_more_sent_invites" to="." method="_on_fetch_more_sent_invites_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/accept_join_request" to="." method="_on_accept_join_request_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/reject_join_request" to="." method="_on_reject_join_request_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_join_requests" to="." method="_on_fetch_join_requests_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_more_join_requests" to="." method="_on_fetch_more_join_requests_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_sent_join_requests" to="." method="_on_fetch_sent_join_requests_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/Requests/ButtonGrid/fetch_more_sent_join_requests" to="." method="_on_fetch_more_sent_join_requests_pressed"]

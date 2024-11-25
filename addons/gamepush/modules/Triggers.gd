@@ -17,8 +17,8 @@ var _callback_claimed := JavaScriptBridge.create_callback(func(args):
 	_inner_claimed.emit(response))
 
 var _callback_claim := JavaScriptBridge.create_callback(_claimed)
-var _callback_activate := JavaScriptBridge.create_callback(_claimed)
-var _callback_error_claim := JavaScriptBridge.create_callback(_claimed)
+var _callback_activate := JavaScriptBridge.create_callback(_activated)
+var _callback_error_claim := JavaScriptBridge.create_callback(_error_claim)
 
 func _ready():
 	if OS.get_name() == "Web":
@@ -30,16 +30,13 @@ func _ready():
 		gp.triggers.on("claim", _callback_claim)
 		gp.triggers.on("error:claim", _callback_error_claim)
 
-func claim(id: String="", tag: String="") -> Dictionary:
+func claim(id_or_tag: Variant) -> Dictionary:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id:
-			conf["id"] = id
-		elif tag:
-			conf["tag"] = tag
+		if _is_valid_id(id_or_tag):
+			conf["id"] = id_or_tag
 		else:
-			push_warning("No id or tag")
-			return {"trigger": null, "isActivated": false, "isClaimed": false}
+			conf["tag"] = id_or_tag
 		gp.triggers.claim(conf).then(_callback_claimed)
 		var response = await _inner_claimed
 		return response
@@ -70,7 +67,7 @@ func activated_list() -> Array:
 		activated_list.forEach(callback)
 	else:
 		push_warning("Not running on Web")
-	return activated_triggers	
+	return activated_triggers
 	
 	
 func get_trigger(trigger_id: String) -> Dictionary:
@@ -87,13 +84,13 @@ func get_trigger(trigger_id: String) -> Dictionary:
 		push_warning("Not running on Web")
 	return trigger_info
 
-func is_trigger_activated(id_or_tag: String) -> bool:
+func is_trigger_activated(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
 		return gp.triggers.isActivated(id_or_tag)
 	push_warning("Not running on Web")
 	return false
 
-func is_claimed(id_or_tag: String) -> bool:
+func is_claimed(id_or_tag: Variant) -> bool:
 	if OS.get_name() == "Web":
 		return gp.triggers.isClaimed(id_or_tag)
 	push_warning("Not running on Web")
@@ -110,7 +107,20 @@ func _claimed(args) -> void:
 func _error_claim(args) -> void:
 	error_claim.emit(args[0])  # Emit the error signal with the error code
 
+
+func _is_valid_id(id:Variant):
+	if id is int or id is float or id is String:
+		var id_int := int(id)
+		var list_id := []
+		for a in list():
+			list_id.append(a.id)
+		if id_int in list_id:
+			return true
+	return false
+	
 class Trigger:
+	extends GP.GPObject
+	
 	var id: String
 	var tag: String
 	var description: String
@@ -168,6 +178,8 @@ class Trigger:
 		return self
 
 class Bonus:
+	extends GP.GPObject
+	
 	var type: String
 	var id: int
 	# Method to convert the bonus to a JSON object
@@ -184,6 +196,8 @@ class Bonus:
 		return self
 
 class Condition:
+	extends GP.GPObject
+	
 	var type: String
 	var key: String
 	var operator: String

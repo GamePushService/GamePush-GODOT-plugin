@@ -1,5 +1,6 @@
 extends Control
 
+@onready var countdown_node := $MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/show_countdown_overlay
 
 func _ready():
 	GP.Ads.start.connect(_on_signal_start)
@@ -42,11 +43,11 @@ func _on_signal_close(success):
 
 
 func _on_show_fullscreen_pressed():
-	GP.Ads.show_fullscreen(true)
+	GP.Ads.show_fullscreen(countdown_node.button_pressed)
 
 
 func _on_show_rewarded_video_pressed():
-	GP.Ads.show_rewarded_video(true)
+	GP.Ads.show_rewarded_video(countdown_node.button_pressed)
 
 
 func _on_main_menu_button_pressed():
@@ -95,3 +96,7 @@ func _on_refresh_sticky_pressed():
 
 func _on_close_sticky_pressed():
 	GP.Ads.close_sticky()
+
+
+func _on_is_preloader_available_pressed() -> void:
+	GP.Logger.info(GP.Ads.is_preloader_available())

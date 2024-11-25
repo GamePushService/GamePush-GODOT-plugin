@@ -4,7 +4,7 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var player:JavaScriptObject
 
-
+signal player_ready()
 signal synced(success:bool)
 signal loaded(success:bool)
 signal logged_in(success:bool)
@@ -12,21 +12,22 @@ signal logged_out(success:bool)
 signal fields_fetched(success:bool)
 signal window_connected
 signal player_state_changed
-signal field_maximum_reached
-signal field_minimum_reached
-signal field_incremented
+signal field_maximum_reached(field:Field)
+signal field_minimum_reached(field:Field)
+signal field_incremented(field:Field, old_value:Variant, new_value:Variant)
 
+var _callback_player_ready := JavaScriptBridge.create_callback(func(args): player_ready.emit())
+var _callback_field_incremented := JavaScriptBridge.create_callback(_on_field_incremented)
+var _callback_maximum_reached := JavaScriptBridge.create_callback(_on_maximum_reached)
+var _callback_minimum_reached := JavaScriptBridge.create_callback(_on_minimum_reached)
+var _callback_logout := JavaScriptBridge.create_callback(_logout)
+var _callback_login := JavaScriptBridge.create_callback(_login)
+var _callback_load := JavaScriptBridge.create_callback(_load)
+var _callback_sync := JavaScriptBridge.create_callback(_sync)
+var _callback_fetch_fields := JavaScriptBridge.create_callback(_fetch_fields)
+var _callback_window_connected := JavaScriptBridge.create_callback(_on_window_connected)
+var _callback_state_changed := JavaScriptBridge.create_callback(_on_state_changed)
 
-var callback_field_incremented := JavaScriptBridge.create_callback(_on_field_incremented)
-var callback_maximum_reached := JavaScriptBridge.create_callback(_on_maximum_reached)
-var callback_minimum_reached := JavaScriptBridge.create_callback(_on_minimum_reached)
-var callback_logout := JavaScriptBridge.create_callback(_logout)
-var callback_login := JavaScriptBridge.create_callback(_login)
-var callback_load := JavaScriptBridge.create_callback(_load)
-var callback_sync := JavaScriptBridge.create_callback(_sync)
-var callback_fetch_fields := JavaScriptBridge.create_callback(_fetch_fields)
-var callback_window_connected := JavaScriptBridge.create_callback(_on_window_connected)
-var callback_state_changed := JavaScriptBridge.create_callback(_on_state_changed)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,16 +37,17 @@ func _ready():
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		player = gp.player
-		player.on("sync", callback_sync)
-		player.on("load", callback_load)
-		player.on("login", callback_login)
-		player.on("logout", callback_logout)
-		player.on("fetchFields", callback_fetch_fields)
-		gp.on("event:connect", callback_window_connected)
-		player.on("change", callback_state_changed)
-		player.on("field:maximum", callback_maximum_reached)
-		player.on("field:minimum", callback_minimum_reached)
-		player.on("field:increment", callback_field_incremented)
+		player.on("ready", _callback_player_ready)
+		player.on("sync", _callback_sync)
+		player.on("load", _callback_load)
+		player.on("login", _callback_login)
+		player.on("logout", _callback_logout)
+		player.on("fetchFields", _callback_fetch_fields)
+		gp.on("event:connect", _callback_window_connected)
+		player.on("change", _callback_state_changed)
+		player.on("field:maximum", _callback_maximum_reached)
+		player.on("field:minimum", _callback_minimum_reached)
+		player.on("field:increment", _callback_field_incremented)
 
 
 # ID игрока
@@ -82,11 +84,15 @@ func is_stub():
 		return player.isStub
 	push_warning("Not Web")
 
-## Поля игрока
-#func get_fields():
-	#if OS.get_name() == "Web":
-		#return player.fields
-	#push_warning("Not Web")
+# Поля игрока
+func get_fields():
+	if OS.get_name() == "Web":
+		var result := []
+		var _callback = JavaScriptBridge.create_callback(func(args):
+			result.append(Field.new()._from_js(args[0])))
+		player.fields.forEach(_callback)
+		return result
+	push_warning("Not Web")
 
 
 # The player is logged in
@@ -104,15 +110,15 @@ func has_any_credentials():
 # Player waiting promise
 func is_ready():
 	if OS.get_name() == "Web":
-		return await player.ready
+			return await player.ready
 	push_warning("Not Web")
 
 func sync(override=null, storage=null) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if override:
+		if override != null:
 			conf["override"] = override
-		if storage:
+		if storage != null:
 			conf["storage"] = storage
 		player.sync(conf)
 		return
@@ -167,20 +173,33 @@ func fetch_fields() -> void:
 # Get the value of the key field
 func get_value(key: String) -> Variant:
 	if OS.get_name() == "Web":
-		return player.get(key)
+		window.gp = gp
+		var result = JavaScriptBridge.eval('window.gp.player.get("%s")' % [key], true)
+		if !OS.is_debug_build():
+			window.gp = JavaScriptBridge.create_object("Object")
+		return result
 	push_warning("Not Web")
 	return
 
 # Set the value of the key field to value, the value is cast to the type
 func set_value(key: String, value: Variant) -> void:
 	if OS.get_name() == "Web":
-		player.set(key, value)
+		if value is String and !value.is_valid_float():
+			value = '"' + value + '"'
+		window.gp = gp
+		var result = JavaScriptBridge.eval('window.gp.player.set("%s", %s)' % [key, value], true)
+		if !OS.is_debug_build():
+			window.gp = JavaScriptBridge.create_object("Object")
 		return
 	push_warning("Not Web")
 
 # Add the value to the key field
 func add_value(key: String, value: Variant) -> void:
 	if OS.get_name() == "Web":
+		if value is String and value.is_valid_int():
+			value = int(value)
+		elif value is String and value.is_valid_float():
+			value = float(value)
 		player.add(key, value)
 		return
 	push_warning("Not Web")
@@ -200,14 +219,14 @@ func has(key: String) -> bool:
 	return false
 
 # Return the player state as an object
-func to_json() -> Dictionary:
+func to_dict() -> Dictionary:
 	if OS.get_name() == "Web":
 		return GP._js_to_dict(player.toJSON())
 	push_warning("Not Web")
 	return {}
 
 # Set the state from the object
-func from_json(data: Dictionary) -> void:
+func from_dict(data: Dictionary) -> void:
 	if OS.get_name() == "Web":
 		var js_object := JavaScriptBridge.create_object("Object")
 		for key in data:
@@ -231,7 +250,7 @@ func remove() -> void:
 	push_warning("Not Web")
 	
 # Get the minimum value of the field key
-func get_min_value(key: String) -> int:
+func get_min_value(key: String) -> Variant:
 	if OS.get_name() == "Web":
 		return player.getMinValue(key)
 	push_warning("Not Web")
@@ -241,12 +260,12 @@ func get_min_value(key: String) -> int:
 # Set the minimum value for the field key
 func set_min_value(key: String, value: Variant) -> void:
 	if OS.get_name() == "Web":
-		player.set(key + ":min", value)
+		set_value(key + ":min", value)
 		return
 	push_warning("Not Web")
 
 # Get the maximum value of the field key
-func get_max_value(key: String) -> int:
+func get_max_value(key: String) -> Variant:
 	if OS.get_name() == "Web":
 		return player.getMaxValue(key)
 	push_warning("Not Web")
@@ -255,7 +274,7 @@ func get_max_value(key: String) -> int:
 # Set the maximum value for the field key
 func set_max_value(key: String, value: Variant) -> void:
 	if OS.get_name() == "Web":
-		player.set(key + ":max", value)
+		set_value(key + ":max", value)
 		return
 	push_warning("Not Web")
 
@@ -329,20 +348,22 @@ func _on_state_changed(args):
 	player_state_changed.emit()  # Emit signal indicating player state has changed
 # Callback function for when the maximum value is reached
 func _on_maximum_reached(args):
-	var field = Field.new()._from_js(args[0])
+	var field = Field.new()._from_js(args[0].field)
 	field_maximum_reached.emit(field)  # Emit signal with the field that reached maximum
 # Callback function for when the minimum value is reached
 func _on_minimum_reached(args):
-	var field = Field.new()._from_js(args[0])
+	var field = Field.new()._from_js(args[0].field)
 	field_minimum_reached.emit(field)  # Emit signal with the field that reached minimum	
 func _on_field_incremented(args):
-	var field = Field.new()._from_js(args[0][0])
-	var old_value = args[0][1] # TODO need test
-	var new_value = args[0][2]
+	var field = Field.new()._from_js(args[0].field)
+	var old_value = args[0].oldValue # 
+	var new_value = args[0].newValue
 	field_incremented.emit(field, old_value, new_value)  # Emit signal with field and its old and new values
 
 
 class Field:
+	extends GP.GPObject
+	
 	var name: String
 	var key: String
 	var type: String  # 'stats' | 'data' | 'flag' | 'service' | 'accounts'
@@ -417,6 +438,8 @@ class Field:
 
 
 class FieldVariant:
+	extends GP.GPObject
+	
 	var name: String
 	var value: Variant  # Может быть String, int или bool
 
@@ -433,6 +456,8 @@ class FieldVariant:
 		value = js_object["value"]
 
 class FieldLimits:
+	extends GP.GPObject
+	
 	var min: float
 	var max: float
 	var could_go_over_limit: bool
@@ -454,6 +479,8 @@ class FieldLimits:
 		return self
 
 class IntervalIncrement:
+	extends GP.GPObject
+	
 	var interval: float  
 	var increment: float  
 

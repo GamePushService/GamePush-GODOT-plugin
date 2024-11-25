@@ -52,7 +52,7 @@ func _ready():
 		is_init = true)
 	var win := JavaScriptBridge.get_interface("window")
 	win.setGpInitCallback(clbk)
-	var lib_url := "https://gamepush.com/sdk/game-score.js?projectId=%s&publicToken=%s&callback=onGPInit" % [project_id, public_token]
+	var lib_url := "https://gs.eponesh.com/sdk/gamepush.js?projectId=%s&publicToken=%s&callback=onGPInit" % [project_id, public_token]
 	var js_code = "var script = document.createElement('script'); script.src = '" + lib_url + "'; document.head.appendChild(script);"
 	JavaScriptBridge.eval(js_code, true)
 	while not gp:
@@ -114,5 +114,15 @@ func _on_timer_timeout():
 	
 func _js_to_dict(js_object:JavaScriptObject) -> Variant:
 	var window := JavaScriptBridge.get_interface("window")
-	var strn = window.JSON.stringify(js_object)
+	var strn = window.JSON.stringify(js_object).to_snake_case()
 	return JSON.parse_string(strn)
+	
+	
+class GPObject:
+	
+	func to_dict() -> Dictionary:
+		var result = {}
+		for property_info in get_property_list():
+			var property_name = property_info.name
+			result[property_name] = self.get(property_name)
+		return result

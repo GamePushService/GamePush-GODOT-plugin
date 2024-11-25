@@ -31,7 +31,7 @@ func _ready():
 		achievements = gp.achievements
 		achievements.on("unlock", _callback_unlock)
 		achievements.on("error:unlock", _callback_error_unlock)
-		achievements.on("progress", _callback_unlock)
+		achievements.on("progress", _callback_progress)
 		achievements.on("error:progress", _callback_error_unlock)
 		achievements.on("open", _callback_opened)
 		achievements.on("close", _callback_closed)
@@ -39,15 +39,15 @@ func _ready():
 		achievements.on("error:fetch", _callback_error_fetched)
 
 
-func unlock(id=null, tag=null) -> void:
+func unlock(id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
-		if id:
-			conf["id"] = id
+		if _is_valid_id(id_or_tag):
+			conf["id"] = id_or_tag
 			achievements.unlock(conf)
 			return
-		if tag:
-			conf["tag"] = tag
+		else:
+			conf["tag"] = id_or_tag
 			achievements.unlock(conf)
 			return
 		push_error("No id or tag")
@@ -55,16 +55,16 @@ func unlock(id=null, tag=null) -> void:
 	push_warning("Not Web")
 	
 
-func set_progress(progress:int, id=null, tag=null) -> void:
+func set_progress(progress:int, id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["progress"] = progress
-		if id:
-			conf["id"] = id
+		if _is_valid_id(id_or_tag):
+			conf["id"] = id_or_tag
 			achievements.setProgress(conf)
 			return
-		if tag:
-			conf["tag"] = tag
+		else:
+			conf["tag"] = id_or_tag
 			achievements.setProgress(conf)
 			return
 		push_error("No id or tag")
@@ -153,12 +153,24 @@ func _fetched(args):
 	var _callback_player_achievements:= JavaScriptBridge.create_callback(func(args):
 		player_achievements.append(PlayerAchievement.new()._from_js(args[0])))
 	achive.playerAchievements.forEach(_callback_player_achievements)
-	fetched.emit(achievements, achievements_groups, player_achievements)
+	fetched.emit(achievements, player_achievements, achievements_groups)
 	
 func _error_fetched(args): error_fetch.emit(args[0])
 
 
+func _is_valid_id(id:Variant):
+	if id is int or id is float or id is String:
+		var id_int := int(id)
+		var list_id := []
+		for a in list():
+			list_id.append(a.id)
+		if id_int in list_id:
+			return true
+	return false
+
 class Achievement:
+	extends GP.GPObject
+	
 	var id: int
 	var tag: String
 	var name: String
@@ -185,8 +197,10 @@ class Achievement:
 		rare = js_object["rare"]
 		max_progress = js_object["maxProgress"]
 		progress_step = js_object["progressStep"]
-		is_locked_visible = js_object["isLockedVisible"]
-		is_locked_description_visible = js_object["isLockedDescriptionVisible"]
+		if js_object["isLockedVisible"]:
+			is_locked_visible = js_object["isLockedVisible"]
+		if js_object["isLockedDescriptionVisible"]:
+			is_locked_description_visible = js_object["isLockedDescriptionVisible"]
 		return self
 
 	func _to_js() -> JavaScriptObject:
@@ -205,8 +219,17 @@ class Achievement:
 		js_object["isLockedVisible"] = is_locked_visible
 		js_object["isLockedDescriptionVisible"] = is_locked_description_visible
 		return js_object
+		
+	func to_dict() -> Dictionary:
+		var result = {}
+		for property_info in get_property_list():
+			var property_name = property_info.name
+			result[property_name] = self.get(property_name)
+		return result
 
 class AchievementsGroup:
+	extends GP.GPObject
+	
 	var id: int
 	var tag: String
 	var name: String
@@ -237,6 +260,8 @@ class AchievementsGroup:
 		return js_object
 
 class PlayerAchievement:
+	extends GP.GPObject
+	
 	var achievement_id: int
 	var created_at: String
 	var progress: int

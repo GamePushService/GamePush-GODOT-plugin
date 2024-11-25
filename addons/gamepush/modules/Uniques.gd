@@ -31,51 +31,51 @@ func _ready():
 		gp.uniques.on("delete", _callback_deleted)
 		gp.uniques.on("error:delete", _callback_delete_error)
 
-# Method to register or update unique data by tag and value
-func register(tag: String, value: String) -> bool:
-	var result := false
+
+func register(tag: String, value: String) -> void:
+
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
 		conf["tag"] = tag
 		conf["value"] = value
-		result = gp.uniques.register(conf)
+		gp.uniques.register(conf)
 	else:
 		push_warning("Not running on Web")
-	return result
 	
-# Get a unique value by tag
+
 func get_value(tag: String) -> String:
 	if OS.get_name() == "Web":
 		return gp.uniques.get(tag)
 	push_warning("Not running on Web")
 	return ""
 	
-# List all unique values
+
 func list() -> Array:
 	if OS.get_name() == "Web":
-		var unique_values = []
-		var callback := JavaScriptBridge.create_callback(func (args):
-			var unique_value = UniqueValue.new()
-			unique_value._from_js(args[0])
-			unique_values.append(unique_value)
-			)
-		gp.uniques.list.forEach(callback)
+		var unique_values = GP._js_to_dict(gp.uniques.list)
 		return unique_values
 	push_warning("Not running on Web")
 	return []
 	
-# Check if a unique value exists (by tag and value)
+signal _check(a:bool)
+
 func check(tag: String, value: String) -> bool:
 	if OS.get_name() == "Web":
+		var result
 		var conf = JavaScriptBridge.create_object("Object")
 		conf["tag"] = tag
 		conf["value"] = value
-		var result = gp.uniques.check(conf)
-		return result.success
-	push_warning("Not running on Web")
-	return false
+		var callback := JavaScriptBridge.create_callback(func(args):
+			_check.emit(args[0])
+			)
+		gp.uniques.check(conf).then(callback)
+		result = await _check
+		return result
+	else:
+		push_warning("Not running on Web")
+		return false
 	
-# Method to delete a unique value by tag
+
 func delete_unique(tag: String) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")
@@ -83,41 +83,43 @@ func delete_unique(tag: String) -> void:
 		gp.uniques.delete(conf)
 	else:
 		push_warning("Not running on Web")
-		
-# Callback for successful unique registration
+
+
 func _registered(args) -> void:
 	var unique_value = UniqueValue.new()._from_js(args[0])
 	registered.emit(unique_value)
 
-# Callback for registration error
+
 func _registration_error(args) -> void:
 	register_error.emit(args[0])
 	
-# Callback for successful unique value check
+
 func _checked(args) -> void:
 	var unique_value = UniqueValue.new()
 	unique_value._from_js(args[0])
 	checked.emit(unique_value)
 
-# Callback for error during unique value check
+
 func _check_error(args) -> void:
 	check_error.emit(args[0])
 
-# Callback for successful deletion
+
 func _deleted(args) -> void:
 	var unique_value = UniqueValue.new()
 	unique_value._from_js(args[0])
 	deleted.emit(unique_value)
 
-# Callback for error during deletion
+
 func _delete_error(args) -> void:
 	delete_error.emit(args[0])
 	
 	
-# UniqueValue class structure
+
 class UniqueValue:
+	extends GP.GPObject
+	
 	var tag: String
-	var value: String
+	var value: Variant
 
 	func _from_js(js_obj: JavaScriptObject) -> UniqueValue:
 		tag = js_obj.tag

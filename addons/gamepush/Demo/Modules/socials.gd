@@ -62,8 +62,13 @@ func _on_join_community_pressed():
 
 
 func _on_make_share_url_pressed():
-	GP.Socials.make_share_url(from_id_node.text, gift_node.text)
+	var dict = {"fromId": from_id_node.text, "gift": gift_node.text}
+	GP.Logger.info(GP.Socials.make_share_url(dict))
 
 
 func _on_get_share_param_pressed():
-	GP.Socials.get_share_param(param_node.text)
+	GP.Logger.info(GP.Socials.get_share_param(param_node.text))
+
+
+func _on_is_supports_share_params_pressed() -> void:
+	GP.Logger.info(GP.Socials.is_supports_share_params())

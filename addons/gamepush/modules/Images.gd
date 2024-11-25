@@ -4,14 +4,14 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var images:JavaScriptObject
 
-signal uploaded
-signal error_upload
-signal choosed
-signal error_choose
-signal fetched
-signal error_fetch
-signal fetched_more
-signal error_fetch_more
+signal uploaded(image:GPImage)
+signal error_upload(error:Dictionary)
+signal choosed(image:GPImage, temp_url:String)
+signal error_choose(error:Dictionary)
+signal fetched(result:Array)
+signal error_fetch(error:Dictionary)
+signal fetched_more(result:Array)
+signal error_fetch_more(error:Dictionary)
 
 var _callback_upload = JavaScriptBridge.create_callback(_upload)
 var _callback_error_upload = JavaScriptBridge.create_callback(_error_upload)
@@ -68,11 +68,14 @@ func choose_file(type_file:String="") -> Array:
 		var result:Array
 		var callback := JavaScriptBridge.create_callback(func(args): __choose_file.emit(args[0]))
 		if type_file:
-			images.chooseFile(type_file)
+			images.chooseFile(type_file).then(callback)
 		else:
-			images.chooseFile()
+			images.chooseFile().then(callback)
 		var _result = await __choose_file
-		result.append(GPImage.new()._from_js(_result.file))
+		if _result.file.id:
+			result.append(GPImage.new()._from_js(_result.file))
+		else:
+			result.append(GPImage.new())
 		result.append(_result.tempUrl)
 		return result
 	else:
@@ -149,11 +152,15 @@ func resize(url:String, width:int, height:int, crop:bool) -> String:
 	
 func _upload(args):
 	uploaded.emit(GPImage.new()._from_js(args[0]))
-func _error_upload(args): error_upload.emit(args[0])
-func _choose(args): choosed.emit(args[0]) # ?
-func _error_choose(args): error_choose.emit(args[0]) #String
+func _error_upload(args): error_upload.emit(GP._js_to_dict(args[0]))
+func _choose(args):
+	var file : = GPImage.new()
+	if args[0].file.id:
+		file._from_js(args[0].file)
+	choosed.emit(file, args[0].tempUrl)
+func _error_choose(args): error_choose.emit(GP._js_to_dict(args[0])) 
 func _fetch(args):
-	var result
+	var result := []
 	var arr_file:Array =[]
 	var callback = JavaScriptBridge.create_callback(func(arg):
 		arr_file.append(GPImage.new()._from_js(arg[0])))
@@ -161,9 +168,9 @@ func _fetch(args):
 	result.append(arr_file)
 	result.append(args[0].canLoadMore)
 	fetched.emit(result)
-func _error_fetch(args): error_fetch.emit(args[0]) #String
+func _error_fetch(args): error_fetch.emit(GP._js_to_dict(args[0])) 
 func _fetch_more(args):
-	var result
+	var result := []
 	var arr_file:Array =[]
 	var callback = JavaScriptBridge.create_callback(func(arg):
 		arr_file.append(GPImage.new()._from_js(arg[0])))
@@ -171,25 +178,24 @@ func _fetch_more(args):
 	result.append(arr_file)
 	result.append(args[0].canLoadMore)
 	fetched_more.emit(result)
-func _error_fetch_more(args): error_fetch_more.emit(args[0]) #String
+func _error_fetch_more(args): error_fetch_more.emit(GP._js_to_dict(args[0]))
 
 
 class GPImage:
+	extends GP.GPObject
+	
 	var id:String
 	var player_id:int
-	var name:String
 	var src:String
 	var width:int
 	var height:int
-	var tags:Array[String]
+	var tags:Array
 	
-	var callback_f_e := JavaScriptBridge.create_callback(_f_e)
 	
-	func _to_js():
+	func _to_js() -> JavaScriptObject:
 		var js_object := JavaScriptBridge.create_object("Object")
 		js_object["id"] = id
 		js_object["playerId"] = player_id
-		js_object["name"] = name
 		js_object["src"] = src
 		js_object["width"] = width
 		js_object["height"] = height
@@ -200,15 +206,17 @@ class GPImage:
 		return js_object
 		
 		
-	func _from_js(js_object):
+	func _from_js(js_object) -> GPImage:
+		var callback_f_e := JavaScriptBridge.create_callback(_f_e)
 		id = js_object["id"]
 		player_id =js_object["playerId"]
-		name = js_object["name"]
 		src = js_object["src"]
 		width = js_object["width"]
 		height = js_object["height"]
 		tags = Array()
 		js_object["tags"].forEach(callback_f_e)
+		return self
+		
 		
 	func _f_e(args):
 		tags.append(args[0])

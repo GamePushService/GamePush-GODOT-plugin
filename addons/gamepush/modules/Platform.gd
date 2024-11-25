@@ -45,7 +45,7 @@ func is_secret_code_auth_available() -> bool:
 	return _get_platform_property("isSecretCodeAuthAvailable")
 
 func get_SDK() -> JavaScriptObject:
-	return platform.getSDK() if OS.get_name() == "Web" else JavaScriptBridge.create_object("Object")
+	return platform.getSDK()
 
 func get_native_SDK() -> JavaScriptObject:
-	return platform.getNativeSDK() if OS.get_name() == "Web" else JavaScriptBridge.create_object("Object")
+	return platform.getNativeSDK()

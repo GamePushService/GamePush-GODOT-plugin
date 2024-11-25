@@ -37,7 +37,7 @@ func _on_main_menu_button_pressed():
 
 
 func _on_register_pressed():
-	GP.Logger.info(GP.Uniques.register(tag_node.text, value_node.text))
+	GP.Uniques.register(tag_node.text, value_node.text)
 
 
 func _on_get_value_pressed():
@@ -49,7 +49,7 @@ func _on_list_pressed():
 
 
 func _on_check_pressed():
-	GP.Logger.info(GP.Uniques.check(tag_node.text, value_node.text))
+	GP.Uniques.check(tag_node.text, value_node.text)
 
 
 func _on_delete_unique_pressed():

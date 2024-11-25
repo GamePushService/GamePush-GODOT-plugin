@@ -26,7 +26,7 @@ func _on_is_secret_code_auth_available_pressed():
 
 
 func _on_get_sdk_pressed():
-	GP.Logger.info(GP.Platform.get_SDK())
+	GP.Logger.info(GP.Platform.get_SDK().gp.platform.type)
 
 
 func _on_get_native_sdk_pressed():

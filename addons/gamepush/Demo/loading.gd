@@ -6,6 +6,7 @@ func _ready():
 		go_to_main()
 		return
 	GP.inited.connect(go_to_main)
+	GP.Player.player_ready.connect(func(): GP.Logger.info("player_ready"))
 
 
 func go_to_main(is_init:bool=false):

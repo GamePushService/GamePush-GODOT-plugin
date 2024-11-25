@@ -2,6 +2,9 @@ extends Control
 
 @onready var key_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/Header#KeyInput"
 @onready var value_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/Header#ValueInput"
+@onready var override := $MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/override
+@onready var storage := $MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/storage
+@onready var interval_node := $"MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/interval"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,6 +18,19 @@ func _ready():
 		$MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/IDLabel.text = "ID: " + str(GP.Player.get_id())
 		$MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/NameLabel.text = "NAME: " + str(GP.Player.get_player_name())
 		
+		
+		GP.Player.fields_fetched.connect(func(success): GP.Logger.info("fields fetched, success:", success))
+		GP.Player.synced.connect(func(success): GP.Logger.info("synced, success:", success))
+		GP.Player.loaded.connect(func(success): GP.Logger.info("loaded, success:", success))
+		GP.Player.logged_in.connect(func(success): GP.Logger.info("logged_in, success:", success))
+		GP.Player.logged_out.connect(func(success): GP.Logger.info("logged_out, success:", success))
+		GP.Player.window_connected.connect(func(): GP.Logger.info("window_connected"))
+		GP.Player.player_state_changed.connect(func(): GP.Logger.info("player_state_changed"))
+		GP.Player.field_maximum_reached.connect(func(field): GP.Logger.info("field_maximum_reached", field.to_dict()))
+		GP.Player.field_minimum_reached.connect(func(field): GP.Logger.info("field_minimum_reached", field.to_dict()))
+		GP.Player.field_incremented.connect(func(field, old_value, new_value): GP.Logger.info("field_incremented", field.to_dict(), old_value, new_value))
+
+
 func _request_completed(result: int, response_code: int, headers: Array, body: PackedByteArray) -> void:
 	if response_code == 200:
 		var img := Image.new()
@@ -41,7 +57,7 @@ func _on_button_grid_login_button_pressed():
 
 
 func _on_button_grid_sync_button_pressed():
-	GP.Player.sync()
+	GP.Player.sync(override.button_pressed, storage.get_item_text(storage.selected))
 
 
 func _on_button_grid_get_name_pressed():
@@ -66,11 +82,11 @@ func _on_button_gridhas_any_credentials_pressed():
 
 
 func _on_button_gridenable_auto_sync_pressed():
-	GP.Player.enable_auto_sync()
+	GP.Player.enable_auto_sync(int(interval_node.text), storage.text)
 
 
 func _on_button_griddisable_auto_sync_pressed():
-	GP.Player.disable_auto_sync()
+	GP.Player.disable_auto_sync(storage.text)
 
 
 func _on_button_gridload_pressed():
@@ -114,7 +130,7 @@ func _on_button_gridremove_pressed():
 
 
 func _on_button_gridget_min_value_pressed():
-	GP.Player.get_min_value(key_node.text)
+	GP.Logger.info(GP.Player.get_min_value(key_node.text))
 
 
 func _on_button_gridset_min_value_pressed():
@@ -122,7 +138,7 @@ func _on_button_gridset_min_value_pressed():
 
 
 func _on_button_gridget_max_value_pressed():
-	GP.Player.get_max_value(key_node.text)
+	GP.Logger.info(GP.Player.get_max_value(key_node.text))
 
 
 func _on_button_gridset_max_value_pressed():
@@ -147,7 +163,7 @@ func _on_button_gridget_playtime_all_pressed():
 
 func _on_button_gridget_field_pressed():
 	var field := GP.Player.get_field(key_node.text)
-	print(field.variants)
+	GP.Logger.info(field.to_dict())
 
 
 func _on_button_gridget_field_name_pressed():
@@ -156,3 +172,14 @@ func _on_button_gridget_field_name_pressed():
 
 func _on_button_gridget_field_variant_name_pressed():
 	GP.Logger.info(GP.Player.get_field_variant_name(key_node.text, value_node.text))
+
+
+func _on_to_dict_pressed() -> void:
+	GP.Logger.info(GP.Player.to_dict())
+
+
+func _on_get_fileds_pressed() -> void:
+	var res := []
+	for f in GP.Player.get_fields():
+		res.append(f.to_dict())
+	GP.Logger.info(res)

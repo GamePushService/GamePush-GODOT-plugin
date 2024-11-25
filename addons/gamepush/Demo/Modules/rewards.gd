@@ -15,23 +15,40 @@ func _on_main_menu_button_pressed():
 
 
 func _on_give_pressed():
-	GP.Logger.info(await GP.Rewards.give(id_or_tag_node.text))
+	var result := []
+	var res = await GP.Rewards.give(id_or_tag_node.text)
+	for r in res:
+		result.append(r.to_dict())
+	GP.Logger.info(result)
 
 
 func _on_accept_pressed():
-	GP.Logger.info(await GP.Rewards.give(id_or_tag_node.text))
+	var result := []
+	var res = await GP.Rewards.accept(id_or_tag_node.text)
+	for r in res:
+		result.append(r.to_dict())
+	GP.Logger.info(result)
 
 
 func _on_list_pressed():
-	GP.Logger.info(GP.Rewards.list())
+	var res := []
+	for r in GP.Rewards.list():
+		res.append(r.to_dict())
+	GP.Logger.info(res)
 
 
 func _on_given_list_pressed():
-	GP.Logger.info(GP.Rewards.given_list())
+	var res := []
+	for r in GP.Rewards.given_list():
+		res.append(r.to_dict())
+	GP.Logger.info(res)
 
 
 func _on_get_reward_pressed():
-	GP.Logger.info(GP.Rewards.get_reward(id_or_tag_node.text))
+	var res := []
+	for r in GP.Rewards.get_reward(id_or_tag_node.text):
+		res.append(r.to_dict())
+	GP.Logger.info(res)
 
 
 func _on_has_pressed():
