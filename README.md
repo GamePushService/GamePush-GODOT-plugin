@@ -78,14 +78,14 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method**          | **Arguments**                 | **Return Type**   |
 |---------------------|-------------------------------|-------------------|
-| `unlock`            | `id_or_tag: Variant`      | `void`            |
+| `unlock`            | `id_or_tag: Variant`          | `void`            |
 | `set_progress`      | `progress: int`, `id_or_tag: Variant` | `void`    |
 | `has`               | `id_or_tag: Variant`          | `bool`            |
 | `get_progress`      | `id_or_tag: Variant`          | `int`             |
 | `open`              | None                          | `void`            |
 | `fetch`             | None                          | `void`            |
 | `list`              | None                          | `Array[Achievement]` |
-| `player_achievements_list` | None                  | `Array[PlayerAchievement]` |
+| `player_achievements_list` | None                   | `Array[PlayerAchievement]` |
 | `groups_list`       | None                          | `Array[AchievementsGroup]` |
 
 
@@ -210,7 +210,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method**                 | **Arguments**                  | **Return Type** |
 |----------------------------|-------------------------------|-----------------|
-| `current()`                | `None`                        | `String`        |
+| `current()`                | None                          | `String`        |
 | `generate_avatar(has, size)`| `has: Variant, size: int`     | `String`        |
 
 ### Channels
@@ -556,7 +556,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 |-------------------------|------------------------------------------------|--------------|
 | `upload`                  | `tags: Array`                                    | `void`         |
 | `upload_url`              | `file_name:String, url:String, tags:Array=[]`                  | `void`         |
-| `upload_content`          | `file_name: String`, `content: String=""`, `tags: Array= []` | void         |
+| `upload_content`          | `file_name: String`, `content: String=""`, `tags: Array= []` | `void`         |
 | `load_content`            | `url: String`                                    | `String`       |
 | `choose_file`             | `type_file: String=""`                           | `Array`        |
 | `fetch`                   | `player_id: Variant=null`, `tags: Variant=null`, `limit: Variant=null`, `offset: Variant=null` | `Array`        |
@@ -699,8 +699,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 |**Signal**|	**Emitted Parameters**|
 |----------|--------------------------|
-|`opened`	||
-|`closed`	||
+|`opened`	|None|
+|`closed`	|None|
 |`fetched`|	`result:Dictionary`|
 | `fetched_scoped` | `result:Dictionary` |
 |`fetched_player_rating` |	`result:Dictionary`|
@@ -820,8 +820,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `logged_in`            | `success_status: bool`                                |
 | `logged_out`           | `success_status: bool`                                |
 | `fields_fetched`       | `success_status: bool`                                |
-| `window_connected`     | `None`                                                |
-| `player_state_changed` | `None`                                                |
+| `window_connected`     |  None                                                 |
+| `player_state_changed` | None                                                  |
 | `field_maximum_reached`| `field: Field`                                        |
 | `field_minimum_reached`| `field: Field`                                        |
 | `field_incremented`    | `field: Field, old_value: Variant, new_value: Variant`|
@@ -927,8 +927,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 |-------------|------------------------------------|-------------|
 | `give`        | `id_or_tag: Variant` , `lazy: bool = false` | `Array`       |
 | `accept`      | `id_or_tag: Variant`               | `Array`       |
-| `list`        |                                    | `Array`       |
-| `given_list`  |                                    | `Array`       |
+| `list`        | None                                   | `Array`       |
+| `given_list`  |  None                                  | `Array`       |
 | `get_reward`  | `id_or_tag: Variant`                | `Array`       |
 | `has`         | `id_or_tag: Variant`                | `bool`        |
 | `has_accepted` | `id_or_tag: Variant`                | `bool`        |
@@ -1095,16 +1095,16 @@ https://docs.gamepush.com/ru/docs/get-start/
 
 | **Method**                         | **Arguments**                        | **Return Type** |
 |--------------------------------|-----------------------------------|-------------|
-| `is_supports_share`              |                                   | `bool`        |
-| `is_supports_native_share`       |                                   | `bool`        |
+| `is_supports_share`              |      None                             | `bool`        |
+| `is_supports_native_share`       |    None                               | `bool`        |
 | `share`                          | `text: String = ""`, `url: String = ""`, `image: String = ""` | `void`        |
-| `is_supports_native_posts`       |                                   | `bool`        |
+| `is_supports_native_posts`       |      None                             | `bool`        |
 | `post`                           | `text: String = ""`, `url: String = ""`, `image: String = "" `| `void`        |
-| `is_supports_native_invite`      |                                   | `bool`        |
+| `is_supports_native_invite`      |      None                             | `bool`        |
 | `invite`                         | `text: String = ""`                 | `void`        |
-| `can_join_community`             |                                   | `bool`        |
-| `is_supports_native_community_join` |                                 | `bool`        |
-| `join_community`                 |                                   | `void`        |
+| `can_join_community`             |       None                            | `bool`        |
+| `is_supports_native_community_join` |     None                           | `bool`        |
+| `join_community`                 |         None                          | `void`        |
 | `make_share_url`                 | `param: Dictionary`    | `String`      |
 | `get_share_param`                | `param: String `                    | `String`      |
 
@@ -1130,8 +1130,8 @@ https://docs.gamepush.com/ru/docs/get-start/
 | **Method**                | **Arguments**               | **Return Type**    |
 |-----------------------|-------------------------|----------------|
 | `claim`                 | `id_or_tag: Variant`  | `Dictionary`    |
-| `list`                  |                         | `Array`          |
-| `activated_list`         |                         | `Array`          |
+| `list`                  |       None                  | `Array`          |
+| `activated_list`         |        None                 | `Array`          |
 | `get_trigger`           | `trigger_id: String`       | `Dictionary`     |
 | `is_trigger_activated`  | `id_or_tag: Variant`        | `bool`           |
 | `is_claimed`            | `id_or_tag: Variant`        | `bool`           |
@@ -1204,7 +1204,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 |----------------|------------------------------------|-------------|
 | `register`       | `tag: String`, `value: String`         | `bool`        |
 | `get_value`      | `tag: String`                        | `String`      |
-| `list`           |                                    | `Array`       |
+| `list`           | None                                   | `Array`       |
 | `check`          | `tag: String`, `value: String`         | `bool`        |
 | `delete_unique`  | `tag: String`                        | `void`        |
 
