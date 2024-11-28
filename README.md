@@ -6,8 +6,8 @@ Development of GamePush Godot plugin - [Anatoly Kulagin](https://github.com/talk
 
 
 ## Get started:
-[English] (https://github.com/GamePushService/GamePush-Godot-plugin/blob/main/docs/Getting%20Started.md)
-[Russian] (https://github.com/GamePushService/GamePush-Godot-plugin/blob/main/docs/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B.md)
+[English](https://github.com/GamePushService/GamePush-Godot-plugin/blob/main/docs/Getting%20Started.md)
+[Russian](https://github.com/GamePushService/GamePush-Godot-plugin/blob/main/docs/%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B.md)
 
 ## Documentation:
 
