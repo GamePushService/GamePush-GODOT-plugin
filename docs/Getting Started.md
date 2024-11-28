@@ -37,7 +37,7 @@ func _ready():
 func go_to_main_scene(_is_success_init:bool=false):
     # Switch to the project's main scene, for example, the main menu
     get_tree().change_scene_to_file("res://path/to/your/scene.tscn")
-
+```
 ### Displaying Rewarded Ads
 
 ```gdscript
