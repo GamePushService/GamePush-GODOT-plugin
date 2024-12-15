@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var events:JavaScriptObject
 
+signal after_ready
+
 signal joined(event:Event, player_event:PlayerEvent)
 signal error_join(error:String)
 
@@ -13,14 +15,16 @@ var _callback_error_join := JavaScriptBridge.create_callback(_error_join)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if OS.get_name() == "Web":
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		events = gp.events
 		events.on("join", _callback_joined)
 		events.on("error:join", _callback_error_join)
-		
-		
+	after_ready.emit()
+	
+
 func join(id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
 		var conf := JavaScriptBridge.create_object("Object")

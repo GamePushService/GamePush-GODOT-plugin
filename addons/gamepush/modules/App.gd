@@ -4,6 +4,8 @@ var window: JavaScriptObject
 var gp: JavaScriptObject
 var app: JavaScriptObject
 
+signal after_ready
+
 signal review_requested(success:bool, rating:int, error:String)
 signal shortcut_added(sucess:bool)
 
@@ -13,11 +15,13 @@ func _ready():
 		await _yield_until_app_ready()
 	else:
 		push_warning("Not running on Web")
+	after_ready.emit()
 
 func _yield_until_app_ready():
+	gp = GP.gp
 	while not gp:
 		gp = GP.gp
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.01).timeout
 	app = gp.app
 
 func _get_app_property(property_name: String) -> Variant:

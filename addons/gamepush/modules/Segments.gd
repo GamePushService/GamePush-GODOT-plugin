@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var segments:JavaScriptObject
 
+signal after_ready
+
 signal entered(segment_tag: String)
 signal left(segment_tag: String)
 
@@ -15,12 +17,15 @@ var _callback_left := JavaScriptBridge.create_callback(func(args):
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		segments = gp.segments
 		gp.segments.on("enter", _callback_entered)
 		gp.segments.on("leave", _callback_left)
+	after_ready.emit()
+	
 
 func list() -> Array:
 	if OS.get_name() == "Web":

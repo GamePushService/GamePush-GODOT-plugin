@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var rewards:JavaScriptObject
 
+signal after_ready
+
 signal reward_given(reward:Reward, player_reward:PlayerReward)
 signal _reward_given(arg:JavaScriptObject)
 signal reward_error(err:String)
@@ -21,14 +23,16 @@ var _callback_reward_accept_error := JavaScriptBridge.create_callback(_on_reward
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		rewards = gp.rewards
 		rewards.on("give", _callback_reward_given)
 		rewards.on("error:give", _callback_reward_error)
 		rewards.on("error:accept", _callback_reward_accept_error)
 		rewards.on("accept", _callback_reward_accepted)
+	after_ready.emit()
 
 
 func give(id_or_tag:Variant, lazy:bool = false) -> Array:

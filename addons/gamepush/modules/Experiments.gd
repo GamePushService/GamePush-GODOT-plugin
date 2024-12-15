@@ -4,6 +4,9 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var experiments:JavaScriptObject
 
+signal after_ready
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if OS.get_name() == "Web":
@@ -12,6 +15,8 @@ func _ready():
 			gp = GP.gp
 			await get_tree().create_timer(0.1).timeout
 		experiments = gp.experiments
+	after_ready.emit()
+	
 		
 func map() -> Dictionary:
 	if OS.get_name() == "Web":

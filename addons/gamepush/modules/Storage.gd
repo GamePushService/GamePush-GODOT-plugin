@@ -3,6 +3,7 @@ extends Node
 var window: JavaScriptObject
 var gp: JavaScriptObject
 
+signal after_ready
 
 signal set_success(key, value)
 signal get_success(key, value)
@@ -19,13 +20,15 @@ var callback_global_get := JavaScriptBridge.create_callback(_get_global_success)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		gp.storage.on("set", callback_set)
 		gp.storage.on("get", callback_get)
 		gp.storage.on("set:global", callback_global_set)
 		gp.storage.on("get:global", callback_global_get)
+	after_ready.emit()
 
 
 # Set storage type

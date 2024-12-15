@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var files:JavaScriptObject
 
+signal after_ready
+
 signal uploaded(file:File)
 signal error_upload(err:Dictionary)
 signal loaded_content
@@ -30,9 +32,10 @@ var _callback_error_fetch_more = JavaScriptBridge.create_callback(_error_fetch_m
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		files = gp.files
 		files.on("upload", _callback_upload)
 		files.on("error:upload", _callback_error_upload)
@@ -44,7 +47,8 @@ func _ready():
 		files.on("error:fetch", _callback_error_fetch)
 		files.on("fetchMore", _callback_fetch_more)
 		files.on("error:fetchMore", _callback_error_fetch_more)
-
+	after_ready.emit()
+	
 
 func upload(tags:Array=[]):
 	if OS.get_name() == "Web":

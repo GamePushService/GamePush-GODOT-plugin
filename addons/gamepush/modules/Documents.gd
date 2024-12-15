@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var documents:JavaScriptObject
 
+signal after_ready
+
 signal opened
 signal closed
 signal fetched(document:Dictionary)
@@ -18,15 +20,16 @@ var _callback_error_fetch = JavaScriptBridge.create_callback(_error_fetch)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		documents = gp.documents
 		documents.on("open", _callback_open)
 		documents.on("close", _callback_close)
 		documents.on("fetch", _callback_fetch)
 		documents.on("error:fetch", _callback_error_fetch)
-		
+	after_ready.emit()
 
 func open(type:String) -> void:
 	if OS.get_name() == "Web":

@@ -4,6 +4,8 @@ var window: JavaScriptObject
 var gp: JavaScriptObject
 var platform: JavaScriptObject
 
+signal after_ready
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if OS.get_name() == "Web":
@@ -11,11 +13,14 @@ func _ready():
 		await _yield_until_gp_ready()
 	else:
 		push_warning("Not running on Web")
+	after_ready.emit()
+	
 
 func _yield_until_gp_ready():
+	gp = GP.gp
 	while not gp:
 		gp = GP.gp
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.01).timeout
 	platform = gp.platform
 
 func _get_platform_property(property_name: String) -> Variant:

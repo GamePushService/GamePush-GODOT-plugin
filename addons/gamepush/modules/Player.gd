@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var player:JavaScriptObject
 
+signal after_ready
+
 signal player_ready()
 signal synced(success:bool)
 signal loaded(success:bool)
@@ -33,9 +35,10 @@ var _callback_state_changed := JavaScriptBridge.create_callback(_on_state_change
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		player = gp.player
 		player.on("ready", _callback_player_ready)
 		player.on("sync", _callback_sync)
@@ -48,6 +51,7 @@ func _ready():
 		player.on("field:maximum", _callback_maximum_reached)
 		player.on("field:minimum", _callback_minimum_reached)
 		player.on("field:increment", _callback_field_incremented)
+	after_ready.emit()
 
 
 # ID игрока

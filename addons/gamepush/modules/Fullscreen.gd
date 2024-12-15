@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var fullscreen:JavaScriptObject
 
+signal after_ready
+
 signal opened
 signal closed
 signal changed
@@ -16,14 +18,17 @@ var _callback_change := JavaScriptBridge.create_callback(_change)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		fullscreen = gp.fullscreen
 		fullscreen.on("open", _callback_open)
 		fullscreen.on("close", _callback_close)
 		fullscreen.on("change", _callback_change)
-
+	after_ready.emit()
+	
+	
 func open():
 	if OS.get_name() == "Web":
 		fullscreen.open()

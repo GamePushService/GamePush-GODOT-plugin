@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var games_collections:JavaScriptObject
 
+signal after_ready
+
 signal opened
 signal closed
 signal fetched(rsdult:Dictionary)
@@ -17,14 +19,16 @@ var callback_error_fetch := JavaScriptBridge.create_callback(_error_fetch)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		games_collections = gp.gamesCollections
 		games_collections.on("open", callback_open)
 		games_collections.on("close", callback_close)
 		games_collections.on("fetch", callback_fetch)
 		games_collections.on("error:fetch", callback_error_fetch)
+	after_ready.emit()
 		
 		
 func open(tag:String="", id:int=0, share_params:Dictionary={}) -> void:

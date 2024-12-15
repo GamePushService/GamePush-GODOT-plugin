@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var achievements:JavaScriptObject
 
+signal after_ready
+
 signal unlocked(achievement:Achievement)
 signal error_unlock(error:String)
 signal progress(achievement:Achievement)
@@ -25,9 +27,10 @@ var _callback_error_fetched = JavaScriptBridge.create_callback(_error_fetched)
 
 func _ready():
 	if OS.get_name() == "Web":
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		achievements = gp.achievements
 		achievements.on("unlock", _callback_unlock)
 		achievements.on("error:unlock", _callback_error_unlock)
@@ -37,7 +40,7 @@ func _ready():
 		achievements.on("close", _callback_closed)
 		achievements.on("fetch", _callback_fetched)
 		achievements.on("error:fetch", _callback_error_fetched)
-
+	after_ready.emit()
 
 func unlock(id_or_tag:Variant) -> void:
 	if OS.get_name() == "Web":
