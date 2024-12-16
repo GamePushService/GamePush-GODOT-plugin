@@ -57,39 +57,12 @@ func _ready():
 	JavaScriptBridge.eval(js_code, true)
 	while not gp:
 		await get_tree().create_timer(0.1).timeout
-		
-	add_child(Achievements)
-	add_child(Ads)
-	add_child(Analytics)
-	add_child(Triggers)
-	add_child(App)
-	add_child(AvatarGenerator)
-	add_child(Channels)
-	add_child(Device)
-	add_child(Documents)
-	add_child(Events)
-	add_child(Experiments)
-	add_child(Fullscreen)
-	add_child(Files)
-	add_child(Game)
-	add_child(GamesCollections)
-	add_child(Images)
-	add_child(Language)
-	add_child(Leaderboard)
-	add_child(Logger)
-	add_child(Payments)
-	add_child(Platform)
-	add_child(Player)
-	add_child(Players)
-	add_child(Rewards)
-	add_child(Schedulers)
-	add_child(Segments)
-	add_child(Server)
-	add_child(Socials)
-	add_child(System)
-	add_child(Variables)
-	add_child(Uniques)
-	add_child(Storage)
+	
+	for prop in get_property_list():
+		var module_node = get(prop.name)
+		if module_node is Node:
+			add_child(module_node)
+	await get_tree().create_timer(0.1).timeout
 	
 	var timer := Timer.new()
 	var is_preloader_show := ProjectSettings.get_setting("game_push/config/is_preloader_show", false)
@@ -106,7 +79,6 @@ func _ready():
 	inited.connect(func(is_init): is_inited = true)
 	inited.emit(is_init)
 	
-
 
 func _on_timer_timeout():
 	Game.game_start()

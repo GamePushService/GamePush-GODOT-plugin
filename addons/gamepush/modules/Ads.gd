@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var ads:JavaScriptObject
 
+signal after_ready
+
 signal start()
 signal close(success:bool)
 signal fullscreen_start()
@@ -36,9 +38,10 @@ var _callback_sticky_refresh = JavaScriptBridge.create_callback(_sticky_refresh)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		ads = gp.ads
 		
 		ads.on('start', _callback_start)
@@ -54,7 +57,7 @@ func _ready():
 		ads.on('sticky:close', _callback_close)
 		ads.on('sticky:render', _callback_sticky_render)
 		ads.on('sticky:refresh', _callback_sticky_refresh)
-
+	after_ready.emit()
 
 func is_adblock_enabled() -> bool:
 	if OS.get_name() == "Web" and ads:

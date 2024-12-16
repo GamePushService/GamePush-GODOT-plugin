@@ -3,6 +3,8 @@ extends Node
 var window: JavaScriptObject
 var gp: JavaScriptObject
 
+signal after_ready
+
 signal registered(unique_value: UniqueValue)
 signal register_error(error: String)
 signal checked(unique_value: UniqueValue)
@@ -21,15 +23,17 @@ var _callback_delete_error := JavaScriptBridge.create_callback(_delete_error)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		gp.uniques.on("register", _callback_registered)
 		gp.uniques.on("error:register", _callback_registration_error)
 		gp.uniques.on("check", _callback_checked)
 		gp.uniques.on("error:check", _callback_check_error)
 		gp.uniques.on("delete", _callback_deleted)
 		gp.uniques.on("error:delete", _callback_delete_error)
+	after_ready.emit()
 
 
 func register(tag: String, value: String) -> void:

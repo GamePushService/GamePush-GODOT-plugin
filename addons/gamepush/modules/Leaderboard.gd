@@ -4,6 +4,7 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var leaderboard:JavaScriptObject
 
+signal after_ready
 signal opened
 signal closed
 signal fetched(result:Dictionary)
@@ -19,12 +20,14 @@ var _callback_close := JavaScriptBridge.create_callback(_close)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		leaderboard = gp.leaderboard
 		leaderboard.on("open", _callback_open)
 		leaderboard.on("close", _callback_close)
+	after_ready.emit()
 
 func open(order_by:Array = [], order:String = "", limit:int = 0,
  include_fields:Array = [], display_fields:Array = [],
@@ -234,6 +237,19 @@ func fetch_player_rating_scoped(variant:String, id:int =0, tag:String ="", order
 	else:
 		push_warning("Not Web")
 
+
+signal _lb_inited
+
+func set_yandex_lb_score(leaderboardName:String, score:int, extraData:String="") -> void:
+	if OS.get_name() == "Web" and GP.Platform.type() == "Yandex":
+		var yandex_sdk = GP.Platform.get_nativ_SDK()
+		var lb
+		yandex_sdk.getLeaderboards().then(JavaScriptBridge.create_callback(func(args):
+			lb = args[0]
+			_lb_inited.emit()
+			))
+		await _lb_inited
+		lb.setLeaderboardScore(leaderboardName, score, extraData)
 
 
 func _open(args): opened.emit()

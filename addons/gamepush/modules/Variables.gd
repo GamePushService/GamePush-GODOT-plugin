@@ -1,6 +1,6 @@
 extends Node
 
-
+signal after_ready
 signal fetched(Variables: Array)
 signal fetched_error(error: String)
 signal platform_variables_fetched(variables: Dictionary)
@@ -17,13 +17,15 @@ var _callback_error_fetch_platform_variables := JavaScriptBridge.create_callback
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		gp.variables.on("fetch", _callback_fetch)
 		gp.variables.on("error:fetch", _callback_fetched_error)
 		gp.variables.on("fetchPlatformVariables", _callback_fetch_platform_variables)
 		gp.variables.on("error:fetchPlatformVariables", _callback_error_fetch_platform_variables)
+	after_ready.emit()
 
 
 func fetch() -> void:

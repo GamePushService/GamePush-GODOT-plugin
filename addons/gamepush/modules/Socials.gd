@@ -3,6 +3,8 @@ extends Node
 var window:JavaScriptObject
 var gp:JavaScriptObject
 
+signal after_ready
+
 signal shared(success: bool)
 signal posted(success: bool)
 signal invited(success: bool)
@@ -17,13 +19,15 @@ var callback_join_community := JavaScriptBridge.create_callback(_join_community)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		gp.socials.on("share", callback_share)
 		gp.socials.on("post", callback_post)
 		gp.socials.on("invite", callback_invite)
 		gp.socials.on("joinCommunity", callback_join_community)
+	after_ready.emit()
 
 # Check if sharing is supported
 func is_supports_share() -> bool:

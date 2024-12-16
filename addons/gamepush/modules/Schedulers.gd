@@ -4,6 +4,8 @@ var window:JavaScriptObject
 var gp:JavaScriptObject
 var schedulers:JavaScriptObject
 
+signal after_ready
+
 signal error_register(error_message: String)
 signal signal_claim_day(scheduler_day_info: SchedulerDayInfo)
 signal error_claim_day(error_message: String)
@@ -34,9 +36,10 @@ var callback_on_error_join := JavaScriptBridge.create_callback(_on_error_join)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		schedulers = gp.schedulers
 		schedulers.on("error:register", callback_error_register)
 		schedulers.on("claimDay", callback_on_claim_day)
@@ -50,7 +53,8 @@ func _ready():
 		schedulers.on("error:claimAllDays", callback_on_error_claim_all_days)
 		schedulers.on("join", callback_on_join)
 		schedulers.on("error:join", callback_on_error_join)
-
+	after_ready.emit()
+	
 
 signal _register(a:JavaScriptObject)
 

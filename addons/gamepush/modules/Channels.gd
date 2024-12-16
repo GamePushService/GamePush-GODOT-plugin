@@ -3,6 +3,8 @@ extends Node
 var window:JavaScriptObject
 var gp:JavaScriptObject
 
+signal after_ready
+
 signal event_message(message: Message)
 signal message_received(message: Message)
 signal message_sent(message: Message)
@@ -231,9 +233,10 @@ var _callback_error_fetch_sent_more_join_requests := JavaScriptBridge.create_cal
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		
 		# Привязка коллбэков к событиям
 		gp.channels.on('event:message', _callback_event_message)
@@ -326,7 +329,8 @@ func _ready():
 		gp.channels.on("error:fetchSentJoinRequests", _callback_error_fetch_sent_join_requests)
 		gp.channels.on("fetchMoreSentJoinRequests", _callback_fetch_sent_more_join_request)
 		gp.channels.on("error:fetchMoreSentJoinRequests", _callback_error_fetch_sent_more_join_requests)
-
+	after_ready.emit()
+	
 
 func join(channel_id:int, password:String="") -> void:
 	if OS.get_name() == "Web":

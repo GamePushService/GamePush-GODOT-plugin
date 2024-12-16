@@ -3,6 +3,9 @@ extends Node
 var window:JavaScriptObject
 var gp:JavaScriptObject
 
+
+signal after_ready
+
 signal activated(trigger: Trigger)
 signal claimed(trigger: Trigger)
 signal _inner_claimed(res:Dictionary)
@@ -23,12 +26,14 @@ var _callback_error_claim := JavaScriptBridge.create_callback(_error_claim)
 func _ready():
 	if OS.get_name() == "Web":
 		window = JavaScriptBridge.get_interface("window")
+		gp = GP.gp
 		while not gp:
 			gp = GP.gp
-			await get_tree().create_timer(0.1).timeout
+			await get_tree().create_timer(0.01).timeout
 		gp.triggers.on("activate", _callback_activate)
 		gp.triggers.on("claim", _callback_claim)
 		gp.triggers.on("error:claim", _callback_error_claim)
+	after_ready.emit()
 
 func claim(id_or_tag: Variant) -> Dictionary:
 	if OS.get_name() == "Web":
