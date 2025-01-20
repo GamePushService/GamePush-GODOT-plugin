@@ -113,7 +113,7 @@ func is_rewarded_playing() -> bool:
 
 func is_preloader_playing() -> bool:
 	if OS.get_name() == "Web":
-		return ads.isStickyPlaying
+		return ads.isPreloaderPlaying
 	push_warning("Not Web")
 	return false
 	
