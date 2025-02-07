@@ -7,11 +7,6 @@ var plugin_path: String = get_script().resource_path.get_base_dir()
 var export_path: String
 var _features: Array
 
-var project_id: String
-var public_token: String 
-var is_archive := false
-var archive_name : String
-
 
 func _get_name() -> String:
 	return "Game Push"
