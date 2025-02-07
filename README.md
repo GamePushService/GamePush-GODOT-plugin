@@ -757,6 +757,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `is_available`                  | None                                  | `bool`           |
 | `consume`                       | `id :int , tag :String`               | `void`          |
 | `purchase`                      | `id :int , tag :String`               | `void`          |
+| `has`                      | `id :int , tag :String`               | `bool`          |
 | `get_products`                  | None                                  | `Array`          |
 | `get_purchases`                 | None                                  | `Array`          |
 | `fetch_products`                | None                                  | `void`           |
