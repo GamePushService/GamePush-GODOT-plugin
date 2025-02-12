@@ -1,0 +1,22 @@
+name: Deploy to Godot Asset Library
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Godot Asset Library
+        uses: talkafk/DeployGodotAssetLibraly@v1
+        with:
+          login: "Game Push"
+          password: ${{ secrets.GODOT_ASSET_STORE_PASSWORD }}
+          asset_id: "3518"
+          commit_sha: ${{ github.sha }}
+          release_tag: ${{ github.ref_name }}
