@@ -237,19 +237,23 @@ func fetch_player_rating_scoped(variant:String, id:int =0, tag:String ="", order
 	else:
 		push_warning("Not Web")
 
-
+signal yandex_lb_score_setted
 signal _lb_inited
 
-func set_yandex_lb_score(leaderboardName:String, score:int, extraData:String="") -> void:
-	if OS.get_name() == "Web" and GP.Platform.type() == "Yandex":
-		var yandex_sdk = GP.Platform.get_nativ_SDK()
-		var lb
-		yandex_sdk.getLeaderboards().then(JavaScriptBridge.create_callback(func(args):
-			lb = args[0]
-			_lb_inited.emit()
-			))
+var lb 
+var _lb_callback := JavaScriptBridge.create_callback(func(args):
+	lb = args[0]
+	_lb_inited.emit()
+	)
+
+func set_yandex_lb_score(leaderboard_name:String, score:int, extra_data:String="") -> void:
+	if OS.get_name() == "Web" and GP.Platform.type() == "YANDEX":
+		var ysdk = GP.Platform.get_native_SDK()
+		ysdk.getLeaderboards().then(_lb_callback)
 		await _lb_inited
-		lb.setLeaderboardScore(leaderboardName, score, extraData)
+		lb.setLeaderboardScore(leaderboard_name, score, extra_data)
+	else:
+		push_warning("Not Web or not yandex")
 
 
 func _open(args): opened.emit()

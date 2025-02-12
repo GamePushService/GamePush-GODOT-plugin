@@ -5,11 +5,7 @@ class_name  HTMLExportPlugin
 
 var plugin_path: String = get_script().resource_path.get_base_dir()
 var export_path: String
-
-var project_id: String
-var public_token: String 
-var is_archive := false
-var archive_name : String
+var _features: Array
 
 
 func _get_name() -> String:
@@ -18,30 +14,32 @@ func _get_name() -> String:
 
 func _export_begin(features: PackedStringArray , is_debug: bool, path: String, flags: int) -> void:
 	export_path = path
+	_features = features
 	
 
 func _export_end() -> void:
-	var project_id := str(ProjectSettings.get_setting("game_push/config/project_id"))
-	var public_token := ProjectSettings.get_setting("game_push/config/token")
-	var is_archive := ProjectSettings.get_setting("game_push/config/is_archive", false)
-	var archive_name := ProjectSettings.get_setting("game_push/config/archive_name", "export_archive.zip")
-	var file := FileAccess.open(export_path, FileAccess.READ)
-	var html := file.get_as_text()
-	file.close()
-	var pos = html.find('</head>')
-	html = html.insert(pos, 
-					'<script>
-					function setGpInitCallback(callback) {
-						window.onGPInit = callback;
-					};
-				</script>\n')
-	file = FileAccess.open(export_path, FileAccess.WRITE)
-	file.store_string(html)
-	file.close()
-	if is_archive:
-		if !archive_name.ends_with(".zip"):
-			archive_name = archive_name + ".zip"
-		zip_export(archive_name)
+	if "web" in _features:
+		var project_id := str(ProjectSettings.get_setting("game_push/config/project_id"))
+		var public_token := ProjectSettings.get_setting("game_push/config/token")
+		var is_archive := ProjectSettings.get_setting("game_push/config/is_archive", false)
+		var archive_name := ProjectSettings.get_setting("game_push/config/archive_name", "export_archive.zip")
+		var file := FileAccess.open(export_path, FileAccess.READ)
+		var html := file.get_as_text()
+		file.close()
+		var pos = html.find('</head>')
+		html = html.insert(pos, 
+						'<script>
+						function setGpInitCallback(callback) {
+							window.onGPInit = callback;
+						};
+					</script>\n')
+		file = FileAccess.open(export_path, FileAccess.WRITE)
+		file.store_string(html)
+		file.close()
+		if is_archive:
+			if !archive_name.ends_with(".zip"):
+				archive_name = archive_name + ".zip"
+			zip_export(archive_name)
 
 
 func zip_export(name_file:String):

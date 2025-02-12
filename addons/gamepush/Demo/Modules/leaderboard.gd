@@ -37,7 +37,8 @@ func _ready():
 		GP.Logger.info("fetched_player_rating_scoped")
 		GP.Logger.info(result)
 		)
-
+	GP.Leaderboard.yandex_lb_score_setted.connect(func():
+		GP.Logger.info("yandex_lb_score_setted"))
 
 func _on_main_menu_button_pressed():
 	get_tree().change_scene_to_file("res://addons/gamepush/Demo/Demo.tscn")
@@ -157,3 +158,6 @@ func _on_fetch_player_rating_scoped_pressed():
 	GP.Leaderboard.fetch_player_rating_scoped(variant_node.text, int(id_node.text), tag_node.text,
 	 [orderby1_node.text, orderby2_node.text, orderby3_node.text], order_node.text, includes, int(show_nearest.text))
 	
+
+func _on_set_yandex_lb_score_pressed() -> void:
+	GP.Leaderboard.set_yandex_lb_score(tag_node.text, int($MarginContainer/HBoxContainer/Panel/VBoxContainer/Header/HBoxContainer/record/HBoxContainer/valuse/value1.text))
