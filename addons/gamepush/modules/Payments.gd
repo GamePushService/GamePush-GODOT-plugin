@@ -84,9 +84,21 @@ func purchase(id=null, tag=null) -> void:
 		push_warning("Not Web")
 
 	
-#func has():
-	#pass
-	#
+func has(id=null, tag=null) -> bool:
+	if OS.get_name() == "Web":
+		var conf := JavaScriptBridge.create_object("Object")
+		if id:
+			conf['id'] = id
+		elif tag:
+			conf["tag"] = tag
+		else:
+			push_error("No id or tag")
+		return payments.has(conf)
+	else:
+		push_warning("Not Web")
+		return false
+	
+
 func get_products():
 	var result:Array
 	if OS.get_name() == "Web":

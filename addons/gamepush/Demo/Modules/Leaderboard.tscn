@@ -284,6 +284,12 @@ size_flags_vertical = 3
 text = "fetch_player_rating_scoped
 "
 
+[node name="set_yandex_lb_score" type="Button" parent="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "set_yandex_lb_score"
+
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/open" to="." method="_on_open_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/fetch" to="." method="_on_fetch_pressed"]
@@ -292,3 +298,4 @@ text = "fetch_player_rating_scoped
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/fetchScoped" to="." method="_on_fetch_scoped_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/publish_record" to="." method="_on_publish_record_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/fetch_player_rating_scoped" to="." method="_on_fetch_player_rating_scoped_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Panel/VBoxContainer/ButtonGrid/set_yandex_lb_score" to="." method="_on_set_yandex_lb_score_pressed"]

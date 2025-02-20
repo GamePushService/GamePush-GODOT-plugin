@@ -113,7 +113,7 @@ func is_rewarded_playing() -> bool:
 
 func is_preloader_playing() -> bool:
 	if OS.get_name() == "Web":
-		return ads.isStickyPlaying
+		return ads.isPreloaderPlaying
 	push_warning("Not Web")
 	return false
 	
@@ -155,11 +155,11 @@ func show_preloader() -> void:
 		return
 	push_warning("Not Web")
 		
-func show_rewarded_video(show_countdown_overlay:bool=false) -> void:
+func show_rewarded_video(show_rewarded_failed_overlay:bool=false) -> void:
 	if OS.get_name() == "Web":
-		if show_countdown_overlay:
+		if show_rewarded_failed_overlay:
 			var conf := JavaScriptBridge.create_object("Object")
-			conf["showCountdownOverlay"] = show_countdown_overlay
+			conf["showRewardedFailedOverlay"] = show_rewarded_failed_overlay
 			ads.showRewardedVideo(conf)
 		else:
 			ads.showRewardedVideo()

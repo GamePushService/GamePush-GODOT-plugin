@@ -166,7 +166,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `can_show_fullscreen_before_game_play`    | None                                     | `bool`          |
 | `show_fullscreen`                         | `show_countdown_overlay: bool = false`   | `void`          |
 | `show_preloader`                          | None                                     | `void`          |
-| `show_rewarded_video`                     | `show_countdown_overlay: bool = false`   | `void`          |
+| `show_rewarded_video`                     | `show_rewarded_failed_overlay: bool = false`   | `void`          |
 | `show_sticky`                             | None                                     | `void`          |
 | `refresh_sticky`                          | None                                     | `void`          |
 | `close_sticky`                            | None                                     | `void`          |
@@ -757,6 +757,7 @@ https://docs.gamepush.com/ru/docs/get-start/
 | `is_available`                  | None                                  | `bool`           |
 | `consume`                       | `id :int , tag :String`               | `void`          |
 | `purchase`                      | `id :int , tag :String`               | `void`          |
+| `has`                      | `id :int , tag :String`               | `bool`          |
 | `get_products`                  | None                                  | `Array`          |
 | `get_purchases`                 | None                                  | `Array`          |
 | `fetch_products`                | None                                  | `void`           |
