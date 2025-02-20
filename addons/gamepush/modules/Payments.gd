@@ -103,7 +103,7 @@ func get_products():
 	var result:Array
 	if OS.get_name() == "Web":
 		var _result = payments.products
-		var callback = func(arg): result.append(GPPurchase.new()._from_js(arg[0]))
+		var callback = func(arg): result.append(Purchase.new()._from_js(arg[0]))
 		_result.forEach(JavaScriptBridge.create_callback(callback))
 		return result
 	push_warning("Not Web")
