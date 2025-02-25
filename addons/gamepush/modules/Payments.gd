@@ -86,14 +86,14 @@ func purchase(id=null, tag=null) -> void:
 	
 func has(id=null, tag=null) -> bool:
 	if OS.get_name() == "Web":
-		var conf := JavaScriptBridge.create_object("Object")
+		var id_or_tag
 		if id:
-			conf['id'] = id
+			id_or_tag = id
 		elif tag:
-			conf["tag"] = tag
+			id_or_tag = tag
 		else:
 			push_error("No id or tag")
-		return payments.has(conf)
+		return payments.has(id_or_tag)
 	else:
 		push_warning("Not Web")
 		return false
